@@ -1,18 +1,23 @@
 package it.univaq.agilehub;
 
+import it.univaq.agilehub.dao.DaoFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        Connection connection = DaoFactory.getConnection();
+        String x =  connection.toString();
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        stage.setTitle(x);
         stage.setScene(scene);
         stage.show();
     }
