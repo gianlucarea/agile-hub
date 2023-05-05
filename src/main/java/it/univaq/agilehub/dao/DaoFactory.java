@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 public class DaoFactory {
-    public static final String URL = "jdbc:mysql://localhost:3306/prova";
+    public static final String URL = "jdbc:mysql://localhost:3306/agile_hub_production";
     public static final String USER = "root";
     public static final String PASS = "password";
 

@@ -2,19 +2,33 @@ package it.univaq.agilehub.model;
 
 public class User {
 
-    private String name, surname, fiscal_code;
+    private int id;
+    private String name;
+    private String surname;
+    private String password;
+    private String username;
     private int age;
     private Type type;
 
     public User() {
     }
 
-    public User(String name, String surname, String fiscal_code, int age, Type type) {
+    public User(int id, String name, String surname, String password, String username, int age, Type type) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
-        this.fiscal_code = fiscal_code;
+        this.password = password;
+        this.username = username;
         this.age = age;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,14 +47,6 @@ public class User {
         this.surname = surname;
     }
 
-    public String getFiscal_code() {
-        return fiscal_code;
-    }
-
-    public void setFiscal_code(String fiscal_code) {
-        this.fiscal_code = fiscal_code;
-    }
-
     public int getAge() {
         return age;
     }
@@ -57,7 +63,32 @@ public class User {
         this.type = type;
     }
 
-    public String toCheck(String name, String surname){
-        return name + " " + surname;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", type=" + type +
+                '}';
     }
 }

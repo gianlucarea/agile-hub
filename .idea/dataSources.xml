@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="prova@localhost" uuid="11474e30-1373-4702-9d5e-a351f9251b0f">
+    <data-source source="LOCAL" name="agile_hub_production@localhost" uuid="eed70985-7654-460f-b73a-07bf647b8521">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/prova</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/agile_hub_production</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
