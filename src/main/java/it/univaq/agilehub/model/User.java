@@ -91,4 +91,8 @@ public class User {
                 ", type=" + type +
                 '}';
     }
+
+    public String toCheck(String name, String surname){
+        return name + " " + surname;
+    }
 }
