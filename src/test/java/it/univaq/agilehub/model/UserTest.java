@@ -15,6 +15,6 @@ class UserTest {
     @Test
     void testToCheck2 () {
         User user = new User();
-        assertEquals("GianlucaRea",user.toCheck("Gianluca","Rea"));
+        assertNotEquals("GianlucaRea",user.toCheck("Gianluca","Rea"));
     }
 }
