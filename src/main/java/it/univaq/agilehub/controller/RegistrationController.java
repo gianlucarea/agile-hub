@@ -1,14 +1,19 @@
 package it.univaq.agilehub.controller;
 
+import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.view.ViewDispatcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class RegistrationController extends DataInitializable<User> implements Initializable{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class RegistrationController extends DataInitializable<User> implements Initializable {
 
     ViewDispatcher dispatcher = ViewDispatcher.getInstance();
 
@@ -76,4 +81,8 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
