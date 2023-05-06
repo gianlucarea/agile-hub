@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class UserDaoImpl implements UserDao{
 
     private static final String insertUser ="insert into agilehub.user value (?)";
@@ -41,4 +42,6 @@ public class UserDaoImpl implements UserDao{
         return user;
     }
 
+
 }
+

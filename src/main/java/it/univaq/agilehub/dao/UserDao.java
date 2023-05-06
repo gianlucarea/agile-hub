@@ -8,6 +8,8 @@ public interface UserDao {
 
     public boolean insertUser(User user);
 
+
     public User getUserById(int id) throws SQLException;
+
 
 }

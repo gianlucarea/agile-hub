@@ -7,4 +7,7 @@ module it.univaq.agilehub {
 
     opens it.univaq.agilehub to javafx.fxml;
     exports it.univaq.agilehub;
+    opens it.univaq.agilehub.controller to javafx.fxml;
+    exports it.univaq.agilehub.controller;
+
 }
