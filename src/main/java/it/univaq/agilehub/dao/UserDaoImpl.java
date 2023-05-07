@@ -28,8 +28,8 @@ public class UserDaoImpl implements UserDao{
             pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
             pst.setString(4, user.getUsername());
             pst.setString(5, user.getDateOfBirth());
-            pst.setInt(5,user.getAge());
-            pst.setString(6,user.getType().toString());
+            pst.setInt(6,user.getAge());
+            pst.setString(7,user.getType().toString());
             int i = pst.executeUpdate();
             if (i==1) {
                 return true;}
@@ -113,7 +113,6 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User authenticate(String username, String password)  {
         password = encoder.encodeToString(password.getBytes());
-
         Connection connection = DaoFactory.getConnection();
         String sql = "select id,name,surname,password,username,age, dateOfBirth, type FROM Users WHERE username =? AND password = ?;";
         User user = new User();
