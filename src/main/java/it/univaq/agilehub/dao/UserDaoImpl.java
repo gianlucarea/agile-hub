@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public boolean registration(User user) {
         Connection connection = DaoFactory.getConnection();
-        String sql = "INSERT INTO Users (name,surname,password,username,age,type) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Users (name,surname,password,username,dateOfBirth,age,type) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pst = null;
         try {
             pst = connection.prepareStatement(sql);
@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao{
             pst.setString(2, user.getSurname());
             pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
             pst.setString(4, user.getUsername());
+            pst.setString(5, user.getDateOfBirth());
             pst.setInt(5,user.getAge());
             pst.setString(6,user.getType().toString());
             int i = pst.executeUpdate();
@@ -52,7 +53,7 @@ public class UserDaoImpl implements UserDao{
         Connection connection = DaoFactory.getConnection();
         User user = null;
         PreparedStatement ps = null ;
-        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE id = ?;";
+        String sql = "select id,name,surname,password,username,dateOfBirth,age,type FROM Users WHERE id = ?;";
         ps = connection.prepareStatement(sql);
         ps.setInt(1,id);
         ResultSet rs = ps.executeQuery();
@@ -62,10 +63,11 @@ public class UserDaoImpl implements UserDao{
                 String surname = rs.getString("surname");
                 String password = rs.getString("password");
                 String username = rs.getString("username");
+                String dateOfBirth = rs.getString("dateOfBirth");
                 int age = rs.getInt("age");
                 Type type = Enum.valueOf(Type.class , rs.getString("type")) ;
                 System.out.println(type);
-                user = new User(user_id,name,surname,password,username,age,type );
+                user = new User(user_id,name,surname,password,username,dateOfBirth,age,type );
             }
             return user;
 
@@ -77,7 +79,7 @@ public class UserDaoImpl implements UserDao{
         Connection connection = DaoFactory.getConnection();
         User user = null;
         PreparedStatement ps =  null;
-        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE username = ?;";
+        String sql = "select id,name,surname,password,username,age,dateOfBirth,type FROM Users WHERE username = ?;";
         try {
             ps = connection.prepareStatement(sql);
             ps.setString(1,username);
@@ -88,9 +90,10 @@ public class UserDaoImpl implements UserDao{
                 String surname = rs.getString("surname");
                 String password = rs.getString("password");
                 String usernameFromDB = rs.getString("username");
+                String dateOfBirth = rs.getString("dateOfBirth");
                 int age = rs.getInt("age");
                 Type type = Enum.valueOf(Type.class , rs.getString("type")) ;
-                user = new User(user_id,name,surname,password,usernameFromDB,age,type );
+                user = new User(user_id,name,surname,password,usernameFromDB,dateOfBirth,age,type );
             }
             return user;
         }catch (SQLException e){
@@ -112,7 +115,7 @@ public class UserDaoImpl implements UserDao{
         password = encoder.encodeToString(password.getBytes());
 
         Connection connection = DaoFactory.getConnection();
-        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE username =? AND password = ?;";
+        String sql = "select id,name,surname,password,username,age, dateOfBirth, type FROM Users WHERE username =? AND password = ?;";
         User user = new User();
         PreparedStatement ps = null;
         try {
@@ -129,6 +132,7 @@ public class UserDaoImpl implements UserDao{
                 user.setName(rs.getString("name"));
                 user.setSurname(rs.getString("surname"));
                 user.setAge(rs.getInt("age"));
+                user.setDateOfBirth(rs.getString("dateOfBirth"));
             }
         }catch(SQLException e){
             throw new RuntimeException(e);

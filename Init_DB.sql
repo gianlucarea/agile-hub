@@ -8,6 +8,7 @@ CREATE TABLE `Users`  (
   `surname` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   `username` varchar(45) NOT NULL,
+  `dateOfBirth` varchar(45) NOT NULL,
   `age` int NOT NULL,
   `type` enum('NORMALE','ADMIN','SOCIO','SOCIO_PLUS','MAESTRO') NOT NULL,
   PRIMARY KEY (`id`),
@@ -22,6 +23,7 @@ INSERT INTO `agile_hub_production`.`Users`
 `surname`,
 `password`,
 `username`,
+`dateOfBirth`,
 `age`,
 `type`)
 VALUES
@@ -30,6 +32,7 @@ VALUES
 'Rea',
 'cGFzc3dvcmQ=',
 'aldino',
+'26/09/1997',
 25,
 'NORMALE');
 
@@ -39,6 +42,7 @@ INSERT INTO `agile_hub_production`.`Users`
 `surname`,
 `password`,
 `username`,
+`dateOfBirth`,
 `age`,
 `type`)
 VALUES
@@ -47,5 +51,6 @@ VALUES
 'Falone',
 'cGFzc3dvcmQx',
 'falone',
+'26/09/1997',
 25,
 'SOCIO');

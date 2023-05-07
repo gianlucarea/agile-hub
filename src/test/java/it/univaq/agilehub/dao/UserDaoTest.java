@@ -48,7 +48,7 @@ public class UserDaoTest {
 
     @Test
     void testRegistrationOfUser()  {
-        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR",30, Type.SOCIO);
+        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR","dateOfBirth", 30, Type.SOCIO);
         userDao.registration(user);
 
         User userFromDb = userDao.getUserByUsername("GR");

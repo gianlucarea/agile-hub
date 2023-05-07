@@ -1,5 +1,12 @@
 package it.univaq.agilehub.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
+import java.util.Date;
+
 public class User {
 
     private int id;
@@ -7,27 +14,31 @@ public class User {
     private String surname;
     private String password;
     private String username;
+
+    private String dateOfBirth;
     private int age;
     private Type type;
 
     public User() {
     }
 
-    public User(int id, String name, String surname, String password, String username, int age, Type type) {
+    public User(int id, String name, String surname, String password, String username, String dateOfBirth, int age, Type type) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.username = username;
+        this.dateOfBirth = dateOfBirth;
         this.age = age;
         this.type = type;
     }
 
-    public User( String name, String surname, String password, String username, int age, Type type) {
+    public User( String name, String surname, String password, String username, String dateOfBirth, int age, Type type) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.username = username;
+        this.dateOfBirth = dateOfBirth;
         this.age = age;
         this.type = type;
     }
@@ -88,6 +99,9 @@ public class User {
         this.username = username;
     }
 
+    public String getDateOfBirth() {return dateOfBirth;}
+
+    public void setDateOfBirth(String dateOfBirth){this.dateOfBirth = dateOfBirth; }
     @Override
     public String toString() {
         return "User{" +
@@ -104,4 +118,24 @@ public class User {
     public String toCheck(String name, String surname){
         return name + " " + surname;
     }
+
+    public int ageCalculator(String bornDate) throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date d = sdf.parse(bornDate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int date = c.get(Calendar.DATE);
+
+        LocalDate l1 = LocalDate.of(year, month, date);
+        LocalDate now1 = LocalDate.now();
+        Period diff1 = Period.between(l1, now1);
+
+        return diff1.getYears();
+    }
+
+
 }
