@@ -27,12 +27,12 @@
       </Text>
       <ImageView fitHeight="124.0" fitWidth="141.0" layoutX="73.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../Downloads/soccer_player_icon_125840.png" />
+            <Image url="@calcio.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="124.0" fitWidth="142.0" layoutX="497.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../Downloads/player_padel_sport_ball_icon_141874.png" />
+            <Image url="@Tennis.png" />
          </image>
       </ImageView>
       <Text layoutX="158.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">

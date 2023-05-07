@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +47,10 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @FXML
     private TextField username;
+    @FXML
+    ImageView calcio = new ImageView();
+    @FXML
+    ImageView Tennis = new ImageView();
 
     @FXML
     void PasswordAction(ActionEvent event) {
