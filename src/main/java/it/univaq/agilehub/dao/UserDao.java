@@ -6,11 +6,10 @@ import java.sql.SQLException;
 
 public interface UserDao {
 
-    public boolean registration(User user);
+     boolean registration(User user);
 
-
-    public User getUserById(int id) throws SQLException;
-    public User getUserByUsername(String username) ;
-    public User authenticate(String username, String password);
+     User getUserById(int id) throws SQLException;
+     User getUserByUsername(String username) ;
+     User authenticate(String username, String password);
 
 }

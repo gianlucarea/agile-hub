@@ -1,5 +1,9 @@
 package it.univaq.agilehub.controller;
 
+import it.univaq.agilehub.dao.DaoFactory;
+import it.univaq.agilehub.dao.UserDao;
+import it.univaq.agilehub.dao.UserDaoImpl;
+import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;
@@ -49,16 +53,25 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @FXML
     void avantiAction(ActionEvent event) {
+        Type type ;
+        if(socioBox.isSelected()){
+            type = Type.SOCIO;
+        } else {
+            type = Type.NORMALE;
+        }
+        User user = null;
+        String dateOfBirth =  User.dateOfBirthConverter(dataNascita.getValue().toString());
+        user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirth ,type);
+        UserDao userDao = new UserDaoImpl();
+        userDao.registration(user);
     }
 
     @FXML
     void cognomeAction(ActionEvent event) {
-
     }
 
     @FXML
     void dataNascitaAction(ActionEvent event) {
-
     }
 
     @FXML

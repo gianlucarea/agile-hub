@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DaoFactory {
     public static String url = "jdbc:mysql://localhost:3306/agile_hub_production";
     public static String user = "root";
-    public static String password = "Forzapescara2022";
+    public static String password = "password";
     public static String getUrl() {
         return url;
     }
