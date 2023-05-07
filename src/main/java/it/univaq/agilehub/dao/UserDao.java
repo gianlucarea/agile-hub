@@ -10,6 +10,7 @@ public interface UserDao {
 
 
     public User getUserById(int id) throws SQLException;
-
     public User getUserByUsername(String username) ;
+    public User authenticate(String username, String password);
+
 }

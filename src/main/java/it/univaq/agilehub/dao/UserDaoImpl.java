@@ -52,11 +52,10 @@ public class UserDaoImpl implements UserDao{
         User user = null;
         PreparedStatement ps = null ;
         String sql = "select id,name,surname,password,username,age,type FROM Users WHERE id = ?;";
-
-            ps = connection.prepareStatement(sql);
-            ps.setInt(1,id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()){
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()){
                 int user_id = rs.getInt("id");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
@@ -107,6 +106,42 @@ public class UserDaoImpl implements UserDao{
         }
     }
 
+    @Override
+    public User authenticate(String username, String password)  {
+
+        Connection connection = DaoFactory.getConnection();
+        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE username =? AND password =?;";
+        User user = new User();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                user.setId(rs.getInt("id"));
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setAge(rs.getInt("age"));
+            }
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }finally {
+            if (ps != null) {
+                try { ps.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+        System.out.println(user.toString());
+        return user;
+    }
 
 }
-

@@ -1,6 +1,8 @@
 package it.univaq.agilehub.view;
 
 
+import it.univaq.agilehub.controller.DataInitializable;
+import it.univaq.agilehub.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -44,19 +46,19 @@ public class ViewDispatcher {
         Scene scene = new Scene(iscrivitiView);
         stage.setScene(scene);
     }
-    /*public void homeView(Persona persona) throws ViewException {
-        View<Persona> view = loadView("home");
-        DataInitializable<Persona> homeController = view.getController();
-        homeController.initializeData(persona);
+    public void homeView(User user) throws ViewException {
+        View<User> view = loadView("home");
+        DataInitializable<User> homeController = view.getController();
+        homeController.initializeData(user);
         layout = (BorderPane) view.getView();
 
 
         stage.setX(200.0);
         Scene scene = new Scene(layout);
-        renderView("benvenuto", persona);
+        //renderView("benvenuto", user);
 
 
-    }*/
+    }
 
     private <T> View<T> loadView(String viewName) throws ViewException {
         System.out.println(getClass());
@@ -72,7 +74,7 @@ public class ViewDispatcher {
 
     }
 
-    /*public <T> void renderView(String nome, T data) {
+    public <T> void renderView(String nome, T data) {
         try {
             View<T> view = loadView(nome);
             DataInitializable<T> controller = view.getController();
@@ -83,6 +85,6 @@ public class ViewDispatcher {
         catch(ViewException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 }

@@ -1,6 +1,10 @@
 package it.univaq.agilehub.controller;
+import it.univaq.agilehub.dao.UserDao;
+import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.view.ViewDispatcher;
+import it.univaq.agilehub.view.ViewException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +17,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController extends DataInitializable<User> implements Initializable {
+
+    UserDao userDao = new UserDaoImpl();
+
     ViewDispatcher dispatcher = ViewDispatcher.getInstance();
 
     @FXML
@@ -35,13 +42,23 @@ public class LoginController extends DataInitializable<User> implements Initiali
     ImageView logo = new ImageView();
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         accediButton.disableProperty().bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty()));
     }
-    public void accediAction(){}
-    public void iscrivitiAction(){}
+
+    public void accediAction(ActionEvent event) throws ViewException {
+        try {
+            User user = userDao.authenticate(username.getText(), password.getText());
+
+            dispatcher.homeView(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorLabel.setText("Username o password errati!");
+        }
+    }
+
+    public void iscrivitiAction() {
+    }
 }
