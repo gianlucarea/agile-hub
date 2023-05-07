@@ -64,6 +64,12 @@ public class RegistrationController extends DataInitializable<User> implements I
         user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirth ,type);
         UserDao userDao = new UserDaoImpl();
         userDao.registration(user);
+        ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+        try {
+            dispatcher.logout();
+        } catch (ViewException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
