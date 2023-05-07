@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1135.0" style="-fx-background-color: #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1135.0" style="-fx-background-color: #d2e7ba;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.HomeController">
    <top>
       <HBox prefHeight="80.0" prefWidth="1135.0" style="-fx-background-color: #80cf75;" BorderPane.alignment="CENTER">
          <children>
@@ -24,6 +24,11 @@
             </AnchorPane>
             <AnchorPane prefHeight="81.0" prefWidth="373.0">
                <children>
+                  <Label fx:id="profileType" layoutX="14.0" layoutY="31.0">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Label>
                   <ImageView fx:id="Iogout" fitHeight="36.0" fitWidth="109.0" layoutX="349.0" layoutY="23.0" onMouseClicked="#logoutAction" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@logoutIcon.png" />

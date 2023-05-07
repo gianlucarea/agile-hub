@@ -24,11 +24,15 @@ public class HomeController  extends DataInitializable<User> implements Initiali
     @FXML
     VBox menuBar  = new VBox();
 
+
     @FXML
     ImageView logout = new ImageView();
 
     @FXML
     Label profile = new Label();
+    @FXML
+    Label profileType = new Label();
+
     private ViewDispatcher dispatcher = ViewDispatcher.getInstance();
     private Stage stage = dispatcher.getStage();
     private User user;
@@ -45,6 +49,7 @@ public class HomeController  extends DataInitializable<User> implements Initiali
     public void initializeData(User user) throws ViewException {
         this.user = user;
         profile.setText(user.getName() + "\n" + user.getSurname());
+        profileType.setText(user.getType().toString());
         if(user.getType() == ADMIN){
             menuBar.getChildren().add(createButton("Home","welcome"));
             menuBar.getChildren().add(new Separator());
