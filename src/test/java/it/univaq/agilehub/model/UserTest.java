@@ -38,4 +38,16 @@ class UserTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    void dateConverterRight() {
+        String date = "1997-09-26";
+        assertEquals("26/09/1997", User.dateOfBirthConverter(date));
+    }
+
+    @Test
+    void dateConverterWrong() {
+        String date = "1997-09-26";
+        assertNotEquals("1997/09/26", User.dateOfBirthConverter(date));
+    }
 }

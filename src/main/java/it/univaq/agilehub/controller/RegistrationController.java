@@ -44,6 +44,9 @@ public class RegistrationController extends DataInitializable<User> implements I
     private CheckBox socioBox;
 
     @FXML
+    private CheckBox socioPlusBox;
+
+    @FXML
     private TextField username;
 
     @FXML
@@ -56,7 +59,9 @@ public class RegistrationController extends DataInitializable<User> implements I
         Type type ;
         if(socioBox.isSelected()){
             type = Type.SOCIO;
-        } else {
+        } else if (socioPlusBox.isSelected()) {
+            type = Type.SOCIO_PLUS;
+        }else{
             type = Type.NORMALE;
         }
         User user = null;
@@ -97,9 +102,17 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @FXML
     void socioAction(ActionEvent event) {
-
+        if( socioBox.isSelected()){
+            socioPlusBox.setSelected(false);
+        }
     }
 
+    @FXML
+    void socioPlusAction(ActionEvent event) {
+        if( socioPlusBox.isSelected()){
+            socioBox.setSelected(false);
+        }
+    }
     @FXML
     void usernameAction(ActionEvent event) {
 
