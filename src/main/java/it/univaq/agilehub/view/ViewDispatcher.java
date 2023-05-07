@@ -56,6 +56,7 @@ public class ViewDispatcher {
         stage.setX(200.0);
         Scene scene = new Scene(layout);
         stage.setScene(scene);
+        renderView("welcome", user);
 
     }
 
