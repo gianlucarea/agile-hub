@@ -51,7 +51,6 @@ public class LoginController extends DataInitializable<User> implements Initiali
     public void accediAction(ActionEvent event) throws ViewException {
         try {
             User user = userDao.authenticate(username.getText(), password.getText());
-
             dispatcher.homeView(user);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,5 +59,6 @@ public class LoginController extends DataInitializable<User> implements Initiali
     }
 
     public void iscrivitiAction() {
+
     }
 }

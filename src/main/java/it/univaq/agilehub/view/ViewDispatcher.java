@@ -42,7 +42,7 @@ public class ViewDispatcher {
 
 
     public  void iscrivitiView() throws ViewException{
-        AnchorPane iscrivitiView = (AnchorPane) loadView("iscriviti").getView();
+        AnchorPane iscrivitiView = (AnchorPane) loadView("registration").getView();
         Scene scene = new Scene(iscrivitiView);
         stage.setScene(scene);
     }
@@ -55,8 +55,7 @@ public class ViewDispatcher {
 
         stage.setX(200.0);
         Scene scene = new Scene(layout);
-        //renderView("benvenuto", user);
-
+        stage.setScene(scene);
 
     }
 
