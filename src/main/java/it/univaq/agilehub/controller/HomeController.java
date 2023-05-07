@@ -24,7 +24,6 @@ public class HomeController  extends DataInitializable<User> implements Initiali
     @FXML
     VBox menuBar  = new VBox();
 
-
     @FXML
     ImageView logout = new ImageView();
 
@@ -39,7 +38,7 @@ public class HomeController  extends DataInitializable<User> implements Initiali
 
 
     private static final MenuElement[] menuUser = {new MenuElement("Prenotazioni", "prenotazioni")};
-    private static final MenuElement[] menuAdmin= {new MenuElement("Maestri", "inserisciMaestri")};
+    private static final MenuElement[] menuAdmin= {new MenuElement("Maestri", "registraMaestri")};
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public interface UserDao {
 
      boolean registration(User user);
-
+     boolean registrationAdmin(User user);
      User getUserById(int id) throws SQLException;
      User getUserByUsername(String username) ;
      User authenticate(String username, String password);

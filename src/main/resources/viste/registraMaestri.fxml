@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.AdminController">
+    <children>
+        <Button fx:id="avantiMaestroButton" layoutX="469.0" layoutY="413.0" mnemonicParsing="false" onAction="#avantiMaestroAction" prefHeight="32.0" prefWidth="75.0" text="Avanti" />
+        <Button fx:id="indietroMaestriButton" layoutX="143.0" layoutY="413.0" mnemonicParsing="false" onAction="#indietroMaestriAction" prefHeight="32.0" prefWidth="75.0" text="Indietro" />
+        <TextField fx:id="nomeMaesto" layoutX="101.0" layoutY="71.0" onAction="#nomeMaestroAction" promptText="Inserisci il  tuo Nome " />
+        <TextField fx:id="usernameMaestro" layoutX="101.0" layoutY="169.0" onAction="#usernameMaestroAction" promptText="Inserisci il tuo Username " />
+        <TextField fx:id="cognomeMaestro" layoutX="427.0" layoutY="71.0" onAction="#cognomeMaestroAction" promptText="Inserisci il tuo Cognome " />
+        <TextField fx:id="passwordMaestro" layoutX="427.0" layoutY="169.0" onAction="#PasswordMaestroAction" promptText="Inserisci  la tua Password " />
+        <DatePicker fx:id="dataNascitaMaestro" layoutX="257.0" layoutY="252.0" onAction="#dataNascitaMaestroAction" />
+        <Text layoutX="257.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci la tua data di nascita " wrappingWidth="185.5">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <ImageView fitHeight="124.0" fitWidth="141.0" layoutX="73.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@calcio.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="124.0" fitWidth="142.0" layoutX="497.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Tennis.png" />
+            </image>
+        </ImageView>
+        <Text layoutX="158.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="460.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="142.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="460.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+      <ChoiceBox fx:id="sportMaestro" layoutX="275.0" layoutY="351.0" prefWidth="150.0" />
+    </children>
+</AnchorPane>
