@@ -51,9 +51,12 @@ public class LoginController extends DataInitializable<User> implements Initiali
     public void accediAction(ActionEvent event) throws ViewException {
         try {
             User user = userDao.authenticate(username.getText(), password.getText());
-            dispatcher.homeView(user);
+            System.out.println(user.toString());
+            if(user != null){
+                dispatcher.homeView(user);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             errorLabel.setText("Username o password errati!");
         }
     }

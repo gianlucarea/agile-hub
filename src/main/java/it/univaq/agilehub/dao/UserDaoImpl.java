@@ -115,7 +115,7 @@ public class UserDaoImpl implements UserDao{
         password = encoder.encodeToString(password.getBytes());
         Connection connection = DaoFactory.getConnection();
         String sql = "select id,name,surname,password,username,age, dateOfBirth, type FROM Users WHERE username =? AND password = ?;";
-        User user = new User();
+        User user = null;
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(sql);
@@ -124,14 +124,14 @@ public class UserDaoImpl implements UserDao{
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
-                user.setId(rs.getInt("id"));
-                user.setUsername(username);
-                user.setPassword( new String(decoder.decode(password.getBytes())));
-                user.setName(rs.getString("name"));
-                user.setSurname(rs.getString("surname"));
-                user.setAge(rs.getInt("age"));
-                user.setDateOfBirth(rs.getString("dateOfBirth"));
+                int id = rs.getInt("id") ;
+                String passwordDecr = new String(decoder.decode(password.getBytes()));
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                int age = rs.getInt("age");
+                String dateOfBirth = rs.getString("dateOfBirth");
+                Type type = Type.valueOf(rs.getString("type"));
+                user = new User(id,name,surname,passwordDecr,username,dateOfBirth,age,type);
             }
         }catch(SQLException e){
             throw new RuntimeException(e);

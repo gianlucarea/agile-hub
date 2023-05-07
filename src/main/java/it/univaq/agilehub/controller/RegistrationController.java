@@ -1,6 +1,6 @@
 package it.univaq.agilehub.controller;
 
-import it.univaq.agilehub.dao.DaoFactory;
+
 import it.univaq.agilehub.dao.UserDao;
 import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Type;
@@ -19,8 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RegistrationController extends DataInitializable<User> implements Initializable {
-
-    ViewDispatcher dispatcher = ViewDispatcher.getInstance();
 
     @FXML
     private Button avantiButton;

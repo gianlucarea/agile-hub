@@ -157,9 +157,8 @@ public class User {
      *   yyyy-mm-dd TO dd/mm/yyyy
      */
     public static String dateOfBirthConverter(String paramFromFX){
-        String dateOfBirth = new String();
-        String dateToSplit =paramFromFX ;
-        String[] arrOfSplit = dateToSplit.split("-");
+        String dateOfBirth = "";
+        String[] arrOfSplit = paramFromFX.split("-");
         for (int i = arrOfSplit.length - 1 ; i > -1; i--){
             dateOfBirth += arrOfSplit[i] + "/";
         }
