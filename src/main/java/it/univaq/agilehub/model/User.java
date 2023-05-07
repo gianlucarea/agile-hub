@@ -43,6 +43,22 @@ public class User {
         this.type = type;
     }
 
+    /**
+     * Constructor that includes age calculation
+     */
+    public User( String name, String surname, String password, String username, String dateOfBirth, Type type) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.username = username;
+        this.dateOfBirth = dateOfBirth;
+        try {
+            this.age = this.ageCalculator(dateOfBirth);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.type = type;
+    }
     public int getId() {
         return id;
     }
