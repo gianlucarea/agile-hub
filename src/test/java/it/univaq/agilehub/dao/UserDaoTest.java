@@ -5,6 +5,8 @@ import it.univaq.agilehub.model.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserDaoTest {
 
     private static final DaoFactory daoFactory = new DaoFactory();
@@ -20,7 +22,7 @@ public class UserDaoTest {
     Connection connection;
 
     @BeforeAll
-    void setUp() throws SQLException {
+     void setUp() throws SQLException {
         daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
         daoFactory.setUser("root");
         daoFactory.setPassword("password");
@@ -46,6 +48,12 @@ public class UserDaoTest {
         userDao.registration(user);
         User userFromDb = userDao.getUserByUsername("GR");
         assertEquals("TGFtaWFQYXNzd29yZCE=",userFromDb.getPassword());
+    }
+
+    @Test
+    void testGetUserUsername()  {
+        User user = userDao.getUserByUsername("GR");
+        assertEquals("Gianluca Rossi", user.getName() + " " + user.getSurname());
     }
 
 
