@@ -42,7 +42,7 @@ public class ViewDispatcher {
 
 
     public  void iscrivitiView() throws ViewException{
-        AnchorPane iscrivitiView = (AnchorPane) loadView("iscriviti").getView();
+        AnchorPane iscrivitiView = (AnchorPane) loadView("registration").getView();
         Scene scene = new Scene(iscrivitiView);
         stage.setScene(scene);
     }
@@ -60,7 +60,7 @@ public class ViewDispatcher {
 
     }
 
-    private <T> View<T> loadView(String viewName) throws ViewException {
+    public <T> View<T> loadView(String viewName) throws ViewException {
         System.out.println(getClass());
         System.out.println(RESOURCE_BASE + viewName + FXML_SUFFIX);
 
