@@ -47,7 +47,7 @@ class UserTest {
 
     @Test
     void dateConverterWrong() {
-        String date = "1897-09-26";
+        String date = "1997-09-26";
         assertNotEquals("1997/09/26", User.dateOfBirthConverter(date));
     }
 }

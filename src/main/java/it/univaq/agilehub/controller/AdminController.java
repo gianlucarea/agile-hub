@@ -1,6 +1,12 @@
 package it.univaq.agilehub.controller;
 
+import it.univaq.agilehub.dao.UserDao;
+import it.univaq.agilehub.dao.UserDaoImpl;
+import it.univaq.agilehub.model.Sport;
+import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.view.ViewDispatcher;
+import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,16 +30,13 @@ public class AdminController extends DataInitializable<User> implements Initiali
     private DatePicker dataNascitaMaestro;
 
     @FXML
-    private Button indietroMaestriButton;
-
-    @FXML
     private TextField nomeMaesto;
 
     @FXML
     private TextField passwordMaestro;
 
     @FXML
-    private ChoiceBox<?> sportMaestro;
+    private ChoiceBox<String> sportMaestro;
 
     @FXML
     private TextField usernameMaestro;
@@ -45,7 +48,18 @@ public class AdminController extends DataInitializable<User> implements Initiali
 
     @FXML
     void avantiMaestroAction(ActionEvent event) {
-
+        User user = null;
+        String dateOfBirth =  User.dateOfBirthConverter(dataNascitaMaestro.getValue().toString());
+        String sport = avantiMaestroButton.getText();
+        user = new User(nomeMaesto.getText(), cognomeMaestro.getText(), passwordMaestro.getText(),usernameMaestro.getText(), dateOfBirth ,Type.MAESTRO, Sport.valueOf(sport));
+        UserDao userDao = new UserDaoImpl();
+        userDao.registration(user);
+        ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+        try {
+            dispatcher.logout();
+        } catch (ViewException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -55,11 +69,6 @@ public class AdminController extends DataInitializable<User> implements Initiali
 
     @FXML
     void dataNascitaMaestroAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void indietroMaestriAction(ActionEvent event) {
 
     }
 
@@ -79,5 +88,7 @@ public class AdminController extends DataInitializable<User> implements Initiali
                 .bind(usernameMaestro.textProperty().isEmpty().or(passwordMaestro.textProperty().isEmpty())
                         .or(dataNascitaMaestro.valueProperty().isNull())
                         .or(nomeMaesto.textProperty().isEmpty()).or(cognomeMaestro.textProperty().isEmpty()));
+
+        sportMaestro.getItems().addAll(Sport.values().toString());
     }
 }

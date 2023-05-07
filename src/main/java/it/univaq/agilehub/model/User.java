@@ -44,7 +44,7 @@ public class User {
     }
 
     /**
-     * Constructor For Admin
+     * Constructor For Admin Master Registration
      */
     public User(String name, String surname, String password, String username, String dateOfBirth, Type type, Sport sport) {
         this.name = name;
