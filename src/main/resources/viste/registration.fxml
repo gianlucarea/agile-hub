@@ -35,11 +35,6 @@
             <Image url="@../../../../../../../Downloads/player_padel_sport_ball_icon_141874.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="98.0" fitWidth="113.0" layoutX="288.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../Downloads/Diagramma%20senza%20titolo.drawio.png" />
-         </image>
-      </ImageView>
       <Text layoutX="158.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
          <font>
             <Font size="18.0" />

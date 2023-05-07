@@ -20,8 +20,8 @@ public class HelloApplication extends Application {
         Connection connection = DaoFactory.getConnection();
 
         UserDao userDao = new UserDaoImpl();
-        User user1 =  userDao.getUserById(1);
-        User user2 =  userDao.getUserById(2);
+        User user1 =  userDao.getUserByUsername("aldino");
+        User user2 =  userDao.getUserByUsername("falone");
 
         System.out.println(user1.toString());
         System.out.println(user2.toString());

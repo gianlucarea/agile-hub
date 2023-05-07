@@ -59,6 +59,13 @@ public class LoginController extends DataInitializable<User> implements Initiali
     }
 
     public void iscrivitiAction() {
+        ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+        try {
+            dispatcher.iscrivitiView();
+        } catch (ViewException e) {
+            throw new RuntimeException(e);
+        }
 
     }
+
 }

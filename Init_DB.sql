@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS agile_hub_test;
-CREATE DATABASE agile_hub_test;
-USE agile_hub_test;
+DROP DATABASE IF EXISTS agile_hub_production;
+CREATE DATABASE agile_hub_production;
+USE agile_hub_production;
 
 CREATE TABLE `Users`  (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -15,7 +15,8 @@ CREATE TABLE `Users`  (
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `agile_hub_test`.`Users`
+
+INSERT INTO `agile_hub_production`.`Users`
 (
 `name`,
 `surname`,
@@ -31,3 +32,20 @@ VALUES
 'aldino',
 25,
 'NORMALE');
+
+INSERT INTO `agile_hub_production`.`Users`
+(
+`name`,
+`surname`,
+`password`,
+`username`,
+`age`,
+`type`)
+VALUES
+(
+'Francesco',
+'Falone',
+'cGFzc3dvcmQx',
+'falone',
+25,
+'SOCIO');

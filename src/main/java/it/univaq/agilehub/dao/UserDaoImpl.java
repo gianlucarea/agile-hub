@@ -13,6 +13,7 @@ import java.util.Base64.*;
 
 public class UserDaoImpl implements UserDao{
     Encoder encoder = Base64.getEncoder();
+    Decoder decoder = Base64.getDecoder();
     private static final String insertUser ="insert into agilehub.user value (?)";
 
     @Override
@@ -24,7 +25,7 @@ public class UserDaoImpl implements UserDao{
             pst = connection.prepareStatement(sql);
             pst.setString(1, user.getName());
             pst.setString(2, user.getSurname());
-            pst.setString(3,encoder.encodeToString(user.getPassword().getBytes()));
+            pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
             pst.setString(4, user.getUsername());
             pst.setInt(5,user.getAge());
             pst.setString(6,user.getType().toString());
@@ -108,9 +109,10 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public User authenticate(String username, String password)  {
+        password = encoder.encodeToString(password.getBytes());
 
         Connection connection = DaoFactory.getConnection();
-        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE username =? AND password =?;";
+        String sql = "select id,name,surname,password,username,age,type FROM Users WHERE username =? AND password = ?;";
         User user = new User();
         PreparedStatement ps = null;
         try {
@@ -123,7 +125,7 @@ public class UserDaoImpl implements UserDao{
 
                 user.setId(rs.getInt("id"));
                 user.setUsername(username);
-                user.setPassword(password);
+                user.setPassword( new String(decoder.decode(password.getBytes())));
                 user.setName(rs.getString("name"));
                 user.setSurname(rs.getString("surname"));
                 user.setAge(rs.getInt("age"));

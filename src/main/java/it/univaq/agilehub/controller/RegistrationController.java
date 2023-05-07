@@ -2,6 +2,7 @@ package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.view.ViewDispatcher;
+import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,7 +49,6 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @FXML
     void avantiAction(ActionEvent event) {
-
     }
 
     @FXML
@@ -63,7 +63,12 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @FXML
     void indietroAction(ActionEvent event) {
-
+        ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+        try {
+            dispatcher.logout();
+        } catch (ViewException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -83,6 +88,9 @@ public class RegistrationController extends DataInitializable<User> implements I
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        avantiButton.disableProperty()
+                .bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty())
+                        .or(dataNascita.valueProperty().isNull())
+                        .or(nome.textProperty().isEmpty()).or(cognome.textProperty().isEmpty()));
     }
 }

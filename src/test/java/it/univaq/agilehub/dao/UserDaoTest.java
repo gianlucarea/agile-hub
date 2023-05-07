@@ -11,6 +11,8 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Base64;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -20,6 +22,8 @@ public class UserDaoTest {
     private static final DaoFactory daoFactory = new DaoFactory();
     private static final UserDao userDao = new UserDaoImpl();
     Connection connection;
+
+    Base64.Decoder decoder = Base64.getDecoder();
 
     @BeforeAll
      void setUp() throws SQLException {
@@ -46,8 +50,13 @@ public class UserDaoTest {
     void testRegistrationOfUser()  {
         User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR",30, Type.SOCIO);
         userDao.registration(user);
+
         User userFromDb = userDao.getUserByUsername("GR");
-        assertEquals("TGFtaWFQYXNzd29yZCE=",userFromDb.getPassword());
+
+        String decodedString = new String(decoder.decode(userFromDb.getPassword().getBytes()));
+        System.out.println(decodedString);
+
+        assertEquals("LamiaPassword!",decodedString);
     }
 
     @Test
