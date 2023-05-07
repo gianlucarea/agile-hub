@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml" fx:controller="it.univaq.agilehub.controller.LoginController">
+   <children>
+      <Label layoutX="456.0" layoutY="71.0" text="LOGIN" textFill="#041b01">
+         <font>
+            <Font name="System Bold Italic" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="399.0" layoutY="147.0" prefHeight="30.0" prefWidth="207.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="password" layoutX="399.0" layoutY="217.0" onAction="#accediAction" prefHeight="30.0" prefWidth="207.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="accediButton" layoutX="455.0" layoutY="265.0" mnemonicParsing="false" onAction="#accediAction" prefHeight="30.0" prefWidth="94.0" style="-fx-background-color: #041b01; -fx-background-radius: 30;" text="Accedi" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="399.0" layoutY="127.0" text="Username:" textFill="#67a45f">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="401.0" layoutY="197.0" text="Password:" textFill="#67a45f">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="372.0" layoutY="355.0" prefHeight="3.0" prefWidth="261.0" style="-fx-background-color: #67a45f; -fx-border-color: #67a45f;" />
+      <Button fx:id="iscrivitiButton" layoutX="421.0" layoutY="413.0" mnemonicParsing="false" onAction="#iscrivitiAction" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #041b01; -fx-background-radius: 30;" text="Iscriviti a AgileHub" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="439.0" layoutY="374.0" text="Non hai un account?" textFill="#67a45f">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabel" layoutX="408.0" layoutY="36.0" textFill="#c70000">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="272.0" fitWidth="300.0" layoutX="39.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

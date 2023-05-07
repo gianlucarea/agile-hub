@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="985.0" style="-fx-background-color: #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.WelcomeController">
+   <children>
+      <ImageView fx:id="image" fitHeight="289.0" fitWidth="288.0" layoutX="349.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="Lbenvenuto" layoutX="371.0" layoutY="359.0" prefHeight="36.0" prefWidth="288.0" textAlignment="CENTER" textFill="#67a45f">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
