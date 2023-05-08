@@ -1,5 +1,6 @@
 package it.univaq.agilehub.dao;
 
+import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
 import org.junit.jupiter.api.BeforeAll;
@@ -46,7 +47,7 @@ public class UserDaoTest {
 
     @Test
     void testRegistrationOfUser()  {
-        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR","dateOfBirth", 30, Type.SOCIO);
+        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR","26/09/1997", 25, Type.SOCIO);
         userDao.registration(user);
 
         User userFromDb = userDao.getUserByUsername("GR");
@@ -56,6 +57,18 @@ public class UserDaoTest {
 
         assertEquals("LamiaPassword!",decodedString);
     }
+
+    @Test
+    void testRegistrationOfMaestro()  {
+        User user = new User("Matteo", "Rossi", "LamiaPassword!","Maestro","26/09/1992", Type.MAESTRO, Sport.CALCETTO);
+        userDao.registrationAdmin(user);
+
+        User userFromDb = userDao.getUserByUsername("Maestro");
+
+
+        assertEquals("Matteo Rossi", userFromDb.getName() + " " + userFromDb.getSurname());
+    }
+
 
     @Test
     void testGetUserUsername()  {
