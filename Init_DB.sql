@@ -11,6 +11,7 @@ CREATE TABLE `Users`  (
   `dateOfBirth` varchar(45) NOT NULL,
   `age` int NOT NULL,
   `type` enum('NORMALE','ADMIN','SOCIO','SOCIO_PLUS','MAESTRO') NOT NULL,
+  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_user_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
@@ -44,7 +45,8 @@ INSERT INTO `agile_hub_production`.`Users`
 `username`,
 `dateOfBirth`,
 `age`,
-`type`)
+`type`,
+`sport`)
 VALUES
 (
 'Francesco',
@@ -53,4 +55,5 @@ VALUES
 'falone',
 '26/09/1997',
 25,
-'SOCIO');
+'ADMIN',
+'PADEL');

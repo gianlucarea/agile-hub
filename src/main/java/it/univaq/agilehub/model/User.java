@@ -18,7 +18,7 @@ public class User {
     private String dateOfBirth;
     private int age;
     private Type type;
-
+    private Sport sport;
     public User() {
     }
 
@@ -41,6 +41,24 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.age = age;
         this.type = type;
+    }
+
+    /**
+     * Constructor For Admin Master Registration
+     */
+    public User(String name, String surname, String password, String username, String dateOfBirth, Type type, Sport sport) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.username = username;
+        this.dateOfBirth = dateOfBirth;
+        try {
+            this.age = this.ageCalculator(dateOfBirth);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.type = type;
+        this.sport = sport;
     }
 
     /**
@@ -118,6 +136,14 @@ public class User {
     public String getDateOfBirth() {return dateOfBirth;}
 
     public void setDateOfBirth(String dateOfBirth){this.dateOfBirth = dateOfBirth; }
+
+    public Sport getSport() {
+        return sport;
+    }
+
+    public void setSport(Sport sport) {
+        this.sport = sport;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -165,6 +191,7 @@ public class User {
         dateOfBirth = (dateOfBirth.substring(0, dateOfBirth.length() - 1));
         return dateOfBirth;
     }
+
 
 
 }

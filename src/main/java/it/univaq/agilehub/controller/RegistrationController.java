@@ -1,6 +1,5 @@
 package it.univaq.agilehub.controller;
 
-
 import it.univaq.agilehub.dao.UserDao;
 import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Type;

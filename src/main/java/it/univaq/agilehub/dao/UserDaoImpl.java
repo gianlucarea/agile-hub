@@ -49,6 +49,39 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
+    public boolean registrationAdmin(User user) {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "INSERT INTO Users (name,surname,password,username,dateOfBirth,age,type,sport) VALUES (?,?,?,?,?,?,?,?)";
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, user.getName());
+            pst.setString(2, user.getSurname());
+            pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
+            pst.setString(4, user.getUsername());
+            pst.setString(5, user.getDateOfBirth());
+            pst.setInt(6,user.getAge());
+            pst.setString(7,user.getType().toString());
+            pst.setString(8,user.getSport().toString());
+            int i = pst.executeUpdate();
+            if (i==1) {
+                return true;}
+            else return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
+
+    @Override
     public User getUserById(int id) throws SQLException {
         Connection connection = DaoFactory.getConnection();
         User user = null;
