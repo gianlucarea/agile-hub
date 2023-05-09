@@ -55,6 +55,6 @@
             </font>
         </Text>
       <ChoiceBox fx:id="sportMaestro" layoutX="270.0" layoutY="325.0" prefWidth="150.0" />
-      <Label fx:id="confermaRegistrazioneMaestro" alignment="TOP_CENTER" layoutX="282.0" layoutY="448.0" prefHeight="17.0" prefWidth="125.0" textAlignment="CENTER" />
+      <Label fx:id="confermaRegistrazioneMaestro" alignment="TOP_CENTER" layoutX="282.0" layoutY="448.0" textAlignment="CENTER" />
     </children>
 </AnchorPane>
