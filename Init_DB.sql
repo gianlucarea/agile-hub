@@ -17,6 +17,15 @@ CREATE TABLE `Users`  (
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `Booking`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dateBooking` varchar(45) NOT NULL,
+  `numberPlayers` int NOT NULL,
+  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') ,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_user_UNIQUE` (`id`)
+  
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `agile_hub_production`.`Users`
 (
@@ -57,3 +66,4 @@ VALUES
 25,
 'ADMIN',
 'PADEL');
+
