@@ -6,5 +6,7 @@ public enum Sport {
     PALLAVOLO,
     NUOTO,
     TENNIS,
-    PADEL
+    PADEL,
+
+    BASKET
 }
