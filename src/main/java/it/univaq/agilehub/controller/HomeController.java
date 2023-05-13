@@ -37,11 +37,8 @@ public class HomeController  extends DataInitializable<User> implements Initiali
     private User user;
 
 
-<<<<<<< Updated upstream
-    private static final MenuElement[] menuUser = {new MenuElement("Prenota Campo", "prenotazioni")};
-=======
-    private static final MenuElement[] menuUser = {new MenuElement("Prenotazione", "prenotazione")};
->>>>>>> Stashed changes
+    private static final MenuElement[] menuUser = {new MenuElement("Prenota Campo", "prenotazione")};
+
     private static final MenuElement[] menuAdmin= {new MenuElement("Maestri", "registraMaestri")};
     @Override
     public void initialize(URL location, ResourceBundle resources) {

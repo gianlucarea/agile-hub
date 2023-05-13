@@ -45,6 +45,9 @@ public class PrenotazioneController extends DataInitializable<User> implements I
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        prenota.disableProperty()
+                        .bind(data.valueProperty().isNull());
+
         for (Sport sport : Sport.values()) {
             campo.getItems().add(sport.name());
 

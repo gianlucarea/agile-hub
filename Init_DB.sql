@@ -11,7 +11,7 @@ CREATE TABLE `Users`  (
   `dateOfBirth` varchar(45) NOT NULL,
   `age` int NOT NULL,
   `type` enum('NORMALE','ADMIN','SOCIO','SOCIO_PLUS','MAESTRO') NOT NULL,
-  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') ,
+  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL','BASKET') ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_user_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
@@ -21,7 +21,7 @@ CREATE TABLE `Booking`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `dateBooking` varchar(45) NOT NULL,
   `numberPlayers` int NOT NULL,
-  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') ,
+  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL','BASKET') ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_user_UNIQUE` (`id`)
   
