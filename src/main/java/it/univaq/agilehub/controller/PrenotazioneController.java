@@ -1,7 +1,8 @@
 package it.univaq.agilehub.controller;
 
+import it.univaq.agilehub.model.Booking;
 import it.univaq.agilehub.model.Sport;
-import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +14,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PrenotazioneController extends DataInitializable<User> implements Initializable {
+public class PrenotazioneController extends DataInitializable<Booking> implements Initializable {
 
     @FXML
     private ChoiceBox<String> campo;
@@ -38,7 +39,7 @@ public class PrenotazioneController extends DataInitializable<User> implements I
     }
 
     @FXML
-    void prenotaAction(ActionEvent event) {
+    void prenotaAction(ActionEvent event)  throws ViewException  {
 
     }
 
@@ -46,7 +47,7 @@ public class PrenotazioneController extends DataInitializable<User> implements I
     public void initialize(URL location, ResourceBundle resources) {
 
         prenota.disableProperty()
-                        .bind(data.valueProperty().isNull());
+                        .bind(data.valueProperty().isNull().or(numeroPartecipanti.textProperty().isEmpty())); ;
 
         for (Sport sport : Sport.values()) {
             campo.getItems().add(sport.name());
