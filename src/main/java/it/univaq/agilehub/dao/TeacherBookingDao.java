@@ -1,0 +1,13 @@
+package it.univaq.agilehub.dao;
+
+import it.univaq.agilehub.model.TeacherBooking;
+
+import java.sql.SQLException;
+
+public interface TeacherBookingDao {
+
+     TeacherBooking getTeacherBookingById(int id) throws SQLException;
+
+     boolean insertTeacherBooking(TeacherBooking teacherBooking) throws SQLException;
+
+}
