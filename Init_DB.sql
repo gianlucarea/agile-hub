@@ -67,3 +67,14 @@ VALUES
 'ADMIN',
 'PADEL');
 
+INSERT INTO `agile_hub_production`.`Booking`
+(
+ `dateBooking`,
+`numberPlayers`,
+`sport`)
+VALUES
+(
+'26/05/2023',
+ 10,
+'CALCETTO');
+

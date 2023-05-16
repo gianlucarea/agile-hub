@@ -21,6 +21,10 @@ public class Booking {
         this.sport = sport;
     }
 
+    public Booking() {
+
+    }
+
     public int getId() {
         return id;
     }
