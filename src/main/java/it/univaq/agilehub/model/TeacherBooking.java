@@ -67,20 +67,20 @@ public class TeacherBooking {
     public String toString() {
         return "TeacherBooking{" +
                 "id=" + id +
-                ", user_id=" + userId +
-                ", numberOfPeople=" + teacherId +
-                ", dateOfBirth='" + dayOfBooking + '\'' +
+                ", userId=" + userId +
+                ", teacherId=" + teacherId +
+                ", dayOfBooking='" + dayOfBooking + '\'' +
                 ", sport=" + sport +
                 '}';
     }
 
-    public static String dateOfBirthConverter(String paramFromFX){
-        String dateOfBirth = "";
+    public static String dayOfBookingConverter(String paramFromFX){
+        String dayOfBooking = "";
         String[] arrOfSplit = paramFromFX.split("-");
         for (int i = arrOfSplit.length - 1 ; i > -1; i--){
-            dateOfBirth += arrOfSplit[i] + "/";
+            dayOfBooking += arrOfSplit[i] + "/";
         }
-        dateOfBirth = (dateOfBirth.substring(0, dateOfBirth.length() - 1));
-        return dateOfBirth;
+        dayOfBooking = (dayOfBooking.substring(0, dayOfBooking.length() - 1));
+        return dayOfBooking;
     }
 }

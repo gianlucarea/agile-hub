@@ -43,7 +43,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
     @FXML
     void prenotaMaestroAction(ActionEvent event) {
 
-        String dayOfBooking =  TeacherBooking.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
+        String dayOfBooking =  TeacherBooking.dayOfBookingConverter(dataPrenotazioneMaestro.getValue().toString());
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
 
         TeacherBooking teacherBooking = new TeacherBooking(1,teacher_id,dayOfBooking,sport);
