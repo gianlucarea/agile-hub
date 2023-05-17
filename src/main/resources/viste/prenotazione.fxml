@@ -56,5 +56,10 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <Label layoutX="638.0" layoutY="327.0" text="Calcetto: 10&#10;Basket: 10&#10;Pallavolo: 12&#10;padel: 4&#10;Tennis: 2">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
