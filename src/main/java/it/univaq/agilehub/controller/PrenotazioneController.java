@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class PrenotazioneController extends DataInitializable<User> implements Initializable {
     private BookingDao bookingService = new BookingDaoImpl();
-
+    private User userLogged;
     @FXML
     Label bookingLabel = new Label();
     @FXML
@@ -36,6 +36,12 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
     @FXML
     private Button prenota;
+
+    @Override
+    public void initializeData(User user) throws ViewException {
+        super.initializeData(user);
+        this.userLogged = user;
+    }
 
     @FXML
     void dataAction(ActionEvent event) {
@@ -55,13 +61,17 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
 
 
+
     @FXML
     void prenotaAction(ActionEvent event)  throws ViewException  {
+
         LocalDate currentDate = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         currentDate.get(weekFields.weekOfWeekBasedYear());
 
         Booking booking = new Booking();
+        booking.setUserId(userLogged.getId());
+
         String sport = campo.getValue();
 
         booking.setDateBooking(LocalDate.parse(data.getValue().toString()));
