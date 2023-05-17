@@ -18,7 +18,7 @@
             <Image url="@calcio.png" />
          </image>
       </ImageView>
-      <DatePicker fx:id="data" layoutX="219.0" layoutY="224.0" onAction="#dataAction" />
+      <DatePicker fx:id="data" layoutX="219.0" layoutY="224.0" onAction="#dataAction" showWeekNumbers="true" />
       <ChoiceBox fx:id="campo" layoutX="599.0" layoutY="224.0" prefWidth="150.0" />
       <Button fx:id="prenota" layoutX="474.0" layoutY="436.0" mnemonicParsing="false" onAction="#prenotaAction" text="Prenota">
          <font>
@@ -47,6 +47,11 @@
       </Label>
       <TextField fx:id="numeroPartecipanti" layoutX="489.0" layoutY="369.0" onAction="#numeroPartecipantiAction" prefHeight="26.0" prefWidth="39.0" />
       <Label fx:id="bookingLabel" layoutX="650.0" layoutY="436.0" textFill="#262424">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabel" layoutX="650.0" layoutY="436.0" textFill="#c70000">
          <font>
             <Font size="15.0" />
          </font>

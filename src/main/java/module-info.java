@@ -3,6 +3,7 @@ module it.univaq.agilehub {
     requires javafx.fxml;
     requires java.sql;
     requires mysql.connector.j;
+    requires java.desktop;
 
 
     opens it.univaq.agilehub to javafx.fxml;

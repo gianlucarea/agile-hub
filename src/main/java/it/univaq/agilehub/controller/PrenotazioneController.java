@@ -2,6 +2,7 @@ package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.dao.BookingDao;
 import it.univaq.agilehub.dao.BookingDaoImpl;
+import it.univaq.agilehub.dao.DaoException;
 import it.univaq.agilehub.model.Booking;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.User;
@@ -13,6 +14,8 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class PrenotazioneController extends DataInitializable<User> implements Initializable {
@@ -20,6 +23,8 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
     @FXML
     Label bookingLabel = new Label();
+    @FXML
+    Label errorLabel = new Label();
     @FXML
     private ChoiceBox<String> campo;
 
@@ -42,21 +47,43 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
     }
 
+    private int getCurrentWeek() {
+        LocalDate date = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return date.get(weekFields.weekOfWeekBasedYear());
+    }
+
 
 
     @FXML
     void prenotaAction(ActionEvent event)  throws ViewException  {
+        LocalDate currentDate = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        currentDate.get(weekFields.weekOfWeekBasedYear());
+
         Booking booking = new Booking();
         String sport = campo.getValue();
+
         booking.setDateBooking(LocalDate.parse(data.getValue().toString()));
         booking.setNumberPlayers(Integer.parseInt(numeroPartecipanti.getText()));
         booking.setSport(Sport.valueOf(sport));
-        bookingService.createBooking(booking);
-        bookingLabel.setText("Prenotazione efettuata!");
+        try{
+
+            if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) ==(currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate)){
+
+                    bookingService.createBooking(booking);
+                    bookingLabel.setText("Prenotazione efettuata!");
+            }
+            }catch(Exception e){
+                    e.printStackTrace();
+                    System.out.println("ciao");
+
+
+                }
+        }
 
 
 
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
