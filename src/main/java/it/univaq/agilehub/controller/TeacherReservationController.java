@@ -7,6 +7,7 @@ import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TeacherBooking;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.view.ViewException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -39,17 +40,22 @@ public class TeacherReservationController extends DataInitializable<User> implem
     private ArrayList<User> teacherList;
 
     private int teacher_id;
+    private User userLogged;
+    @Override
+    public void initializeData(User user) throws ViewException {
+        super.initializeData(user);
+        this.userLogged = user;
+    }
 
     @FXML
     void prenotaMaestroAction(ActionEvent event) {
-
         String dayOfBooking =  TeacherBooking.dayOfBookingConverter(dataPrenotazioneMaestro.getValue().toString());
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
-
-        TeacherBooking teacherBooking = new TeacherBooking(1,teacher_id,dayOfBooking,sport);
+        TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id, dayOfBooking, sport);
         TeacherBookingDao teacherBookingDao = new TeacherBookingDaoImpl();
         try {
             teacherBookingDao.insertTeacherBooking(teacherBooking);
+            confermaPrenotazioneMaestro.setText("Prenotazione Effettuata");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +64,6 @@ public class TeacherReservationController extends DataInitializable<User> implem
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherList = new ArrayList<User>();
-
         prenotaMaestroButton.disableProperty()
                 .bind(dataPrenotazioneMaestro.valueProperty().isNull());
 
