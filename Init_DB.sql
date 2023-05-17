@@ -22,7 +22,7 @@ CREATE TABLE `Booking`  (
   `user_id` INT NOT NULL,
   `dateBooking` varchar(45) NOT NULL,
   `numberPlayers` int NOT NULL,
-  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL','BASKET') ,
+  `sport` enum('CALCETTO','PALLAVOLO','TENNIS','PADEL','BASKET') ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_booking_UNIQUE` (`id`),
   INDEX par_ind (user_id),

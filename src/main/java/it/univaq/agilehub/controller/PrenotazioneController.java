@@ -18,6 +18,9 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static it.univaq.agilehub.model.Sport.*;
+import static it.univaq.agilehub.model.Type.NORMALE;
+
 public class PrenotazioneController extends DataInitializable<User> implements Initializable {
     private BookingDao bookingService = new BookingDaoImpl();
     private User userLogged;
@@ -64,6 +67,7 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
     @FXML
     void prenotaAction(ActionEvent event)  throws ViewException  {
+        int max = 0;
 
         LocalDate currentDate = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
@@ -76,21 +80,54 @@ public class PrenotazioneController extends DataInitializable<User> implements I
 
         booking.setDateBooking(LocalDate.parse(data.getValue().toString()));
         booking.setNumberPlayers(Integer.parseInt(numeroPartecipanti.getText()));
-        booking.setSport(Sport.valueOf(sport));
-        try{
+        booking.setSport(valueOf(sport));
 
-            if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) ==(currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate)){
+
+
+        if(booking.getSport()== CALCETTO){
+            max = 10;
+        }
+        if(booking.getSport()== PALLAVOLO){
+            max = 12;
+        }
+        if(booking.getSport()== TENNIS){
+            max = 2;
+        }
+        if(booking.getSport()== PADEL){
+            max = 4;
+        }
+        if(booking.getSport()== BASKET){
+            max = 10;
+        }
+
+
+
+
+
+
+
+        if(userLogged.getType() == NORMALE){
+           try{
+
+                if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) ==(currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) == max){
 
                     bookingService.createBooking(booking);
                     bookingLabel.setText("Prenotazione efettuata!");
-            }
-            }catch(Exception e){
-                    e.printStackTrace();
-                    System.out.println("ciao");
-
-
                 }
+            }catch(Exception e){
+               errorLabel.setText("Errore nella prenotazione");
+               System.out.println("ciao");
+
+
+            }
         }
+
+
+    }
+
+
+
+
 
 
 

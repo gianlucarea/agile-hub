@@ -4,7 +4,6 @@ public enum Sport {
 
     CALCETTO,
     PALLAVOLO,
-    NUOTO,
     TENNIS,
     PADEL,
     BASKET
