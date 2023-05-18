@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class User {
 
-    private int id;
+    private static int id;
     private String name;
     private String surname;
     private String password;
@@ -77,7 +77,7 @@ public class User {
         }
         this.type = type;
     }
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
