@@ -77,7 +77,14 @@ public class User {
         }
         this.type = type;
     }
-    public static int getId() {
+
+    public User(int id, String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public int getId() {
         return id;
     }
 
