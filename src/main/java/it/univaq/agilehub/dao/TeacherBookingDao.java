@@ -13,4 +13,8 @@ public interface TeacherBookingDao {
 
      List<TeacherBooking> getAllTeacherBookingsForMaestro(int user_id) throws SQLException;
 
+     boolean doesTeacherBookingAlreadyExist(TeacherBooking teacherBooking) throws SQLException;
+
+     boolean isTeacearBookingFull(int teacher_id, String bookingDate) throws SQLException;
+
 }

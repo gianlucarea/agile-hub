@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -40,6 +41,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
     private ArrayList<User> teacherList;
 
     private int teacher_id;
+
     private User userLogged;
     @Override
     public void initializeData(User user) throws ViewException {
@@ -51,11 +53,20 @@ public class TeacherReservationController extends DataInitializable<User> implem
     void prenotaMaestroAction(ActionEvent event) {
         String dayOfBooking =  TeacherBooking.dayOfBookingConverter(dataPrenotazioneMaestro.getValue().toString());
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
-        TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id, dayOfBooking, sport);
+
         TeacherBookingDao teacherBookingDao = new TeacherBookingDaoImpl();
         try {
-            teacherBookingDao.insertTeacherBooking(teacherBooking);
-            confermaPrenotazioneMaestro.setText("Prenotazione Effettuata");
+            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id,dayOfBooking,sport);
+            if (teacherBookingDao.doesTeacherBookingAlreadyExist(teacherBooking)) {
+                confermaPrenotazioneMaestro.setText("Prenotazione già effettuata\nScegli un altra data");
+            } else if (teacherBookingDao.isTeacearBookingFull(teacher_id, dayOfBooking)) {
+                confermaPrenotazioneMaestro.setText("Prenotazioni piene\nScegli un altra data");
+            } else {
+                teacherBookingDao.insertTeacherBooking(teacherBooking);
+                confermaPrenotazioneMaestro.setText("Prenotazione effettuata");
+                dataPrenotazioneMaestro.setValue(null);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,8 +75,11 @@ public class TeacherReservationController extends DataInitializable<User> implem
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherList = new ArrayList<User>();
+
         prenotaMaestroButton.disableProperty()
                 .bind(dataPrenotazioneMaestro.valueProperty().isNull());
+
+        dataPrenotazioneMaestro.disableProperty().bind(listaMaestri.getSelectionModel().selectedItemProperty().isNull());
 
         for (Sport sport : Sport.values()){
             selezioneSport.getItems().add(sport.name());
@@ -89,8 +103,13 @@ public class TeacherReservationController extends DataInitializable<User> implem
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 if (!teacherList.isEmpty() && (t1.intValue() != -1)) {
-                    //System.out.println(teacherList.get(t1.intValue()));
-                    //[TO DO] set calendar dates
+                    dataPrenotazioneMaestro.setDayCellFactory(datePicker -> new DateCell() {
+                        public void updateItem(LocalDate date, boolean empty) {
+                            super.updateItem(date, empty);
+                            LocalDate today = LocalDate.now();
+                            setDisable(empty || date.compareTo(today) < 0 || date.isAfter(today.plusWeeks(1)));
+                        }
+                    });
                 }
 
             }

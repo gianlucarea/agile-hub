@@ -83,4 +83,8 @@ public class TeacherBooking {
         dayOfBooking = (dayOfBooking.substring(0, dayOfBooking.length() - 1));
         return dayOfBooking;
     }
+
+    public boolean equals(TeacherBooking tb) {
+        return this.userId == tb.userId && this.teacherId == tb.teacherId && this.dayOfBooking.equals(tb.dayOfBooking) && this.sport == tb.sport;
+    }
 }

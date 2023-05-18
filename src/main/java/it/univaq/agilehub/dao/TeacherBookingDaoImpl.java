@@ -104,4 +104,75 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
         return listOfTeacherBooking;
     }
 
+    @Override
+    public boolean doesTeacherBookingAlreadyExist(TeacherBooking teacherBooking) throws SQLException {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "SELECT user_id, teacher_id, dayOfBooking, sport FROM Teacher_Booking WHERE user_id = ? AND teacher_id = ? AND dayOfBooking = ? AND sport = ?";
+
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, teacherBooking.getUserId());
+            pst.setInt(2, teacherBooking.getTeacherId());
+            pst.setString(3, teacherBooking.getDayOfBooking());
+            pst.setString(4,teacherBooking.getSport().toString());
+            ResultSet rs = pst.executeQuery();
+
+            TeacherBooking tb = new TeacherBooking();
+            if(rs.next()) {
+
+                tb.setTeacherId(rs.getInt("teacher_id"));
+                tb.setDayOfBooking(rs.getString("dayOfBooking"));
+                tb.setUserId(rs.getInt("user_id"));
+                tb.setSport(Enum.valueOf(Sport.class , rs.getString("sport")));
+            }
+
+            return teacherBooking.equals(tb);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
+
+    @Override
+    public boolean isTeacearBookingFull(int teacher_id, String bookingDate) throws SQLException {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "SELECT COUNT(id) FROM teacher_booking WHERE teacher_id = ? AND dayOfBooking = ?";
+
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, teacher_id);
+            pst.setString(2, bookingDate);
+            ResultSet rs = pst.executeQuery();
+
+            int result = 3;
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            return result >= 3;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
 }
