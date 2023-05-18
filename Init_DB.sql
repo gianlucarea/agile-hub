@@ -44,7 +44,7 @@ CREATE TABLE `Booking`  (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_booking_UNIQUE` (`id`),
   INDEX par_ind (user_id),
-  CONSTRAINT fk_user FOREIGN KEY (user_id)
+  CONSTRAINT fk_user_booking FOREIGN KEY (user_id)
   REFERENCES Users(id)
   ON DELETE CASCADE  
   ON UPDATE CASCADE
@@ -150,7 +150,7 @@ VALUES
 '22/01/1995',
 28,
 'MAESTRO',
-'NUOTO');
+'TENNIS');
 
 INSERT INTO `agile_hub_production`.`Teacher_Booking`
 (`user_id`,
@@ -159,10 +159,10 @@ INSERT INTO `agile_hub_production`.`Teacher_Booking`
 `sport`)
 VALUES
 (
-7,
-8,
+1,
+5,
 '30/05/2023',
-'Nuoto');
+'TENNIS');
 
 INSERT INTO `agile_hub_production`.`Teacher_Booking`
 (`user_id`,
@@ -171,10 +171,10 @@ INSERT INTO `agile_hub_production`.`Teacher_Booking`
 `sport`)
 VALUES
 (
-6,
-8,
+4,
+5,
 '25/05/2023',
-'Nuoto');
+'TENNIS');
 
 INSERT INTO `agile_hub_production`.`Booking`
 (

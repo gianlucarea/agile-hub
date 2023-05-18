@@ -19,16 +19,11 @@ public class WelcomeController extends DataInitializable<User> implements Initia
     ImageView image = new ImageView();
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-    }
-
+    public void initialize(URL location, ResourceBundle resources) {}
 
     public void initializeData(User user) {
         this.user = user;
-
         Lbenvenuto.setText("Benvenuto " + user.getName() + "!");
-
     }
+
 }

@@ -4,6 +4,7 @@ import it.univaq.agilehub.model.Booking;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,14 +25,12 @@ public class BookingDaoImpl implements BookingDao {
         try {
             pst = connection.prepareStatement(sql);
             pst.setInt(1,booking.getUserId());
-            pst.setString(2, booking.getDateBooking().toString());
+            pst.setString(2, Utility.dateOfBirthConverter(booking.getDateBooking().toString()));
             pst.setInt(3,booking.getNumberPlayers());
             pst.setString(4, booking.getSport().toString());
 
-
             int i = pst.executeUpdate();
-            if (i==1) {
-                return true;}
+            if (i==1) {return true;}
             else return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -61,16 +60,10 @@ public class BookingDaoImpl implements BookingDao {
             int user_id = rs.getInt("user_id");
            LocalDate dateBooking = LocalDate.parse(getString("dateBooking").toString());
             int numberPlayers = rs.getInt("numberPlayers");
-
             Sport sport = Enum.valueOf(Sport.class , rs.getString("sport")) ;
-            System.out.println(sport);
             booking = new Booking(booking_id,user_id,dateBooking,numberPlayers,sport );
         }
         return booking;
-
-
     }
-
-
 
 }

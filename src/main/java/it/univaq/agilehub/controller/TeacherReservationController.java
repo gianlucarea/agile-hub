@@ -7,6 +7,7 @@ import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TeacherBooking;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -43,6 +45,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
     private int teacher_id;
 
     private User userLogged;
+
     @Override
     public void initializeData(User user) throws ViewException {
         super.initializeData(user);
@@ -51,12 +54,14 @@ public class TeacherReservationController extends DataInitializable<User> implem
 
     @FXML
     void prenotaMaestroAction(ActionEvent event) {
-        String dayOfBooking =  TeacherBooking.dayOfBookingConverter(dataPrenotazioneMaestro.getValue().toString());
+        String dayOfBooking =  Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
+        System.out.println(dayOfBooking);
+        LocalDate dayOfBookingTolocalDate = LocalDate.parse(dayOfBooking, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
 
         TeacherBookingDao teacherBookingDao = new TeacherBookingDaoImpl();
         try {
-            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id,dayOfBooking,sport);
+            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id,dayOfBookingTolocalDate,sport);
             if (teacherBookingDao.doesTeacherBookingAlreadyExist(teacherBooking)) {
                 confermaPrenotazioneMaestro.setText("Prenotazione già effettuata\nScegli un altra data");
             } else if (teacherBookingDao.isTeacearBookingFull(teacher_id, dayOfBooking)) {
@@ -66,7 +71,6 @@ public class TeacherReservationController extends DataInitializable<User> implem
                 confermaPrenotazioneMaestro.setText("Prenotazione effettuata");
                 dataPrenotazioneMaestro.setValue(null);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +79,6 @@ public class TeacherReservationController extends DataInitializable<User> implem
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherList = new ArrayList<User>();
-
         prenotaMaestroButton.disableProperty()
                 .bind(dataPrenotazioneMaestro.valueProperty().isNull());
 

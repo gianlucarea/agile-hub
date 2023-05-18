@@ -17,10 +17,10 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import static it.univaq.agilehub.model.Type.ADMIN;
 
 public class HomeController  extends DataInitializable<User> implements Initializable {
+
     @FXML
     VBox menuBar  = new VBox();
 
@@ -29,6 +29,7 @@ public class HomeController  extends DataInitializable<User> implements Initiali
 
     @FXML
     Label profile = new Label();
+
     @FXML
     Label profileType = new Label();
 
@@ -36,13 +37,11 @@ public class HomeController  extends DataInitializable<User> implements Initiali
     private Stage stage = dispatcher.getStage();
     private User user;
 
-
-    private static final MenuElement[] menuUser = {new MenuElement("Prenota Campo", "prenotazioni"), new MenuElement("Lezioni", "prenotaMaestri")};
+    private static final MenuElement[] menuUser = {new MenuElement("Prenota Campo", "prenotazione"), new MenuElement("Lezioni", "prenotaMaestri")};
     private static final MenuElement[] menuAdmin= {new MenuElement("Maestri", "registraMaestri")};
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {}
 
     @Override
     public void initializeData(User user) throws ViewException {
@@ -54,27 +53,19 @@ public class HomeController  extends DataInitializable<User> implements Initiali
             menuBar.getChildren().add(new Separator());
             for(MenuElement element: menuAdmin) {
                 menuBar.getChildren().add(createButton(element.getButtonName(), element.getViewName()));
-
-        }
-
-
-
-    }
-        else{
+            }
+        } else{
             menuBar.getChildren().add(createButton("Home","welcome"));
             menuBar.getChildren().add(new Separator());
             for(MenuElement element: menuUser) {
                 menuBar.getChildren().add(createButton(element.getButtonName(), element.getViewName()));
-
             }
         }
+    }
 
-        }
     public void logoutAction() throws ViewException {
         dispatcher.logout();
     }
-
-
 
     private Button createButton(String name, String view) {
         Button button = new Button(name);
@@ -82,13 +73,9 @@ public class HomeController  extends DataInitializable<User> implements Initiali
         button.setTextFill(Paint.valueOf("White"));
         button.setPrefHeight(35);
         button.setPrefWidth(180);
-
         button.setOnAction((ActionEvent event) -> {
             dispatcher.renderView(view, user);
         });
-
-
         return button;
-
     }
 }

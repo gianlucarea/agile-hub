@@ -1,14 +1,16 @@
 package it.univaq.agilehub.model;
 
+import java.time.LocalDate;
+
 public class TeacherBooking {
     private int id, userId, teacherId;
-    private String dayOfBooking;
+    private LocalDate dayOfBooking;
     private Sport sport;
 
     public TeacherBooking() {
     }
 
-    public TeacherBooking(int id, int userId, int teacherId, String dayOfBooking, Sport sport) {
+    public TeacherBooking(int id, int userId, int teacherId, LocalDate dayOfBooking, Sport sport) {
         this.id = id;
         this.userId = userId;
         this.teacherId = teacherId;
@@ -16,7 +18,7 @@ public class TeacherBooking {
         this.sport = sport;
     }
 
-    public TeacherBooking(int userId, int teacherId, String dayOfBooking, Sport sport) {
+    public TeacherBooking(int userId, int teacherId, LocalDate dayOfBooking, Sport sport) {
         this.id = id;
         this.userId = userId;
         this.teacherId = teacherId;
@@ -47,11 +49,11 @@ public class TeacherBooking {
         this.teacherId = teacherId;
     }
 
-    public String getDayOfBooking() {
+    public LocalDate getDayOfBooking() {
         return dayOfBooking;
     }
 
-    public void setDayOfBooking(String dayOfBooking) {
+    public void setDayOfBooking(LocalDate dayOfBooking) {
         this.dayOfBooking = dayOfBooking;
     }
 

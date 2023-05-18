@@ -2,10 +2,10 @@ package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.dao.BookingDao;
 import it.univaq.agilehub.dao.BookingDaoImpl;
-import it.univaq.agilehub.dao.DaoException;
 import it.univaq.agilehub.model.Booking;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,13 +22,15 @@ import java.util.ResourceBundle;
 import static it.univaq.agilehub.model.Sport.*;
 import static it.univaq.agilehub.model.Type.NORMALE;
 
-public class PrenotazioneController extends DataInitializable<User> implements Initializable {
+public class BookingController extends DataInitializable<User> implements Initializable {
     private BookingDao bookingService = new BookingDaoImpl();
     private User userLogged;
     @FXML
     Label bookingLabel = new Label();
+
     @FXML
     Label errorLabel = new Label();
+
     @FXML
     private ChoiceBox<String> campo;
 
@@ -47,14 +50,10 @@ public class PrenotazioneController extends DataInitializable<User> implements I
     }
 
     @FXML
-    void dataAction(ActionEvent event) {
-
-    }
+    void dataAction(ActionEvent event) {}
 
     @FXML
-    void numeroPartecipantiAction(ActionEvent event) {
-
-    }
+    void numeroPartecipantiAction(ActionEvent event) {}
 
     private int getCurrentWeek() {
         LocalDate date = LocalDate.now();
@@ -62,63 +61,49 @@ public class PrenotazioneController extends DataInitializable<User> implements I
         return date.get(weekFields.weekOfWeekBasedYear());
     }
 
-
-
-
     @FXML
     void prenotaAction(ActionEvent event)  throws ViewException  {
         int max = 0;
-
         LocalDate currentDate = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         currentDate.get(weekFields.weekOfWeekBasedYear());
+        String sport = campo.getValue();
 
         Booking booking = new Booking();
         booking.setUserId(userLogged.getId());
-
-        String sport = campo.getValue();
-
-        booking.setDateBooking(LocalDate.parse(data.getValue().toString()));
+        booking.setDateBooking(LocalDate.parse(Utility.dateOfBirthConverter(data.getValue().toString()) , DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         booking.setNumberPlayers(Integer.parseInt(numeroPartecipanti.getText()));
         booking.setSport(valueOf(sport));
 
-
-
-        if(booking.getSport()== CALCETTO){
-            max = 10;
+        switch (booking.getSport()){
+            case CALCETTO:
+                max = 10;
+                break;
+            case PALLAVOLO:
+                max = 12;
+                break;
+            case TENNIS:
+                max = 2;
+                break;
+            case PADEL:
+                max = 4;
+                break;
+            case BASKET:
+                max = 10;
+                break;
+            default:
+                break;
         }
-        if(booking.getSport()== PALLAVOLO){
-            max = 12;
-        }
-        if(booking.getSport()== TENNIS){
-            max = 2;
-        }
-        if(booking.getSport()== PADEL){
-            max = 4;
-        }
-        if(booking.getSport()== BASKET){
-            max = 10;
-        }
-
-
-
-
-
-
 
         if(userLogged.getType() == NORMALE){
            try{
-
-                if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) ==(currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) == max){
-
+                if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) == (currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) <= max){
                     bookingService.createBooking(booking);
                     bookingLabel.setText("Prenotazione efettuata!");
                 }
             }catch(Exception e){
                errorLabel.setText("Errore nella prenotazione");
-               System.out.println("ciao");
-
-
+               e.printStackTrace();
             }
         }
 

@@ -1,28 +1,20 @@
 package it.univaq.agilehub.model;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 
 public class User {
 
-    private static int id;
-    private String name;
-    private String surname;
-    private String password;
-    private String username;
-
-    private String dateOfBirth;
-    private int age;
+    private int id, age;
+    private String name, surname, password, username;
+    private LocalDate dateOfBirth;
     private Type type;
     private Sport sport;
     public User() {
     }
 
-    public User(int id, String name, String surname, String password, String username, String dateOfBirth, int age, Type type) {
+    public User(int id, String name, String surname, String password, String username, LocalDate dateOfBirth, int age, Type type) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -33,7 +25,7 @@ public class User {
         this.type = type;
     }
 
-    public User( String name, String surname, String password, String username, String dateOfBirth, int age, Type type) {
+    public User( String name, String surname, String password, String username, LocalDate dateOfBirth, int age, Type type) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -46,7 +38,7 @@ public class User {
     /**
      * Constructor For Admin Master Registration
      */
-    public User(String name, String surname, String password, String username, String dateOfBirth, Type type, Sport sport) {
+    public User(String name, String surname, String password, String username, LocalDate dateOfBirth, Type type, Sport sport) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -64,7 +56,7 @@ public class User {
     /**
      * Constructor that includes age calculation
      */
-    public User( String name, String surname, String password, String username, String dateOfBirth, Type type) {
+    public User( String name, String surname, String password, String username, LocalDate dateOfBirth, Type type) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -140,9 +132,9 @@ public class User {
         this.username = username;
     }
 
-    public String getDateOfBirth() {return dateOfBirth;}
+    public LocalDate getDateOfBirth() {return dateOfBirth;}
 
-    public void setDateOfBirth(String dateOfBirth){this.dateOfBirth = dateOfBirth; }
+    public void setDateOfBirth(LocalDate dateOfBirth){this.dateOfBirth = dateOfBirth; }
 
     public Sport getSport() {
         return sport;
@@ -151,6 +143,7 @@ public class User {
     public void setSport(Sport sport) {
         this.sport = sport;
     }
+
     @Override
     public String toString() {
         return "User{" +
@@ -168,37 +161,10 @@ public class User {
         return name + " " + surname;
     }
 
-    public int ageCalculator(String bornDate) throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date d = sdf.parse(bornDate);
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-        int date = c.get(Calendar.DATE);
-
-        LocalDate l1 = LocalDate.of(year, month, date);
+    public int ageCalculator(LocalDate bornDate) throws ParseException {
+        LocalDate l1 = LocalDate.of(bornDate.getYear(),bornDate.getMonthValue(), bornDate.getDayOfMonth());
         LocalDate now1 = LocalDate.now();
         Period diff1 = Period.between(l1, now1);
-
         return diff1.getYears();
     }
-
-    /**
-     *   yyyy-mm-dd TO dd/mm/yyyy
-     */
-    public static String dateOfBirthConverter(String paramFromFX){
-        String dateOfBirth = "";
-        String[] arrOfSplit = paramFromFX.split("-");
-        for (int i = arrOfSplit.length - 1 ; i > -1; i--){
-            dateOfBirth += arrOfSplit[i] + "/";
-        }
-        dateOfBirth = (dateOfBirth.substring(0, dateOfBirth.length() - 1));
-        return dateOfBirth;
-    }
-
-
-
 }
