@@ -186,7 +186,7 @@ public class BookingController extends DataInitializable<User> implements Initia
         selezioneCampo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pitch>() {
             @Override
             public void changed(ObservableValue<? extends Pitch> observable, Pitch oldValue, Pitch newValue) {
-                if(data.getValue() != null){
+                if(data.getValue() != null && selezioneOrario.getValue() != null){
                     selezioneOrario.getItems().clear();
                     String converted = Utility.dateOfBirthConverter(data.getValue().toString());
                     try {
