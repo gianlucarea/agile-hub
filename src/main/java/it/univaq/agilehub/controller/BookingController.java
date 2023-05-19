@@ -1,29 +1,35 @@
 package it.univaq.agilehub.controller;
 
-import it.univaq.agilehub.dao.BookingDao;
-import it.univaq.agilehub.dao.BookingDaoImpl;
-import it.univaq.agilehub.model.Booking;
-import it.univaq.agilehub.model.Sport;
-import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.dao.*;
+import it.univaq.agilehub.model.*;
 import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static it.univaq.agilehub.model.Sport.*;
 import static it.univaq.agilehub.model.Type.NORMALE;
 
 public class BookingController extends DataInitializable<User> implements Initializable {
     private BookingDao bookingService = new BookingDaoImpl();
+    private PitchDao pitchService = new PitchDaoImpl();
+
+    private TimeSlotDao timeSlotService = new TimeSlotDaoImpl();
     private User userLogged;
     @FXML
     Label bookingLabel = new Label();
@@ -32,7 +38,13 @@ public class BookingController extends DataInitializable<User> implements Initia
     Label errorLabel = new Label();
 
     @FXML
-    private ChoiceBox<String> campo;
+    private ChoiceBox<String> selezioneTipologia;
+
+    @FXML
+    private ChoiceBox<Pitch> selezioneCampo;
+
+    @FXML
+    private ChoiceBox<TimeSlot> selezioneOrario;
 
     @FXML
     private DatePicker data;
@@ -50,7 +62,38 @@ public class BookingController extends DataInitializable<User> implements Initia
     }
 
     @FXML
-    void dataAction(ActionEvent event) {}
+    void dataAction(ActionEvent event) {
+        selezioneOrario.getItems().clear();
+        if(selezioneCampo.getValue() != null){
+            String converted = Utility.dateOfBirthConverter(data.getValue().toString());
+            try {
+                ArrayList<Integer> unavailableTS = timeSlotService.unavailableTimeSlotId(converted, selezioneCampo.getValue());
+                ArrayList<TimeSlot> allTimeSlot = timeSlotService.getAllTimeSlots();
+                if(unavailableTS.isEmpty()){
+                    for (TimeSlot t : allTimeSlot) {
+                        selezioneOrario.getItems().add(t);
+                    }
+                } else {
+                    // OVERHERE A BETTER METHOD BUT OK FOR NOW
+                    List<TimeSlot> found = new ArrayList<TimeSlot>();
+                    for(TimeSlot timeSlot : allTimeSlot){
+                        for(int i : unavailableTS){
+                            if(timeSlot.getId() == i){
+                                found.add(timeSlot);
+                            }
+                        }
+                    }
+                    allTimeSlot.removeAll(found);
+                    for (TimeSlot t : allTimeSlot) {
+                        selezioneOrario.getItems().add(t);
+                    }
+
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     @FXML
     void numeroPartecipantiAction(ActionEvent event) {}
@@ -61,13 +104,15 @@ public class BookingController extends DataInitializable<User> implements Initia
         return date.get(weekFields.weekOfWeekBasedYear());
     }
 
+
     @FXML
     void prenotaAction(ActionEvent event)  throws ViewException  {
+        errorLabel.setText("");
         int max = 0;
         LocalDate currentDate = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         currentDate.get(weekFields.weekOfWeekBasedYear());
-        String sport = campo.getValue();
+        String sport = selezioneTipologia.getValue();
 
         Booking booking = new Booking();
         booking.setUserId(userLogged.getId());
@@ -112,11 +157,6 @@ public class BookingController extends DataInitializable<User> implements Initia
 
 
 
-
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -124,8 +164,62 @@ public class BookingController extends DataInitializable<User> implements Initia
                         .bind(data.valueProperty().isNull().or(numeroPartecipanti.textProperty().isEmpty())); ;
 
         for (Sport sport : Sport.values()) {
-            campo.getItems().add(sport.name());
-
+            selezioneTipologia.getItems().add(sport.name());
         }
+
+        selezioneTipologia.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue observable, Number oldValue, Number newValue) {
+                        selezioneCampo.getItems().clear();
+                        ArrayList<Pitch> pitchList;
+                        try {
+                            pitchList = (ArrayList<Pitch>) pitchService.getPitchBySport(selezioneTipologia.getItems().get(newValue.intValue()));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        for(Pitch pitch : pitchList){
+                            selezioneCampo.getItems().add(pitch);
+                        }
+                    }
+                });
+
+        selezioneCampo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pitch>() {
+            @Override
+            public void changed(ObservableValue<? extends Pitch> observable, Pitch oldValue, Pitch newValue) {
+                if(data.getValue() != null){
+                    selezioneOrario.getItems().clear();
+                    String converted = Utility.dateOfBirthConverter(data.getValue().toString());
+                    try {
+                        ArrayList<Integer> unavailableTS = timeSlotService.unavailableTimeSlotId(converted, newValue);
+                        ArrayList<TimeSlot> allTimeSlot = timeSlotService.getAllTimeSlots();
+                        if(unavailableTS.isEmpty()){
+                            for (TimeSlot t : allTimeSlot) {
+                                selezioneOrario.getItems().add(t);
+                            }
+                        } else {
+                            // OVERHERE A BETTER METHOD BUT OK FOR NOW
+                            List<TimeSlot> found = new ArrayList<TimeSlot>();
+                            for(TimeSlot timeSlot : allTimeSlot){
+                                for(int i : unavailableTS){
+                                    if(timeSlot.getId() == i){
+                                        found.add(timeSlot);
+                                    }
+                                }
+                            }
+                            allTimeSlot.removeAll(found);
+                            for (TimeSlot t : allTimeSlot) {
+                                selezioneOrario.getItems().add(t);
+                            }
+
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    errorLabel.setText("Ricordati Di Inserire La Data");
+                }
+            }
+        });
+
     }
 }

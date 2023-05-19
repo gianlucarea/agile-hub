@@ -22,7 +22,7 @@ CREATE TABLE `Teacher_Booking`  (
   `user_id` int Not Null,
   `teacher_id` int Not Null,
   `dayOfBooking` varchar(45) NOT NULL,
-  `sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') ,
+  `sport` enum('CALCETTO','PALLAVOLO','TENNIS','PADEL','BASKET') ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_teacher_booking_UNIQUE` (`id`),
   INDEX par_ind (user_id),  
@@ -101,6 +101,10 @@ INSERT INTO `agile_hub_production`.`Teacher_Booking`(`user_id`,`teacher_id`,`day
 INSERT INTO `agile_hub_production`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (5,10,'30/05/2023','TENNIS');
 INSERT INTO `agile_hub_production`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (6,11,'30/05/2023','PADEL');
 
+INSERT INTO `agile_hub_production`.`Booking`(`user_id`,`dateBooking`,`numberPlayers`,`sport`) VALUES (3,'30/05/2023',10,'CALCETTO');
+INSERT INTO `agile_hub_production`.`Booking`(`user_id`,`dateBooking`,`numberPlayers`,`sport`) VALUES (4,'30/05/2023',10,'CALCETTO');
+INSERT INTO `agile_hub_production`.`Booking`(`user_id`,`dateBooking`,`numberPlayers`,`sport`) VALUES (5,'30/05/2023',10,'CALCETTO');
+
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('8:00 - 9:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('9:00 - 10:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('10:00 - 11:00');
@@ -115,3 +119,22 @@ INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('19:00 - 20:
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('20:00 - 21:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('21:00 - 22:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('22:00 - 23:00');
+
+INSERT INTO `agile_hub_production`.`Pitch`(`name`, `type`) VALUES ('Calcetto 1','CALCETTO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Calcetto 2','CALCETTO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Calcetto 3','CALCETTO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Pallavolo 1','PALLAVOLO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Pallavolo 2','PALLAVOLO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Pallavolo 3','PALLAVOLO');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Tennis 1','TENNIS');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Tennis 2','TENNIS');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Padel 1','PADEL');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Padel 2','PADEL');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Padel 3','PADEL');
+INSERT INTO `agile_hub_production`.`Pitch`(`name`,`type`) VALUES ('Basket 1','BASKET');
+
+INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateBooking`,`time_id`) VALUES(1,1,'30/05/2023',1);
+INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateBooking`,`time_id`) VALUES(1,2,'30/05/2023',2);
+INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateBooking`,`time_id`) VALUES(1,3,'30/05/2023',7);
+
+

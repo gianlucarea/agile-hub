@@ -11,37 +11,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.TeacherReservationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.TeacherReservationController">
     <children>
-        <ImageView fitHeight="124.0" fitWidth="141.0" layoutX="73.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="124.0" fitWidth="141.0" layoutX="24.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@calcio.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="124.0" fitWidth="142.0" layoutX="497.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="124.0" fitWidth="142.0" layoutX="552.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Tennis.png" />
             </image>
         </ImageView>
-      <Text layoutX="169.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona sport" textAlignment="CENTER" wrappingWidth="150.10908570344805">
+      <Text layoutX="147.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona sport" textAlignment="CENTER" wrappingWidth="150.10908570344805">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="selezioneSport" layoutX="169.0" layoutY="93.0" prefWidth="150.0" />
-      <Text layoutX="329.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona maestro" textAlignment="CENTER" wrappingWidth="201.5999930087005">
+      <ChoiceBox fx:id="selezioneSport" layoutX="148.0" layoutY="119.0" prefWidth="150.0" />
+      <Text layoutX="351.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona maestro" textAlignment="CENTER" wrappingWidth="201.5999930087005">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ListView fx:id="listaMaestri" layoutX="329.0" layoutY="93.0" prefHeight="124.0" prefWidth="201.0" />
-      <Text layoutX="262.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona data" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+      <ListView fx:id="listaMaestri" layoutX="351.0" layoutY="92.0" prefHeight="124.0" prefWidth="201.0" />
+      <Text layoutX="135.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona data" textAlignment="CENTER" wrappingWidth="176.29090297730522">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <DatePicker fx:id="dataPrenotazioneMaestro" layoutX="262.0" layoutY="274.0" />
+      <DatePicker fx:id="dataPrenotazioneMaestro" layoutX="130.0" layoutY="190.0" />
         <Button fx:id="prenotaMaestroButton" layoutX="288.0" layoutY="376.0" mnemonicParsing="false" onAction="#prenotaMaestroAction" prefHeight="32.0" prefWidth="124.0" text="Prenota maestro" />
       <Label fx:id="confermaPrenotazioneMaestro" alignment="TOP_CENTER" layoutX="277.0" layoutY="418.0" prefWidth="146.7" textAlignment="CENTER" />
+      <ChoiceBox fx:id="selezioneCampo" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="selezioneOrario" layoutX="275.0" layoutY="320.0" prefWidth="150.0" />
+      <Text layoutX="262.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Campo" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="263.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Orario" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
