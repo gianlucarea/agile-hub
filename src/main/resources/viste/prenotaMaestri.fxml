@@ -23,34 +23,28 @@
                 <Image url="@Tennis.png" />
             </image>
         </ImageView>
-      <Text layoutX="147.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona sport" textAlignment="CENTER" wrappingWidth="150.10908570344805">
+      <Text layoutX="135.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona sport" textAlignment="CENTER" wrappingWidth="150.10908570344805">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="selezioneSport" layoutX="148.0" layoutY="119.0" prefWidth="150.0" />
-      <Text layoutX="351.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona maestro" textAlignment="CENTER" wrappingWidth="201.5999930087005">
+      <ChoiceBox fx:id="selezioneSport" layoutX="135.0" layoutY="119.0" prefWidth="150.0" />
+      <Text layoutX="383.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona maestro" textAlignment="CENTER" wrappingWidth="201.5999930087005">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ListView fx:id="listaMaestri" layoutX="351.0" layoutY="92.0" prefHeight="124.0" prefWidth="201.0" />
+      <ListView fx:id="listaMaestri" layoutX="366.0" layoutY="102.0" prefHeight="124.0" prefWidth="235.0" />
       <Text layoutX="135.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona data" textAlignment="CENTER" wrappingWidth="176.29090297730522">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <DatePicker fx:id="dataPrenotazioneMaestro" layoutX="130.0" layoutY="190.0" />
+      <DatePicker fx:id="dataPrenotazioneMaestro" layoutX="130.0" layoutY="190.0" onAction="#showAvailableSlots" />
         <Button fx:id="prenotaMaestroButton" layoutX="288.0" layoutY="376.0" mnemonicParsing="false" onAction="#prenotaMaestroAction" prefHeight="32.0" prefWidth="124.0" text="Prenota maestro" />
       <Label fx:id="confermaPrenotazioneMaestro" alignment="TOP_CENTER" layoutX="277.0" layoutY="418.0" prefWidth="146.7" textAlignment="CENTER" />
-      <ChoiceBox fx:id="selezioneCampo" layoutX="275.0" layoutY="258.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="selezioneOrario" layoutX="275.0" layoutY="320.0" prefWidth="150.0" />
-      <Text layoutX="262.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Campo" textAlignment="CENTER" wrappingWidth="176.29090297730522">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text layoutX="263.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Orario" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+      <ChoiceBox fx:id="selezioneOrario" layoutX="275.0" layoutY="295.0" prefWidth="150.0" />
+      <Text layoutX="262.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Orario" textAlignment="CENTER" wrappingWidth="176.29090297730522">
          <font>
             <Font size="18.0" />
          </font>

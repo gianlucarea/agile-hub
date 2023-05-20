@@ -76,16 +76,6 @@ public class TeacherBooking {
                 '}';
     }
 
-    public static String dayOfBookingConverter(String paramFromFX){
-        String dayOfBooking = "";
-        String[] arrOfSplit = paramFromFX.split("-");
-        for (int i = arrOfSplit.length - 1 ; i > -1; i--){
-            dayOfBooking += arrOfSplit[i] + "/";
-        }
-        dayOfBooking = (dayOfBooking.substring(0, dayOfBooking.length() - 1));
-        return dayOfBooking;
-    }
-
     public boolean equals(TeacherBooking tb) {
         return this.userId == tb.userId && this.teacherId == tb.teacherId && this.dayOfBooking.equals(tb.dayOfBooking) && this.sport == tb.sport;
     }

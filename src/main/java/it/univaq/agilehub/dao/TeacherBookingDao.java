@@ -9,12 +9,14 @@ public interface TeacherBookingDao {
 
      TeacherBooking getTeacherBookingById(int id) throws SQLException;
 
-     boolean insertTeacherBooking(TeacherBooking teacherBooking) throws SQLException;
+     int insertTeacherBooking(TeacherBooking teacherBooking) throws SQLException;
+
+     void insertTimeTeacherBooking(int teacher_id, int teacher_booking_id, String dateBooking, int time_id);
 
      List<TeacherBooking> getAllTeacherBookingsForMaestro(int user_id) throws SQLException;
 
      boolean doesTeacherBookingAlreadyExist(TeacherBooking teacherBooking) throws SQLException;
 
-     boolean isTeacearBookingFull(int teacher_id, String bookingDate) throws SQLException;
+     boolean isTeacherBookingFull(int teacher_id, String bookingDate) throws SQLException;
 
 }

@@ -82,6 +82,24 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `Time_TeacherBooking` (
+`id` int NOT NULL AUTO_INCREMENT,
+`teacher_id` INT NOT NULL,
+`teacher_booking_id`INT NOT NULL,
+`dateBooking` varchar(45) NOT NULL,
+`time_id` int NOT NULL,
+PRIMARY KEY (`teacher_id`,`dateBooking`,`time_id`),
+UNIQUE KEY `id_time_teacher_booking` (`id`),
+INDEX par_ind (teacher_id),
+CONSTRAINT fk_teacher_id FOREIGN KEY (teacher_id)
+REFERENCES Users(id),
+CONSTRAINT fk_teacher_booking_id FOREIGN KEY (teacher_booking_id)
+REFERENCES Teacher_Booking(id),
+CONSTRAINT fk_time_teacher_id FOREIGN KEY (time_id)
+REFERENCES Time_Slot(id)
+ON DELETE CASCADE  
+ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 INSERT INTO `agile_hub_production`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`)VALUES('Gianluca','Rea','cGFzc3dvcmQ=','aldino','26/09/1997',25,'NORMALE');
@@ -109,6 +127,7 @@ INSERT INTO `agile_hub_production`.`Booking`(`user_id`,`dateBooking`,`numberPlay
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('8:00 - 9:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('9:00 - 10:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('10:00 - 11:00');
+INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('11:00 - 12:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('12:00 - 13:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('13:00 - 14:00');
 INSERT INTO `agile_hub_production`.`Time_Slot`(`time_slot`) VALUES ('14:00 - 15:00');
@@ -138,4 +157,5 @@ INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateB
 INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateBooking`,`time_id`) VALUES(1,2,'30/05/2023',2);
 INSERT INTO `agile_hub_production`.`Time_Booking`(`pitch_id`,`booking_id`,`dateBooking`,`time_id`) VALUES(1,3,'30/05/2023',7);
 
+INSERT INTO `agile_hub_production`.`Time_TeacherBooking` (`id`, `teacher_id`, `teacher_booking_id`, `dateBooking`, `time_id`) VALUES ('1', '7', '1', '21/05/2023', '3');
 

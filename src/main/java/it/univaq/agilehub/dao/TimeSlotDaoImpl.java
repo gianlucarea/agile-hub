@@ -2,6 +2,7 @@ package it.univaq.agilehub.dao;
 
 import it.univaq.agilehub.model.Pitch;
 import it.univaq.agilehub.model.TimeSlot;
+import it.univaq.agilehub.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +21,39 @@ public class TimeSlotDaoImpl implements TimeSlotDao{
         ps = connection.prepareStatement(sql);
         ps.setString(1, bookingDate);
         ps.setInt(2,p.getId());
+
+        ResultSet rs = ps.executeQuery();
+        try {
+            while (rs.next()) {
+                listOfTimeSlots.add(rs.getInt("time_id"));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (ps != null) {
+                try { ps.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+        return listOfTimeSlots;
+    }
+
+    @Override
+    public ArrayList<Integer> unavailableTimeSlotTeacherId(String bookingDate, User t) throws SQLException {
+        Connection connection = DaoFactory.getConnection();
+        PreparedStatement ps = null;
+        ArrayList<Integer> listOfTimeSlots = new ArrayList<>();
+        String sql = "select time_id FROM Time_TeacherBooking WHERE dateBooking = ? AND teacher_id = ?;";
+
+        ps = connection.prepareStatement(sql);
+        ps.setString(1, bookingDate);
+        ps.setInt(2,t.getId());
 
         ResultSet rs = ps.executeQuery();
         try {

@@ -4,10 +4,7 @@ import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TeacherBooking;
 import it.univaq.agilehub.utility.Utility;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,20 +34,51 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
     }
 
     @Override
-    public boolean insertTeacherBooking(TeacherBooking teacherBooking) throws SQLException {
+    public int insertTeacherBooking(TeacherBooking teacherBooking) throws SQLException {
         Connection connection = DaoFactory.getConnection();
         String sql = "INSERT INTO Teacher_Booking (user_id,teacher_id,dayOfBooking,sport) VALUES (?,?,?,?)";
         PreparedStatement pst = null;
+        int teacher_id = 0;
 
         try {
-            pst = connection.prepareStatement(sql);
+            pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1, teacherBooking.getUserId());
             pst.setInt(2, teacherBooking.getTeacherId());
             pst.setString(3, Utility.dateOfBirthConverter(teacherBooking.getDayOfBooking().toString()));
             pst.setString(4,teacherBooking.getSport().toString());
-            int i = pst.executeUpdate();
-            if (i==1) {return true;}
-            else return false;
+
+            pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            if(rs.next()){
+                teacher_id = rs.getInt(1);
+            }
+            return teacher_id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
+
+    @Override
+    public void insertTimeTeacherBooking(int teacher_id, int teacher_booking_id, String dateBooking, int time_id) {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "INSERT INTO Time_TeacherBooking (teacher_id,teacher_booking_id,dateBooking,time_id) VALUES (?,?,?,?)";
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1,teacher_id);
+            pst.setInt(2, teacher_booking_id);
+            pst.setString(3, Utility.dateOfBirthConverter(dateBooking));
+            pst.setInt(4, time_id);
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -146,7 +174,7 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
     }
 
     @Override
-    public boolean isTeacearBookingFull(int teacher_id, String bookingDate) throws SQLException {
+    public boolean isTeacherBookingFull(int teacher_id, String bookingDate) throws SQLException {
         Connection connection = DaoFactory.getConnection();
         String sql = "SELECT COUNT(id) FROM teacher_booking WHERE teacher_id = ? AND dayOfBooking = ?";
 

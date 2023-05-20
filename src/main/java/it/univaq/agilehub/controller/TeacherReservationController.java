@@ -1,11 +1,9 @@
 package it.univaq.agilehub.controller;
 
-import it.univaq.agilehub.dao.TeacherBookingDao;
-import it.univaq.agilehub.dao.TeacherBookingDaoImpl;
-import it.univaq.agilehub.dao.UserDao;
-import it.univaq.agilehub.dao.UserDaoImpl;
+import it.univaq.agilehub.dao.*;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TeacherBooking;
+import it.univaq.agilehub.model.TimeSlot;
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewException;
@@ -21,15 +19,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TeacherReservationController extends DataInitializable<User> implements Initializable {
 
+    TeacherBookingDao teacherBookingDao = new TeacherBookingDaoImpl();
+    TimeSlotDao timeSlotDao = new TimeSlotDaoImpl();
     @FXML
     private Label confermaPrenotazioneMaestro;
 
     @FXML
-    private ListView<String> listaMaestri;
+    private ListView<User> listaMaestri;
 
     @FXML
     private DatePicker dataPrenotazioneMaestro;
@@ -42,6 +43,9 @@ public class TeacherReservationController extends DataInitializable<User> implem
 
     private ArrayList<User> teacherList;
 
+    @FXML
+    private ChoiceBox<TimeSlot> selezioneOrario;
+
     private int teacher_id;
 
     private User userLogged;
@@ -53,21 +57,56 @@ public class TeacherReservationController extends DataInitializable<User> implem
     }
 
     @FXML
+    void showAvailableSlots(ActionEvent event) {
+        selezioneOrario.getItems().clear();
+
+        if(dataPrenotazioneMaestro.getValue() != null) {
+            User teacher = listaMaestri.getSelectionModel().getSelectedItem();
+            String converted = Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
+            try {
+                ArrayList<Integer> unavailableTS = timeSlotDao.unavailableTimeSlotTeacherId(converted,teacher);
+                ArrayList<TimeSlot> allTimeSlot = timeSlotDao.getAllTimeSlots();
+
+                if(unavailableTS.isEmpty()){
+                    for (TimeSlot t : allTimeSlot) {
+                        selezioneOrario.getItems().add(t);
+                    }
+                } else {
+                    // OVERHERE A BETTER METHOD BUT OK FOR NOW
+                    List<TimeSlot> found = new ArrayList<TimeSlot>();
+                    for(TimeSlot timeSlot : allTimeSlot){
+                        for(int i : unavailableTS){
+                            if(timeSlot.getId() == i){
+                                found.add(timeSlot);
+                            }
+                        }
+                    }
+                    allTimeSlot.removeAll(found);
+                    for (TimeSlot t : allTimeSlot) {
+                        selezioneOrario.getItems().add(t);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @FXML
     void prenotaMaestroAction(ActionEvent event) {
         String dayOfBooking =  Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
-        System.out.println(dayOfBooking);
         LocalDate dayOfBookingTolocalDate = LocalDate.parse(dayOfBooking, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
 
-        TeacherBookingDao teacherBookingDao = new TeacherBookingDaoImpl();
         try {
-            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id,dayOfBookingTolocalDate,sport);
+            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id, dayOfBookingTolocalDate,sport);
             if (teacherBookingDao.doesTeacherBookingAlreadyExist(teacherBooking)) {
-                confermaPrenotazioneMaestro.setText("Prenotazione già effettuata\nScegli un altra data");
-            } else if (teacherBookingDao.isTeacearBookingFull(teacher_id, dayOfBooking)) {
-                confermaPrenotazioneMaestro.setText("Prenotazioni piene\nScegli un altra data");
+                confermaPrenotazioneMaestro.setText("Prenotazione già effettuata\n Scegli un altra data");
+            } else if (teacherBookingDao.isTeacherBookingFull(teacher_id, dayOfBooking)) {
+                confermaPrenotazioneMaestro.setText("Prenotazioni piene\n Scegli un altra data");
             } else {
-                teacherBookingDao.insertTeacherBooking(teacherBooking);
+                int teacher_bookingid = teacherBookingDao.insertTeacherBooking(teacherBooking);
+                teacherBookingDao.insertTimeTeacherBooking(listaMaestri.getSelectionModel().getSelectedItem().getId(),teacher_bookingid,dayOfBooking,selezioneOrario.getValue().getId());
                 confermaPrenotazioneMaestro.setText("Prenotazione effettuata");
                 dataPrenotazioneMaestro.setValue(null);
             }
@@ -80,7 +119,10 @@ public class TeacherReservationController extends DataInitializable<User> implem
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherList = new ArrayList<User>();
         prenotaMaestroButton.disableProperty()
-                .bind(dataPrenotazioneMaestro.valueProperty().isNull());
+                .bind(dataPrenotazioneMaestro.valueProperty().isNull()
+                        .or(selezioneOrario.getSelectionModel().selectedIndexProperty().lessThan(0))
+                        .or(selezioneSport.getSelectionModel().selectedIndexProperty().lessThan(0))
+                        .or(listaMaestri.getSelectionModel().selectedItemProperty().isNull()));
 
         dataPrenotazioneMaestro.disableProperty().bind(listaMaestri.getSelectionModel().selectedItemProperty().isNull());
 
@@ -96,7 +138,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
                 UserDao userDao = new UserDaoImpl();
                 teacherList = userDao.getTeacherBySport(t1);
                 for(User teacher : teacherList) {
-                    listaMaestri.getItems().addAll(teacher.getName() + " " + teacher.getSurname());
+                    listaMaestri.getItems().add(teacher);
                     teacher_id = teacher.getId();
                 }
             }

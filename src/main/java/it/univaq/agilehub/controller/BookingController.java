@@ -142,7 +142,6 @@ public class BookingController extends DataInitializable<User> implements Initia
         if(userLogged.getType() == NORMALE){
            try{
                 if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) == (currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) <= max){
-                    System.out.println("INFINE");
                     int booking_id = bookingService.insertBooking(booking);
                     bookingService.insertTimeBooking(selezioneCampo.getValue().getId(),booking_id,booking.getDateBooking().toString(), selezioneOrario.getValue().getId());
                     bookingLabel.setText("Prenotazione efettuata!");
