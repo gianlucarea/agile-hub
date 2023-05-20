@@ -1,7 +1,6 @@
 package it.univaq.agilehub.dao;
 
 import it.univaq.agilehub.model.Pitch;
-import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TimeSlot;
 
 import java.sql.Connection;
@@ -9,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TimeSlotDaoImpl implements TimeSlotDao{
     @Override
@@ -17,7 +15,7 @@ public class TimeSlotDaoImpl implements TimeSlotDao{
         Connection connection = DaoFactory.getConnection();
         PreparedStatement ps = null;
         ArrayList<Integer> listOfTimeSlots = new ArrayList<>();
-        String sql = "select time_id FROM Time_Booking WHERE dateBooking = ? AND pitch_id != ?;";
+        String sql = "select time_id FROM Time_Booking WHERE dateBooking = ? AND pitch_id = ?;";
 
         ps = connection.prepareStatement(sql);
         ps.setString(1, bookingDate);

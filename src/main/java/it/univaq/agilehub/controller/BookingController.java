@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static it.univaq.agilehub.model.Sport.*;
 import static it.univaq.agilehub.model.Type.NORMALE;
@@ -120,6 +119,7 @@ public class BookingController extends DataInitializable<User> implements Initia
         booking.setNumberPlayers(Integer.parseInt(numeroPartecipanti.getText()));
         booking.setSport(valueOf(sport));
 
+
         switch (booking.getSport()){
             case CALCETTO:
                 max = 10;
@@ -139,12 +139,18 @@ public class BookingController extends DataInitializable<User> implements Initia
             default:
                 break;
         }
-
         if(userLogged.getType() == NORMALE){
            try{
                 if(booking.getDateBooking().get(weekFields.weekOfWeekBasedYear()) == (currentDate.get(weekFields.weekOfWeekBasedYear())) && booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) <= max){
-                    bookingService.createBooking(booking);
+                    System.out.println("INFINE");
+                    int booking_id = bookingService.insertBooking(booking);
+                    bookingService.insertTimeBooking(selezioneCampo.getValue().getId(),booking_id,booking.getDateBooking().toString(), selezioneOrario.getValue().getId());
                     bookingLabel.setText("Prenotazione efettuata!");
+
+                    selezioneCampo.setValue(null);
+                    selezioneOrario.setValue(null);
+                } else {
+                    errorLabel.setText("Errore controllare numero prenotati");
                 }
             }catch(Exception e){
                errorLabel.setText("Errore nella prenotazione");
@@ -161,7 +167,12 @@ public class BookingController extends DataInitializable<User> implements Initia
     public void initialize(URL location, ResourceBundle resources) {
 
         prenota.disableProperty()
-                        .bind(data.valueProperty().isNull().or(numeroPartecipanti.textProperty().isEmpty())); ;
+                        .bind(data.valueProperty().isNull()
+                                .or(numeroPartecipanti.textProperty().isEmpty())
+                                .or(selezioneTipologia.getSelectionModel().selectedIndexProperty().lessThan(0))
+                                .or(selezioneCampo.getSelectionModel().selectedIndexProperty().lessThan(0))
+                                .or(selezioneOrario.getSelectionModel().selectedIndexProperty().lessThan(0))
+                        );
 
         for (Sport sport : Sport.values()) {
             selezioneTipologia.getItems().add(sport.name());
@@ -184,9 +195,10 @@ public class BookingController extends DataInitializable<User> implements Initia
                 });
 
         selezioneCampo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pitch>() {
+
             @Override
             public void changed(ObservableValue<? extends Pitch> observable, Pitch oldValue, Pitch newValue) {
-                if(data.getValue() != null && selezioneOrario.getValue() != null){
+                if(data.getValue() != null && newValue != null){
                     selezioneOrario.getItems().clear();
                     String converted = Utility.dateOfBirthConverter(data.getValue().toString());
                     try {
@@ -215,8 +227,6 @@ public class BookingController extends DataInitializable<User> implements Initia
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                } else {
-                    errorLabel.setText("Ricordati Di Inserire La Data");
                 }
             }
         });

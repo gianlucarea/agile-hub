@@ -6,10 +6,7 @@ import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.utility.Utility;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 import static javax.swing.UIManager.getString;
@@ -18,20 +15,50 @@ public class BookingDaoImpl implements BookingDao {
     private static final String insertUser ="insert into agilehub.booking value (?)";
 
     @Override
-    public boolean createBooking(Booking booking) {
+    public int insertBooking(Booking booking) {
         Connection connection = DaoFactory.getConnection();
+        int id = 0;
         String sql = "INSERT INTO Booking (user_id,dateBooking,numberPlayers,sport) VALUES (?,?,?,?)";
         PreparedStatement pst = null;
         try {
-            pst = connection.prepareStatement(sql);
+            pst = connection.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1,booking.getUserId());
             pst.setString(2, Utility.dateOfBirthConverter(booking.getDateBooking().toString()));
             pst.setInt(3,booking.getNumberPlayers());
             pst.setString(4, booking.getSport().toString());
+            pst.executeUpdate();
 
-            int i = pst.executeUpdate();
-            if (i==1) {return true;}
-            else return false;
+            ResultSet rs = pst.getGeneratedKeys();
+            if(rs.next()){
+                id = rs.getInt(1);
+            }
+            return id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
+
+    @Override
+    public void insertTimeBooking(int pitch_id, int booking_id, String dateBooking, int time_id) {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "INSERT INTO Time_Booking (pitch_id,booking_id,dateBooking,time_id) VALUES (?,?,?,?)";
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1,pitch_id);
+            pst.setInt(2, booking_id);
+            pst.setString(3, Utility.dateOfBirthConverter(dateBooking));
+            pst.setInt(4, time_id);
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

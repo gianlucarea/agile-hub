@@ -69,7 +69,8 @@ CREATE TABLE `Time_Booking` (
 `booking_id`INT NOT NULL,
 `dateBooking` varchar(45) NOT NULL,
 `time_id` int NOT NULL,
-PRIMARY KEY (`id`, `pitch_id`,`dateBooking`,`time_id`),
+PRIMARY KEY (`pitch_id`,`dateBooking`,`time_id`),
+UNIQUE KEY `id_time_bookinh` (`id`),
 INDEX par_ind (pitch_id),
 CONSTRAINT fk_pitch FOREIGN KEY (pitch_id)
 REFERENCES Pitch(id),
