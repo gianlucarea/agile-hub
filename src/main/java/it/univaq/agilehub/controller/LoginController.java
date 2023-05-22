@@ -51,9 +51,11 @@ public class LoginController extends DataInitializable<User> implements Initiali
             if(user != null){
                 dispatcher.homeView(user);
             }
+            else {
+                errorLabel.setText("Username o password errati!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            errorLabel.setText("Username o password errati!");
         }
     }
 

@@ -4,12 +4,16 @@ import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.utility.Utility;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Base64.*;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 
 
 public class UserDaoImpl implements UserDao{
@@ -183,7 +187,7 @@ public class UserDaoImpl implements UserDao{
                 catch (SQLException ignore) {}
             }
         }
-        System.out.println(user.toString());
+        //System.out.println(user.toString());
         return user;
     }
 

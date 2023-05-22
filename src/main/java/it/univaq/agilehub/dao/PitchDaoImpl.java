@@ -1,6 +1,7 @@
 package it.univaq.agilehub.dao;
 
-import it.univaq.agilehub.model.*;
+import it.univaq.agilehub.model.Pitch;
+import it.univaq.agilehub.model.Sport;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

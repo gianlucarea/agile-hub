@@ -17,7 +17,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import static it.univaq.agilehub.model.Type.ADMIN;
+import static it.univaq.agilehub.model.Type.MAESTRO;
 
 public class HomeController  extends DataInitializable<User> implements Initializable {
 
@@ -39,6 +41,7 @@ public class HomeController  extends DataInitializable<User> implements Initiali
 
     private static final MenuElement[] menuUser = {new MenuElement("Prenota Campo", "prenotazione"), new MenuElement("Lezioni", "prenotaMaestri")};
     private static final MenuElement[] menuAdmin= {new MenuElement("Maestri", "registraMaestri")};
+    private static final MenuElement[] menuTeacher = {new MenuElement("Visualizza Lezioni", "visualizzaLezioni")};
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
@@ -52,6 +55,12 @@ public class HomeController  extends DataInitializable<User> implements Initiali
             menuBar.getChildren().add(createButton("Home","welcome"));
             menuBar.getChildren().add(new Separator());
             for(MenuElement element: menuAdmin) {
+                menuBar.getChildren().add(createButton(element.getButtonName(), element.getViewName()));
+            }
+        } else if (user.getType() == MAESTRO) {
+            menuBar.getChildren().add(createButton("Home","welcome"));
+            menuBar.getChildren().add(new Separator());
+            for(MenuElement element: menuTeacher) {
                 menuBar.getChildren().add(createButton(element.getButtonName(), element.getViewName()));
             }
         } else{

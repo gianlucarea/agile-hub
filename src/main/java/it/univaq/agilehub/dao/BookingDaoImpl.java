@@ -2,8 +2,6 @@ package it.univaq.agilehub.dao;
 
 import it.univaq.agilehub.model.Booking;
 import it.univaq.agilehub.model.Sport;
-import it.univaq.agilehub.model.Type;
-import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.utility.Utility;
 
 import java.sql.*;

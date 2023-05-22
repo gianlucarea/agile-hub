@@ -10,5 +10,6 @@ module it.univaq.agilehub {
     exports it.univaq.agilehub;
     opens it.univaq.agilehub.controller to javafx.fxml;
     exports it.univaq.agilehub.controller;
-
+    opens it.univaq.agilehub.model to javafx.fxml;
+    exports it.univaq.agilehub.model;
 }

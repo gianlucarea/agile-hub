@@ -25,6 +25,7 @@ public class TeacherBooking {
         this.dayOfBooking = dayOfBooking;
         this.sport = sport;
     }
+
     public int getId() {
         return id;
     }

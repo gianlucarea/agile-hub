@@ -5,7 +5,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="985.0" style="-fx-background-color: #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.WelcomeController">
    <children>
       <ImageView fx:id="image" fitHeight="289.0" fitWidth="288.0" layoutX="349.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">

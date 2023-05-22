@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static it.univaq.agilehub.model.Sport.*;
+import static it.univaq.agilehub.model.Sport.valueOf;
 import static it.univaq.agilehub.model.Type.NORMALE;
+import static it.univaq.agilehub.model.Type.SOCIO;
 
 public class BookingController extends DataInitializable<User> implements Initializable {
     private BookingDao bookingService = new BookingDaoImpl();
@@ -155,6 +156,22 @@ public class BookingController extends DataInitializable<User> implements Initia
                errorLabel.setText("Errore nella prenotazione");
                e.printStackTrace();
             }
+        } else if (userLogged.getType() == SOCIO) {
+            try{
+                if(booking.getDateBooking().isAfter(currentDate) && Integer.parseInt(numeroPartecipanti.getText()) <= max){
+                    int booking_id = bookingService.insertBooking(booking);
+                    bookingService.insertTimeBooking(selezioneCampo.getValue().getId(),booking_id,booking.getDateBooking().toString(), selezioneOrario.getValue().getId());
+                    bookingLabel.setText("Prenotazione efettuata!");
+
+                    selezioneCampo.setValue(null);
+                    selezioneOrario.setValue(null);
+                } else {
+                    errorLabel.setText("Errore controllare numero prenotati");
+                }
+            }catch(Exception e){
+                errorLabel.setText("Errore nella prenotazione");
+                e.printStackTrace();
+            }
         }
 
 
@@ -172,6 +189,30 @@ public class BookingController extends DataInitializable<User> implements Initia
                                 .or(selezioneCampo.getSelectionModel().selectedIndexProperty().lessThan(0))
                                 .or(selezioneOrario.getSelectionModel().selectedIndexProperty().lessThan(0))
                         );
+
+        selezioneCampo.disableProperty()
+                .bind(selezioneTipologia.getSelectionModel().selectedIndexProperty().lessThan(0));
+
+        selezioneOrario.disableProperty()
+                .bind(selezioneCampo.getSelectionModel().selectedIndexProperty().lessThan(0)
+                        .or(data.valueProperty().isNull()));
+
+        data.setDayCellFactory(datePicker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                if(userLogged.getType() == NORMALE){
+                    WeekFields weekFields = WeekFields.of(Locale.getDefault());
+                    today.get(weekFields.weekOfWeekBasedYear());
+                    date.get(weekFields.weekOfWeekBasedYear());
+                    setDisable(empty || today.get(weekFields.weekOfWeekBasedYear()) != date.get(weekFields.weekOfWeekBasedYear()));
+                }
+                else {
+                    setDisable(empty || date.compareTo(today) < 0);
+                }
+            }
+        });
 
         for (Sport sport : Sport.values()) {
             selezioneTipologia.getItems().add(sport.name());

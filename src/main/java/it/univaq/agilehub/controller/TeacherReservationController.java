@@ -99,7 +99,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
 
         try {
-            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id, dayOfBookingTolocalDate,sport);
+            TeacherBooking teacherBooking = new TeacherBooking(userLogged.getId(), teacher_id, dayOfBookingTolocalDate, sport);
             if (teacherBookingDao.doesTeacherBookingAlreadyExist(teacherBooking)) {
                 confermaPrenotazioneMaestro.setText("Prenotazione già effettuata\n Scegli un altra data");
             } else if (teacherBookingDao.isTeacherBookingFull(teacher_id, dayOfBooking)) {

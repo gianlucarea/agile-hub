@@ -2,10 +2,12 @@ package it.univaq.agilehub.dao;
 
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.TeacherBooking;
+import it.univaq.agilehub.model.TimeSlot;
 import it.univaq.agilehub.utility.Utility;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,38 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
     }
 
     @Override
+    public TimeSlot getTimeTeacherBooking(int teacher_booking_id) {
+        Connection connection = DaoFactory.getConnection();
+        String sql = "SELECT t.id, t.time_slot FROM Time_TeacherBooking b, time_slot t WHERE b.teacher_booking_id = ? AND b.time_id = t.id";
+        PreparedStatement pst = null;
+
+        TimeSlot result = new TimeSlot();
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1,teacher_booking_id);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                result.setId(rs.getInt(1));
+                result.setTime_slot(rs.getString(2));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pst != null) {
+                try { pst.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<TeacherBooking> getAllTeacherBookingsForMaestro(int teacher_id) throws SQLException {
 
         Connection connection = DaoFactory.getConnection();
@@ -108,8 +142,9 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
         try {
             while (rs.next()) {
                 TeacherBooking tb = new TeacherBooking();
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 tb.setTeacherId(rs.getInt("teacher_id"));
-                LocalDate dayOfBookingTolocalDate = LocalDate.parse(rs.getString("dayOfBooking"));
+                LocalDate dayOfBookingTolocalDate = LocalDate.parse(rs.getString("dayOfBooking"), dateTimeFormatter);
                 tb.setDayOfBooking(dayOfBookingTolocalDate);
                 tb.setUserId(rs.getInt("user_id"));
                 tb.setId(rs.getInt("id"));
