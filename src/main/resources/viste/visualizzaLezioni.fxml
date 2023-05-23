@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.TeacherViewBookingController">
+   <children>
+      <Label layoutX="278.0" layoutY="20.0" text="Lezioni da svolgere" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="teacherBookingTable" layoutX="31.0" layoutY="58.0" prefHeight="420.0" prefWidth="641.0">
+        <columns>
+          <TableColumn editable="false" maxWidth="256.5818386077881" prefWidth="256.5818386077881" text="Studenti" fx:id="studentColumn"/>
+          <TableColumn editable="false" prefWidth="283.6363220214844" text="Date" fx:id="dateColumn"/>
+            <TableColumn editable="false" prefWidth="101.236328125" text="Orari" fx:id="timeColumn"/>
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

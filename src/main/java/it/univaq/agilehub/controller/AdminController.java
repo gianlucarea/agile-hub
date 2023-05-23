@@ -5,12 +5,15 @@ import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AdminController extends DataInitializable<User> implements Initializable {
@@ -40,16 +43,15 @@ public class AdminController extends DataInitializable<User> implements Initiali
     private Label confermaRegistrazioneMaestro;
 
     @FXML
-    void PasswordMaestroAction(ActionEvent event) {
-
-    }
+    void PasswordMaestroAction(ActionEvent event) {}
 
     @FXML
     void avantiMaestroAction(ActionEvent event) {
         User user = null;
-        String dateOfBirth =  User.dateOfBirthConverter(dataNascitaMaestro.getValue().toString());
+        String dateOfBirth =  dataNascitaMaestro.getValue().toString();
+        LocalDate dateOfBirthTolocalDate = LocalDate.parse(Utility.dateOfBirthConverter(dateOfBirth), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String sport = sportMaestro.getValue();
-        user = new User(nomeMaesto.getText(), cognomeMaestro.getText(), passwordMaestro.getText(),usernameMaestro.getText(), dateOfBirth , Type.MAESTRO, Sport.valueOf(sport));
+        user = new User(nomeMaesto.getText(), cognomeMaestro.getText(), passwordMaestro.getText(),usernameMaestro.getText(), dateOfBirthTolocalDate , Type.MAESTRO, Sport.valueOf(sport));
         UserDao userDao = new UserDaoImpl();
         userDao.registrationAdmin(user);
 
@@ -63,24 +65,16 @@ public class AdminController extends DataInitializable<User> implements Initiali
     }
 
     @FXML
-    void cognomeMaestroAction(ActionEvent event) {
-
-    }
+    void cognomeMaestroAction(ActionEvent event) {}
 
     @FXML
-    void dataNascitaMaestroAction(ActionEvent event) {
-
-    }
+    void dataNascitaMaestroAction(ActionEvent event) {}
 
     @FXML
-    void nomeMaestroAction(ActionEvent event) {
-
-    }
+    void nomeMaestroAction(ActionEvent event) {}
 
     @FXML
-    void usernameMaestroAction(ActionEvent event) {
-
-    }
+    void usernameMaestroAction(ActionEvent event) {}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,6 +86,6 @@ public class AdminController extends DataInitializable<User> implements Initiali
         for (Sport sport : Sport.values()){
             sportMaestro.getItems().add(sport.name());
         }
-
     }
+
 }

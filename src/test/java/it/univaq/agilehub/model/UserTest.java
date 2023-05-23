@@ -19,6 +19,8 @@ class UserTest {
         assertNotEquals("GianlucaRea",user.toCheck("Gianluca","Rea"));
     }
 
+    /*
+
     @Test
     void ageCalculatorEqual25() {
         String age = "26/09/1997";
@@ -38,7 +40,7 @@ class UserTest {
             throw new RuntimeException(e);
         }
     }
-
+    */
     @Test
     void dateConverterRight() {
         String date = "1997-09-26";

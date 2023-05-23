@@ -37,27 +37,25 @@ public class LoginController extends DataInitializable<User> implements Initiali
     @FXML
     Button iscrivitiButton = new Button();
 
-
     @FXML
     ImageView logo = new ImageView();
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         accediButton.disableProperty().bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty()));
     }
 
     public void accediAction(ActionEvent event) throws ViewException {
         try {
             User user = userDao.authenticate(username.getText(), password.getText());
-            System.out.println(user.toString());
             if(user != null){
                 dispatcher.homeView(user);
             }
+            else {
+                errorLabel.setText("Username o password errati!");
+            }
         } catch (Exception e) {
-            //e.printStackTrace();
-            errorLabel.setText("Username o password errati!");
+            e.printStackTrace();
         }
     }
 
@@ -68,7 +66,6 @@ public class LoginController extends DataInitializable<User> implements Initiali
         } catch (ViewException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }

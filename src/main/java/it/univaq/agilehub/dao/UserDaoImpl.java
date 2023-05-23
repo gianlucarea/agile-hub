@@ -2,13 +2,18 @@ package it.univaq.agilehub.dao;
 
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Base64.*;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 
 
 public class UserDaoImpl implements UserDao{
@@ -27,7 +32,8 @@ public class UserDaoImpl implements UserDao{
             pst.setString(2, user.getSurname());
             pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
             pst.setString(4, user.getUsername());
-            pst.setString(5, user.getDateOfBirth());
+            String dateOfBirth = Utility.dateOfBirthConverter(user.getDateOfBirth().toString());
+            pst.setString(5, dateOfBirth);
             pst.setInt(6,user.getAge());
             pst.setString(7,user.getType().toString());
             int i = pst.executeUpdate();
@@ -59,7 +65,8 @@ public class UserDaoImpl implements UserDao{
             pst.setString(2, user.getSurname());
             pst.setString(3, encoder.encodeToString(user.getPassword().getBytes()));
             pst.setString(4, user.getUsername());
-            pst.setString(5, user.getDateOfBirth());
+            String dateOfBirth = Utility.dateOfBirthConverter(user.getDateOfBirth().toString());
+            pst.setString(5, dateOfBirth.toString());
             pst.setInt(6,user.getAge());
             pst.setString(7,user.getType().toString());
             pst.setString(8,user.getSport().toString());
@@ -99,8 +106,8 @@ public class UserDaoImpl implements UserDao{
                 String dateOfBirth = rs.getString("dateOfBirth");
                 int age = rs.getInt("age");
                 Type type = Enum.valueOf(Type.class , rs.getString("type")) ;
-                System.out.println(type);
-                user = new User(user_id,name,surname,password,username,dateOfBirth,age,type );
+                LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                user = new User(user_id,name,surname,password,username,dateOfBirthTolocalDate,age,type );
             }
             return user;
 
@@ -126,7 +133,8 @@ public class UserDaoImpl implements UserDao{
                 String dateOfBirth = rs.getString("dateOfBirth");
                 int age = rs.getInt("age");
                 Type type = Enum.valueOf(Type.class , rs.getString("type")) ;
-                user = new User(user_id,name,surname,password,usernameFromDB,dateOfBirth,age,type );
+                LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth);
+                user = new User(user_id,name,surname,password,usernameFromDB,dateOfBirthTolocalDate,age,type );
             }
             return user;
         }catch (SQLException e){
@@ -164,7 +172,8 @@ public class UserDaoImpl implements UserDao{
                 int age = rs.getInt("age");
                 String dateOfBirth = rs.getString("dateOfBirth");
                 Type type = Type.valueOf(rs.getString("type"));
-                user = new User(id,name,surname,passwordDecr,username,dateOfBirth,age,type);
+                LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                user = new User(id,name,surname,passwordDecr,username,dateOfBirthTolocalDate,age,type);
             }
         }catch(SQLException e){
             throw new RuntimeException(e);
@@ -178,7 +187,7 @@ public class UserDaoImpl implements UserDao{
                 catch (SQLException ignore) {}
             }
         }
-        System.out.println(user.toString());
+        //System.out.println(user.toString());
         return user;
     }
 

@@ -4,6 +4,7 @@ import it.univaq.agilehub.dao.UserDao;
 import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
@@ -16,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class RegistrationController extends DataInitializable<User> implements Initializable {
@@ -52,9 +55,7 @@ public class RegistrationController extends DataInitializable<User> implements I
     ImageView Tennis = new ImageView();
 
     @FXML
-    void PasswordAction(ActionEvent event) {
-
-    }
+    void PasswordAction(ActionEvent event) {}
 
     @FXML
     void avantiAction(ActionEvent event) {
@@ -67,8 +68,9 @@ public class RegistrationController extends DataInitializable<User> implements I
             type = Type.NORMALE;
         }
         User user = null;
-        String dateOfBirth =  User.dateOfBirthConverter(dataNascita.getValue().toString());
-        user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirth ,type);
+        String dateOfBirth = Utility.dateOfBirthConverter(dataNascita.getValue().toString()) ;
+        LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirthTolocalDate ,type);
         UserDao userDao = new UserDaoImpl();
         userDao.registration(user);
         ViewDispatcher dispatcher = ViewDispatcher.getInstance();
@@ -80,12 +82,16 @@ public class RegistrationController extends DataInitializable<User> implements I
     }
 
     @FXML
-    void cognomeAction(ActionEvent event) {
-    }
+    void nomeActione(ActionEvent event) {}
 
     @FXML
-    void dataNascitaAction(ActionEvent event) {
-    }
+    void cognomeAction(ActionEvent event) {}
+
+    @FXML
+    void dataNascitaAction(ActionEvent event) {}
+
+    @FXML
+    void usernameAction(ActionEvent event) {}
 
     @FXML
     void indietroAction(ActionEvent event) {
@@ -95,11 +101,6 @@ public class RegistrationController extends DataInitializable<User> implements I
         } catch (ViewException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @FXML
-    void nomeActione(ActionEvent event) {
-
     }
 
     @FXML
@@ -114,10 +115,6 @@ public class RegistrationController extends DataInitializable<User> implements I
         if( socioPlusBox.isSelected()){
             socioBox.setSelected(false);
         }
-    }
-    @FXML
-    void usernameAction(ActionEvent event) {
-
     }
 
     @Override
