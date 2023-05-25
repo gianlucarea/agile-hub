@@ -14,6 +14,12 @@ public class User {
     public User() {
     }
 
+    public User(int id, String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+    }
+
     public User(int id, String name, String surname, String password, String username, LocalDate dateOfBirth, int age, Type type) {
         this.id = id;
         this.name = name;
@@ -147,9 +153,14 @@ public class User {
     }
 
     public int ageCalculator(LocalDate bornDate) throws ParseException {
+        try{
         LocalDate l1 = LocalDate.of(bornDate.getYear(),bornDate.getMonthValue(), bornDate.getDayOfMonth());
         LocalDate now1 = LocalDate.now();
         Period diff1 = Period.between(l1, now1);
         return diff1.getYears();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

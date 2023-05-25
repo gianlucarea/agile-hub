@@ -191,4 +191,40 @@ public class UserDaoImpl implements UserDao{
         return user;
     }
 
+    @Override
+    public ArrayList<User> getTeacherBySport(String sport) {
+        Connection connection = DaoFactory.getConnection();
+        User user = null;
+        PreparedStatement ps =  null;
+        String sql = "select id,name,surname,username FROM Users WHERE type = 'MAESTRO' AND sport = ?;";
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,sport);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<User> usersList = new ArrayList<User>();
+            while (rs.next()){
+                int id = rs.getInt("id") ;
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+
+                // Create new user creator for simple teacher data for listing by sport?
+                // Or maybe just give back an ArrayList with all the names of the teachers?
+                user = new User(id, name, surname);
+                usersList.add(user);
+            }
+            return usersList;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                try { ps.close(); }
+                catch (SQLException ignore) {}
+            }
+            if (connection != null) {
+                try { connection.close(); }
+                catch (SQLException ignore) {}
+            }
+        }
+    }
+
 }

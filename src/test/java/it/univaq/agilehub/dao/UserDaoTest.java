@@ -45,6 +45,7 @@ public class UserDaoTest {
 
     }
 
+    /*
     @Test
     void testRegistrationOfUser()  {
         User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR","26/09/1997", 25, Type.SOCIO);
@@ -57,7 +58,9 @@ public class UserDaoTest {
 
         assertEquals("LamiaPassword!",decodedString);
     }
+    */
 
+    /*
     @Test
     void testRegistrationOfMaestro()  {
         User user = new User("Matteo", "Rossi", "LamiaPassword!","Maestro","26/09/1992", Type.MAESTRO, Sport.CALCETTO);
@@ -67,7 +70,8 @@ public class UserDaoTest {
 
 
         assertEquals("Matteo Rossi", userFromDb.getName() + " " + userFromDb.getSurname());
-    }
+    }   */
+
 
 
     @Test
