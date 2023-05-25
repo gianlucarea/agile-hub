@@ -148,19 +148,14 @@ public class User {
         return name + " " + surname;
     }
 
-    public String toCheck(String name, String surname){
-        return name + " " + surname;
-    }
-
     public int ageCalculator(LocalDate bornDate) throws ParseException {
         try{
-        LocalDate l1 = LocalDate.of(bornDate.getYear(),bornDate.getMonthValue(), bornDate.getDayOfMonth());
-        LocalDate now1 = LocalDate.now();
-        Period diff1 = Period.between(l1, now1);
-        return diff1.getYears();
+            LocalDate l1 = LocalDate.of(bornDate.getYear(),bornDate.getMonthValue(), bornDate.getDayOfMonth());
+            LocalDate now1 = LocalDate.now();
+            Period diff1 = Period.between(l1, now1);
+            return diff1.getYears();
         } catch (NullPointerException e){
-            e.printStackTrace();
+            throw e;
         }
-        return 0;
     }
 }

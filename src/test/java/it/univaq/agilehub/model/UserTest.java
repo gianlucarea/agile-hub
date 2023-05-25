@@ -11,19 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
     User user = new User();
 
-  @Test
-  void testToCheck () {
-      assertEquals("Gianluca Rea",user.toCheck("Gianluca","Rea"));
-  }
-
-    //This test suppose to fail to show
-    @Test
-    void testToCheck2 () {
-        assertNotEquals("GianlucaRea",user.toCheck("Gianluca","Rea"));
-    }
-
-
-
     @Test
     void ageCalculatorEqual25() {
         LocalDate age = LocalDate.of(1997,9,26);
@@ -39,6 +26,7 @@ class UserTest {
         LocalDate age = LocalDate.of(1999,9,26);
         try {
             assertNotEquals(25, user.ageCalculator(age));
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -47,11 +35,7 @@ class UserTest {
     @Test
     void ageCalculatorNullParameter() {
         LocalDate age = null;
-        try {
-            assertNotEquals(25, user.ageCalculator(age));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        assertThrows(NullPointerException.class , ()-> user.ageCalculator(age));
     }
 
     /*
