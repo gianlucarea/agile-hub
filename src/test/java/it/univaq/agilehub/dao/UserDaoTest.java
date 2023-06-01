@@ -11,9 +11,10 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Base64;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserDaoTest {
@@ -34,7 +35,6 @@ public class UserDaoTest {
         String sql2 = "USE agile_hub_test; ";
         String createTable = "CREATE TABLE Users ( `id` int NOT NULL AUTO_INCREMENT,`name` varchar(45) NOT NULL,`surname` varchar(45) NOT NULL,`password` varchar(45) DEFAULT NULL,`username` varchar(45) NOT NULL,`dateOfBirth` varchar(45) NOT NULL, `age` int NOT NULL,`type` enum('NORMALE','ADMIN','SOCIO','SOCIO_PLUS','MAESTRO') NOT NULL,`sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') , PRIMARY KEY (`id`), UNIQUE KEY `id_user_UNIQUE` (`id`), UNIQUE KEY `username_UNIQUE` (`username`)) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
 
-
         // Trasform in a for
         PreparedStatement pst  = connection.prepareStatement(sql1);
         pst.executeUpdate();
@@ -45,36 +45,58 @@ public class UserDaoTest {
 
     }
 
+
     @Test
     void testRegistrationOfUser()  {
-        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR","26/09/1997", 25, Type.SOCIO);
-        userDao.registration(user);
+        User user = new User("Gianluca", "Rossi", "LamiaPassword!","GR", LocalDate.of(1997,9,26),  Type.SOCIO);
 
+        userDao.registration(user);
         User userFromDb = userDao.getUserByUsername("GR");
 
-        String decodedString = new String(decoder.decode(userFromDb.getPassword().getBytes()));
-        System.out.println(decodedString);
+        assertEquals("GR",userFromDb.getUsername());
+        assertNotEquals("Gr",userFromDb.getUsername());
+        assertEquals(LocalDate.of(1997,9,26),userFromDb.getDateOfBirth());
+        assertEquals(25, userFromDb.getAge());
+        assertNotEquals(24 ,userFromDb.getAge());
 
-        assertEquals("LamiaPassword!",decodedString);
     }
 
     @Test
     void testRegistrationOfMaestro()  {
-        User user = new User("Matteo", "Rossi", "LamiaPassword!","Maestro","26/09/1992", Type.MAESTRO, Sport.CALCETTO);
+        User user = new User("Matteo", "Rossi", "LamiaPassword!","Maestro",LocalDate.of(1992,7,12), Type.MAESTRO, Sport.CALCETTO);
         userDao.registrationAdmin(user);
 
         User userFromDb = userDao.getUserByUsername("Maestro");
 
-
-        assertEquals("Matteo Rossi", userFromDb.getName() + " " + userFromDb.getSurname());
+        assertEquals("Maestro",userFromDb.getUsername());
+        assertNotEquals("maestro",userFromDb.getUsername());
+        assertEquals(LocalDate.of(1992,7,12),userFromDb.getDateOfBirth());
+        assertEquals(30, userFromDb.getAge());
+        assertNotEquals(31 ,userFromDb.getAge());
     }
 
 
     @Test
-    void testGetUserUsername()  {
-        User user = userDao.getUserByUsername("GR");
-        assertEquals("Gianluca Rossi", user.getName() + " " + user.getSurname());
+    void authenticate()  {
+        User userFromDb = userDao.authenticate("GR","LamiaPassword!");
+
+        assertEquals("GR",userFromDb.getUsername());
+        assertNotEquals("Gr",userFromDb.getUsername());
+        assertEquals(LocalDate.of(1997,9,26),userFromDb.getDateOfBirth());
+        assertEquals(25, userFromDb.getAge());
+        assertNotEquals(24 ,userFromDb.getAge());
     }
 
 
+    @Test
+    void authenticateNull()  {
+        User userFromDb = userDao.authenticate("","");
+        assertNull(userFromDb);
+    }
+
+    @Test
+    void authenticateVoidNull()  {
+        User userFromDb = userDao.authenticate("WDSACS>AFCSXZDWXC`´´‹~¥‘“‘¥~‹÷‹~¥‘“","FACESCESXDCWSC AS2€¥Ω¥‹´``´´‹~¥‘“");
+        assertNull(userFromDb);
+    }
 }

@@ -19,10 +19,9 @@ import java.util.Base64.Encoder;
 public class UserDaoImpl implements UserDao{
     Encoder encoder = Base64.getEncoder();
     Decoder decoder = Base64.getDecoder();
-    private static final String insertUser ="insert into agilehub.user value (?)";
 
     @Override
-    public boolean registration(User user) {
+    public void registration(User user) {
         Connection connection = DaoFactory.getConnection();
         String sql = "INSERT INTO Users (name,surname,password,username,dateOfBirth,age,type) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pst = null;
@@ -36,10 +35,8 @@ public class UserDaoImpl implements UserDao{
             pst.setString(5, dateOfBirth);
             pst.setInt(6,user.getAge());
             pst.setString(7,user.getType().toString());
-            int i = pst.executeUpdate();
-            if (i==1) {
-                return true;}
-            else return false;
+            pst.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -55,7 +52,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public boolean registrationAdmin(User user) {
+    public void registrationAdmin(User user) {
         Connection connection = DaoFactory.getConnection();
         String sql = "INSERT INTO Users (name,surname,password,username,dateOfBirth,age,type,sport) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement pst = null;
@@ -70,10 +67,7 @@ public class UserDaoImpl implements UserDao{
             pst.setInt(6,user.getAge());
             pst.setString(7,user.getType().toString());
             pst.setString(8,user.getSport().toString());
-            int i = pst.executeUpdate();
-            if (i==1) {
-                return true;}
-            else return false;
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -133,7 +127,7 @@ public class UserDaoImpl implements UserDao{
                 String dateOfBirth = rs.getString("dateOfBirth");
                 int age = rs.getInt("age");
                 Type type = Enum.valueOf(Type.class , rs.getString("type")) ;
-                LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth);
+                LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 user = new User(user_id,name,surname,password,usernameFromDB,dateOfBirthTolocalDate,age,type );
             }
             return user;
@@ -163,7 +157,6 @@ public class UserDaoImpl implements UserDao{
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 int id = rs.getInt("id") ;
                 String passwordDecr = new String(decoder.decode(password.getBytes()));
@@ -187,7 +180,6 @@ public class UserDaoImpl implements UserDao{
                 catch (SQLException ignore) {}
             }
         }
-        //System.out.println(user.toString());
         return user;
     }
 
