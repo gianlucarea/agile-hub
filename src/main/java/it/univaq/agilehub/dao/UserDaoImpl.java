@@ -83,15 +83,16 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User getUserById(int id) throws SQLException {
+    public User getUserById(int id) {
         Connection connection = DaoFactory.getConnection();
         User user = null;
         PreparedStatement ps = null ;
         String sql = "select id,name,surname,password,username,dateOfBirth,age,type FROM Users WHERE id = ?;";
-        ps = connection.prepareStatement(sql);
-        ps.setInt(1,id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()){
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
                 int user_id = rs.getInt("id");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
@@ -103,8 +104,10 @@ public class UserDaoImpl implements UserDao{
                 LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 user = new User(user_id,name,surname,password,username,dateOfBirthTolocalDate,age,type );
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
             return user;
-
 
     }
 

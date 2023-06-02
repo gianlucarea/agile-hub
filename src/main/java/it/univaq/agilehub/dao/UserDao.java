@@ -9,7 +9,7 @@ public interface UserDao {
 
      void registration(User user);
      void registrationAdmin(User user);
-     User getUserById(int id) throws SQLException;
+     User getUserById(int id);
      User getUserByUsername(String username);
      User authenticate(String username, String password);
      ArrayList<User> getTeacherBySport(String sport);

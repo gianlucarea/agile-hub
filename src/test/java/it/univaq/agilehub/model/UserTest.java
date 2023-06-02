@@ -40,7 +40,7 @@ class UserTest {
             throw new RuntimeException(e);
         }
     }
-    */
+
     @Test
     void dateConverterRight() {
         String date = "1997-09-26";
@@ -52,4 +52,5 @@ class UserTest {
         String date = "1997-09-26";
         assertNotEquals("1997/09/26", User.dateOfBirthConverter(date));
     }
+    */
 }

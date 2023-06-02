@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -98,5 +99,61 @@ public class UserDaoTest {
     void authenticateVoidNull()  {
         User userFromDb = userDao.authenticate("WDSACS>AFCSXZDWXC`´´‹~¥‘“‘¥~‹÷‹~¥‘“","FACESCESXDCWSC AS2€¥Ω¥‹´``´´‹~¥‘“");
         assertNull(userFromDb);
+    }
+
+    @Test
+    void getUserByIDTest(){
+        User userFromDB = userDao.getUserById(1);
+        assertEquals("GR",userFromDB.getUsername());
+        assertNotEquals("Gr",userFromDB.getUsername());
+        assertEquals(LocalDate.of(1997,9,26),userFromDB.getDateOfBirth());
+        assertEquals(25, userFromDB.getAge());
+        assertNotEquals(24 ,userFromDB.getAge());
+    }
+
+    @Test
+    void getUserByIDTestNull(){
+        User userFromDB = userDao.getUserById(0);
+        assertNull(userFromDB);
+    }
+
+    @Test
+    void getUserByUsername(){
+        User userFromDB = userDao.getUserByUsername("GR");
+        assertEquals("GR",userFromDB.getUsername());
+        assertNotEquals("Gr",userFromDB.getUsername());
+        assertEquals(LocalDate.of(1997,9,26),userFromDB.getDateOfBirth());
+        assertEquals(25, userFromDB.getAge());
+        assertNotEquals(24 ,userFromDB.getAge());
+    }
+
+    @Test
+    void getUserByUsernameNull(){
+        User userFromDB = userDao.getUserByUsername("");
+        User userFromDB1 = userDao.getUserByUsername("DWYOUQDGWVOG)");
+
+        assertNull(userFromDB);
+        assertNull(userFromDB1);
+    }
+
+    @Test
+    void getTeacherBySport(){
+        ArrayList<User> usersFromDB = userDao.getTeacherBySport("CALCETTO");
+
+        assertEquals(false, usersFromDB.isEmpty());
+        assertEquals(User.class, usersFromDB.get(0).getClass());
+    }
+
+    @Test
+    void getTeacherByWrongSport(){
+        ArrayList<User> usersFromDB = userDao.getTeacherBySport("");
+        ArrayList<User> usersFromDB1 = userDao.getTeacherBySport("PALLAVOLO");
+        ArrayList<User> usersFromDB2 = userDao.getTeacherBySport("XYZ");
+
+
+        assertEquals(true, usersFromDB.isEmpty());
+        assertEquals(true, usersFromDB1.isEmpty());
+        assertEquals(true, usersFromDB2.isEmpty());
+
     }
 }
