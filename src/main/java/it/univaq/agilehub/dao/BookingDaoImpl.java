@@ -18,6 +18,9 @@ public class BookingDaoImpl implements BookingDao {
         int id = 0;
         String sql = "INSERT INTO Booking (user_id,dateBooking,numberPlayers,sport) VALUES (?,?,?,?)";
         PreparedStatement pst = null;
+        if( booking.getUserId() == 0 || booking.getDateBooking().isBefore(LocalDate.now())){
+            throw new IllegalArgumentException();
+        }
         try {
             pst = connection.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1,booking.getUserId());
@@ -50,6 +53,10 @@ public class BookingDaoImpl implements BookingDao {
         Connection connection = DaoFactory.getConnection();
         String sql = "INSERT INTO Time_Booking (pitch_id,booking_id,dateBooking,time_id) VALUES (?,?,?,?)";
         PreparedStatement pst = null;
+
+        if( pitch_id <= 0 || booking_id <=0 || time_id <=0 ){
+            throw new IllegalArgumentException();
+        }
         try {
             pst = connection.prepareStatement(sql);
             pst.setInt(1,pitch_id);

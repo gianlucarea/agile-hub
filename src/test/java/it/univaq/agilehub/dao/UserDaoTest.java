@@ -6,7 +6,10 @@ import it.univaq.agilehub.model.User;
 import org.junit.jupiter.api.BeforeAll;
  import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.parallel.Resources;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -14,6 +17,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,18 +37,32 @@ public class UserDaoTest {
         daoFactory.setUser("root");
         daoFactory.setPassword("password");
         connection = daoFactory.getConnection();
-        String sql1 = "DROP TABLE IF EXISTS agile_hub_test.Users; " ;
-        String sql2 = "USE agile_hub_test; ";
-        String createTable = "CREATE TABLE Users ( `id` int NOT NULL AUTO_INCREMENT,`name` varchar(45) NOT NULL,`surname` varchar(45) NOT NULL,`password` varchar(45) DEFAULT NULL,`username` varchar(45) NOT NULL,`dateOfBirth` varchar(45) NOT NULL, `age` int NOT NULL,`type` enum('NORMALE','ADMIN','SOCIO','SOCIO_PLUS','MAESTRO') NOT NULL,`sport` enum('CALCETTO','PALLAVOLO','NUOTO','TENNIS','PADEL') , PRIMARY KEY (`id`), UNIQUE KEY `id_user_UNIQUE` (`id`), UNIQUE KEY `username_UNIQUE` (`username`)) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
-
-        // Trasform in a for
-        PreparedStatement pst  = connection.prepareStatement(sql1);
-        pst.executeUpdate();
-        pst  = connection.prepareStatement( sql2);
-        pst.executeUpdate();
-        pst  = connection.prepareStatement( createTable);
-        pst.executeUpdate();
-
+        try{
+            ClassLoader classLoader = getClass().getClassLoader();
+            File scriptFile = new File(classLoader.getResource("Testing_DB.sql").getFile());
+            if(scriptFile.exists()) {
+                var buffer = new StringBuilder();
+                var scanner = new Scanner(scriptFile);
+                while(scanner.hasNextLine()) {
+                    var line = scanner.nextLine();
+                    buffer.append(line);
+                    if(line.endsWith(";")) {
+                        String command = buffer.toString();
+                        connection.createStatement().execute(command);
+                        buffer = new StringBuilder();
+                    } else {
+                        buffer.append("\n");
+                    }
+                }
+            }
+            else System.err.println("File not found.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(connection != null) connection.close();
+        }
     }
 
 
@@ -104,8 +123,8 @@ public class UserDaoTest {
     @Test
     void getUserByIDTest(){
         User userFromDB = userDao.getUserById(1);
-        assertEquals("GR",userFromDB.getUsername());
-        assertNotEquals("Gr",userFromDB.getUsername());
+        assertEquals("aldino",userFromDB.getUsername());
+        assertNotEquals("aldinos",userFromDB.getUsername());
         assertEquals(LocalDate.of(1997,9,26),userFromDB.getDateOfBirth());
         assertEquals(25, userFromDB.getAge());
         assertNotEquals(24 ,userFromDB.getAge());
@@ -119,8 +138,8 @@ public class UserDaoTest {
 
     @Test
     void getUserByUsername(){
-        User userFromDB = userDao.getUserByUsername("GR");
-        assertEquals("GR",userFromDB.getUsername());
+        User userFromDB = userDao.getUserByUsername("aldino");
+        assertEquals("aldino",userFromDB.getUsername());
         assertNotEquals("Gr",userFromDB.getUsername());
         assertEquals(LocalDate.of(1997,9,26),userFromDB.getDateOfBirth());
         assertEquals(25, userFromDB.getAge());
@@ -147,7 +166,7 @@ public class UserDaoTest {
     @Test
     void getTeacherByWrongSport(){
         ArrayList<User> usersFromDB = userDao.getTeacherBySport("");
-        ArrayList<User> usersFromDB1 = userDao.getTeacherBySport("PALLAVOLO");
+        ArrayList<User> usersFromDB1 = userDao.getTeacherBySport("CANOTAGGIO");
         ArrayList<User> usersFromDB2 = userDao.getTeacherBySport("XYZ");
 
 
