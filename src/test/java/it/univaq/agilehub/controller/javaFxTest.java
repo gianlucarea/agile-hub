@@ -1,4 +1,4 @@
-package it.univaq.agilehub.model;
+package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;

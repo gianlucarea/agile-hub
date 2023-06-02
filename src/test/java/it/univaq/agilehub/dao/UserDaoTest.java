@@ -4,20 +4,16 @@ import it.univaq.agilehub.model.Sport;
 import it.univaq.agilehub.model.Type;
 import it.univaq.agilehub.model.User;
 import org.junit.jupiter.api.BeforeAll;
- import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.parallel.Resources;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
-
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
