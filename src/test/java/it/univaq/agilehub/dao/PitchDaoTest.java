@@ -1,7 +1,6 @@
 package it.univaq.agilehub.dao;
 
-import it.univaq.agilehub.model.Booking;
-import it.univaq.agilehub.model.Sport;
+import it.univaq.agilehub.model.Pitch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -10,15 +9,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BookingDaoTest {
+public class PitchDaoTest {
 
     private static final DaoFactory daoFactory = new DaoFactory();
-    BookingDao bookingDao = new BookingDaoImpl();
+    PitchDao pitchDao = new PitchDaoImpl();
     Connection connection;
 
     @BeforeAll
@@ -56,53 +56,39 @@ public class BookingDaoTest {
     }
 
     @Test
-    void insertBookingTest() {
-        Booking booking = new Booking(6, LocalDate.now(), 10,  Sport.CALCETTO);
+    void getPitchBySportTest()   {
+        List<Pitch> pitch ;
+        try {
+          pitch = pitchDao.getPitchBySport("CALCETTO");
+        }catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
 
-        int id = bookingDao.insertBooking(booking);
-        assertNotEquals(0,id);
-    }
-
-    @Test
-    void insertBookingTestWrongBooking() {
-        Booking booking = new Booking(0, LocalDate.now(), 10,  Sport.CALCETTO);
-        Booking booking2 = new Booking(1, LocalDate.now().minusDays(3), 10,  Sport.CALCETTO);
-
-        assertThrows(NullPointerException.class, () -> {
-            bookingDao.insertBooking(null);
-        });
-
-        assertThrows(IllegalArgumentException.class,() ->{
-            bookingDao.insertBooking(booking);
-            bookingDao.insertBooking(booking2);
-        });
-    }
-
-    @Test
-    void insertTimeBookingTest(){
-        assertDoesNotThrow(()->{
-            bookingDao.insertTimeBooking(1,1,LocalDate.now().toString(),5);
-        });
+        assertEquals(false, pitch.isEmpty());
+        assertEquals(true,pitch.size()>0);
 
     }
 
     @Test
-    void insertTimeBookingFail(){
+    void getPitchBySportTestNull()   {
+        List<Pitch> pitch;
+        List<Pitch> pitch2;
+        List<Pitch> pitch3;
+        try {
+            pitch = pitchDao.getPitchBySport("");
+            pitch2 = pitchDao.getPitchBySport("£$%&/()))=");
+            pitch3 = pitchDao.getPitchBySport("PALLAMANO");
 
-        assertDoesNotThrow(()->{
-            bookingDao.insertTimeBooking(1,1,LocalDate.now().toString(),7);
-        });
+        }catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
 
-
-        assertThrows(IllegalArgumentException.class,() ->{
-            bookingDao.insertTimeBooking(0,1,LocalDate.now().toString(),2);
-            bookingDao.insertTimeBooking(1,0,LocalDate.now().toString(),3);
-            bookingDao.insertTimeBooking(1,0,LocalDate.now().toString(),0);
-
-        });
-
+        assertEquals(true, pitch.isEmpty());
+        assertEquals(false,pitch.size()>0);
+        assertEquals(true,pitch2.isEmpty());
+        assertEquals(false,pitch2.size()>0);
+        assertEquals(true,pitch3.isEmpty());
+        assertEquals(false,pitch3.size()>0);
 
     }
-
-
 }
