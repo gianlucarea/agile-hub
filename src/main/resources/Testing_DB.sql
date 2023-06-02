@@ -114,11 +114,11 @@ INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dat
 INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`,`sport`)VALUES('Elisabeth','Swann','cGFzc3dvcmQ=','elisabeth','12/11/1994',29,'MAESTRO','TENNIS');
 INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`,`sport`)VALUES('Joshamee','Gibbs','cGFzc3dvcmQ=','gibbs','07/03/1991',32,'MAESTRO','PADEL');
 
-INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (1,7,'30/05/2023','CALCETTO');
-INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (3,8,'30/05/2023','PALLAVOLO');
-INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (4,9,'30/05/2023','PADEL');
+INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (1,7, '30/05/2023','CALCETTO');
+INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (3,8, '30/05/2023','PALLAVOLO');
+INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (4,9, '30/05/2023','PADEL');
 INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (5,10,'30/05/2023','TENNIS');
-INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (6,11,'30/05/2023','PADEL');
+INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (6,11, '30/05/2023','PADEL');
 
 INSERT INTO `agile_hub_test`.`Booking`(`user_id`,`dateBooking`,`numberPlayers`,`sport`) VALUES (3,'30/05/2023',10,'CALCETTO');
 INSERT INTO `agile_hub_test`.`Booking`(`user_id`,`dateBooking`,`numberPlayers`,`sport`) VALUES (4,'30/05/2023',10,'CALCETTO');
