@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,22 +88,23 @@ public class BookingDaoTest {
     }
 
     @Test
-    void insertTimeBookingFail(){
-
-        assertDoesNotThrow(()->{
-            bookingDao.insertTimeBooking(1,1,LocalDate.now().toString(),7);
-        });
-
-
-        assertThrows(IllegalArgumentException.class,() ->{
-            bookingDao.insertTimeBooking(0,1,LocalDate.now().toString(),2);
-            bookingDao.insertTimeBooking(1,0,LocalDate.now().toString(),3);
-            bookingDao.insertTimeBooking(1,0,LocalDate.now().toString(),0);
+    void insertTimeBookingInvalid() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            bookingDao.insertTimeBooking(0, 1, LocalDate.now().toString(), 2);
+            bookingDao.insertTimeBooking(1, -1, LocalDate.now().toString(), 3);
+            bookingDao.insertTimeBooking(1, 0, LocalDate.now().toString(), 0);
+            bookingDao.insertTimeBooking(1, 1, LocalDate.now().minusDays(100).toString(), 1);
 
         });
-
-
     }
-
-
+        @Test
+        void insertTimeBookingInvalidDateFormat() {
+            assertThrows(DateTimeParseException.class, () -> {
+                bookingDao.insertTimeBooking(1, 1, "25/09/202322", 3);
+                bookingDao.insertTimeBooking(1, 1, "25-09-2023", 3);
+                bookingDao.insertTimeBooking(1, 1, "25-093-2023", 3);
+                bookingDao.insertTimeBooking(1, 1, "250-09-2023", 3);
+                bookingDao.insertTimeBooking(1, 1, "00-09-2023", 3);
+            });
+        }
 }
