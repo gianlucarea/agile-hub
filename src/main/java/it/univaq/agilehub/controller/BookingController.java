@@ -272,4 +272,8 @@ public class BookingController extends DataInitializable<User> implements Initia
         });
 
     }
+
+    public void setUser(User user) {
+        this.userLogged = user;
+    }
 }

@@ -113,6 +113,7 @@ INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dat
 INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`,`sport`)VALUES('Will','Turner','cGFzc3dvcmQ=','will','10/01/1996',27,'MAESTRO','BASKET');
 INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`,`sport`)VALUES('Elisabeth','Swann','cGFzc3dvcmQ=','elisabeth','12/11/1994',29,'MAESTRO','TENNIS');
 INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`,`sport`)VALUES('Joshamee','Gibbs','cGFzc3dvcmQ=','gibbs','07/03/1991',32,'MAESTRO','PADEL');
+INSERT INTO `agile_hub_test`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`)VALUES('Matteo','Univaq','cGFzc3dvcmQ=','univaq','26/09/1997',25,'NORMALE');
 
 INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (1,7, '30/05/2023','CALCETTO');
 INSERT INTO `agile_hub_test`.`Teacher_Booking`(`user_id`,`teacher_id`,`dayOfBooking`,`sport`) VALUES (2,7, '30/05/2023','CALCETTO');
