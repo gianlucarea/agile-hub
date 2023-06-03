@@ -53,7 +53,11 @@ public class TimeSlotDaoImpl implements TimeSlotDao{
 
         ps = connection.prepareStatement(sql);
         ps.setString(1, bookingDate);
-        ps.setInt(2,t.getId());
+        try{
+            ps.setInt(2,t.getId());
+        }catch (NullPointerException e){
+            throw e;
+        }
 
         ResultSet rs = ps.executeQuery();
         try {
