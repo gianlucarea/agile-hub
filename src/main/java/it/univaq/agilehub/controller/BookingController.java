@@ -150,7 +150,7 @@ public class BookingController extends DataInitializable<User> implements Initia
                     selezioneCampo.setValue(null);
                     selezioneOrario.setValue(null);
                 } else {
-                    errorLabel.setText("Errore controllare numero prenotati");
+                    errorLabel.setText("Errore controllare numero prenotati o data");
                 }
             }catch(Exception e){
                errorLabel.setText("Errore nella prenotazione");
@@ -166,7 +166,7 @@ public class BookingController extends DataInitializable<User> implements Initia
                     selezioneCampo.setValue(null);
                     selezioneOrario.setValue(null);
                 } else {
-                    errorLabel.setText("Errore controllare numero prenotati");
+                    errorLabel.setText("Errore controllare numero prenotati o data");
                 }
             }catch(Exception e){
                 errorLabel.setText("Errore nella prenotazione");

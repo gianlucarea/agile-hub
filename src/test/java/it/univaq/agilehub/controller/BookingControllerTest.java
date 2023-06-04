@@ -8,6 +8,7 @@ import it.univaq.agilehub.model.User;
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -16,9 +17,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.matcher.control.LabeledMatchers;
 
 
 import java.awt.event.InputEvent;
@@ -28,9 +31,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static it.univaq.agilehub.model.Sport.CALCETTO;
-import static it.univaq.agilehub.model.Sport.PALLAVOLO;
+import static it.univaq.agilehub.model.Sport.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 
 @ExtendWith(ApplicationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -108,43 +111,110 @@ public class BookingControllerTest {
         User normale = userDao.getUserById(1);
         controller.setUser(normale);
 
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
         robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(PALLAVOLO));
-        robot.clickOn("#data").write("04/06/2023");
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
+        robot.clickOn("#data").write("10/06/2023");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#numeroPartecipanti").write("12");
         robot.clickOn("#selezioneCampo").clickOn("Pallavolo 2");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
         robot.clickOn("#selezioneOrario").clickOn("19:00 - 20:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
+
+
     }
 
     @Test
-    void prenotazionUtenteNormaleWrongTest(FxRobot robot) throws InterruptedException {
+    void prenotazionUtenteNormaleWrongTestData(FxRobot robot) throws InterruptedException {
         User normale = userDao.getUserById(1);
         controller.setUser(normale);
 
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
         robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(PALLAVOLO));
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
         robot.clickOn("#data").write("24/06/2023");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#numeroPartecipanti").write("12");
         robot.clickOn("#selezioneCampo").clickOn("Pallavolo 2");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
         robot.clickOn("#selezioneOrario").clickOn("19:00 - 20:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
+
+        FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore controllare numero prenotati o data"));
     }
 
     @Test
-    void prenotazionUtenteSocioTest(FxRobot robot) throws InterruptedException {
-        User socio_plus = userDao.getUserById(4);
-        controller.setUser(socio_plus);
+    void prenotazionUtenteNormaleWrongTestPartecipanti(FxRobot robot) throws InterruptedException {
+        User normale = userDao.getUserById(1);
+        controller.setUser(normale);
 
-        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(PALLAVOLO));
-        robot.clickOn("#data").write("24/06/2023");
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
+        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(CALCETTO));
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
+        robot.clickOn("#data").write("09/06/2023");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
-        robot.clickOn("#numeroPartecipanti").write("12");
-        robot.clickOn("#selezioneCampo").clickOn("Pallavolo 2");
+        robot.clickOn("#numeroPartecipanti").write("13");
+        robot.clickOn("#selezioneCampo").clickOn("Calcetto 1");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
         robot.clickOn("#selezioneOrario").clickOn("19:00 - 20:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
+        robot.clickOn("#prenota").clickOn();
+
+        FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore controllare numero prenotati o data"));
+    }
+    @Test
+    void prenotazionUtenteSocioTest(FxRobot robot) throws InterruptedException {
+        User socio = userDao.getUserById(3);
+        controller.setUser(socio);
+
+        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(BASKET));
+        robot.clickOn("#data").write("08/06/2023");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.clickOn("#numeroPartecipanti").write("10");
+        robot.clickOn("#selezioneCampo").clickOn("Basket 1");
+        robot.clickOn("#selezioneOrario").clickOn("18:00 - 19:00");
+        robot.clickOn("#prenota").clickOn();
+    }
+    @Test
+    void prenotazionUtenteSocioWrongTestData(FxRobot robot) throws InterruptedException {
+        User socio = userDao.getUserById(3);
+        controller.setUser(socio);
+
+        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(PALLAVOLO));
+        robot.clickOn("#data").write("28/06/2023");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.clickOn("#numeroPartecipanti").write("10");
+        robot.clickOn("#selezioneCampo").clickOn("Basket 1");
+        robot.clickOn("#selezioneOrario").clickOn("18:00 - 19:00");
         robot.clickOn("#prenota").clickOn();
     }
 }
