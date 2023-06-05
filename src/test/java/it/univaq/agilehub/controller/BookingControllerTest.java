@@ -218,6 +218,7 @@ public class BookingControllerTest {
 
 
     }
+
     @Test
     void prenotazionUtenteSocioWrongTestData(FxRobot robot) throws InterruptedException {
         User socio = userDao.getUserById(3);
@@ -240,6 +241,33 @@ public class BookingControllerTest {
         FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
         robot.clickOn("#selezioneOrario").clickOn("19:00 - 20:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
+        robot.clickOn("#prenota").clickOn();
+
+        FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore controllare numero prenotati o data"));
+    }
+    @Test
+    void prenotazionUtenteSocioWrongTestPartecipanti(FxRobot robot) throws InterruptedException {
+        User normale = userDao.getUserById(1);
+        controller.setUser(normale);
+
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
+        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(TENNIS));
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
+        robot.clickOn("#data").write("07/06/2023");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        robot.clickOn("#numeroPartecipanti").write("13");
+        robot.clickOn("#selezioneCampo").clickOn("Tennis 1");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
+        robot.clickOn("#selezioneOrario").clickOn("18:00 - 19:00");
 
         FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();

@@ -111,7 +111,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    void LoginWrongUsernameAndPassword(FxRobot robot) throws InterruptedException {
+    void loginWrongUsernameAndPassword(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
         robot.clickOn("#username").write("aldino111w");
         robot.clickOn("#password").write("passwordewqawdfaw");
@@ -122,7 +122,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    void LoginWrongUsername(FxRobot robot) throws InterruptedException {
+    void loginWrongUsername(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
         robot.clickOn("#username").write("aldino111w");
         robot.clickOn("#password").write("password");
@@ -132,7 +132,7 @@ public class LoginControllerTest {
         FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Username o password errati!"));
     }
     @Test
-    void LoginWrongPassword(FxRobot robot) throws InterruptedException {
+    void loginWrongPassword(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
         robot.clickOn("#username").write("aldino");
         robot.clickOn("#password").write("passwordewqawdfaw");
