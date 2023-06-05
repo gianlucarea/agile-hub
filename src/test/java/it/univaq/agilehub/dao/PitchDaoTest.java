@@ -24,7 +24,7 @@ public class PitchDaoTest {
     void setUp() throws SQLException {
         daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
         daoFactory.setUser("root");
-        daoFactory.setPassword("password");
+        daoFactory.setPassword("root");
         connection = daoFactory.getConnection();
         try{
             ClassLoader classLoader = getClass().getClassLoader();

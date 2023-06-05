@@ -107,7 +107,7 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
     @Override
     public TimeSlot getTimeTeacherBooking(int teacher_booking_id) {
         Connection connection = DaoFactory.getConnection();
-        String sql = "SELECT t.id, t.time_slot FROM Time_TeacherBooking b, time_slot t WHERE b.teacher_booking_id = ? AND b.time_id = t.id";
+        String sql = "SELECT t.id, t.time_slot FROM Time_TeacherBooking b, Time_Slot t WHERE b.teacher_booking_id = ? AND b.time_id = t.id";
         PreparedStatement pst = null;
         if(teacher_booking_id <= 0 ){
             throw new IllegalArgumentException();
@@ -228,7 +228,7 @@ public class TeacherBookingDaoImpl implements TeacherBookingDao{
     @Override
     public boolean isTeacherBookingFull(int teacher_id, String bookingDate) throws SQLException {
         Connection connection = DaoFactory.getConnection();
-        String sql = "SELECT COUNT(id) FROM teacher_booking WHERE teacher_id = ? AND dayOfBooking = ?";
+        String sql = "SELECT COUNT(id) FROM Teacher_Booking WHERE teacher_id = ? AND dayOfBooking = ?";
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate.parse(bookingDate,dateTimeFormatter);
