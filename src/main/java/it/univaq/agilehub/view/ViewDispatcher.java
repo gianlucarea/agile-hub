@@ -63,8 +63,6 @@ public class ViewDispatcher {
     }
 
     public <T> View<T> loadView(String viewName) throws ViewException {
-        System.out.println(getClass());
-        System.out.println(RESOURCE_BASE + viewName + FXML_SUFFIX);
 
         try {
 

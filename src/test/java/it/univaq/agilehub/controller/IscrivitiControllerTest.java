@@ -1,25 +1,22 @@
 package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.dao.DaoFactory;
-import it.univaq.agilehub.dao.UserDao;
-import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.junit.jupiter.api.Test;
-
-import javafx.scene.Scene;
+import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import java.io.File;
@@ -37,9 +34,6 @@ public class IscrivitiControllerTest {
     private static final DaoFactory daoFactory = new DaoFactory();
     static Connection connection;
 
-
-
-    RegistrationController controller;
 
     @BeforeAll
     public static void setupSpec() throws Exception {
@@ -79,29 +73,27 @@ public class IscrivitiControllerTest {
 
     }
 
-
     @BeforeEach
     public void start() throws Exception {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/viste/registration.fxml"));
-        AnchorPane pane = loader.load();
+                getClass().getResource("/viste/login.fxml"));
+
         FxToolkit.setupStage(stage -> {
-            stage.setScene(new Scene(pane, 1000, 1000));
-            stage.show();
+            ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+            try {
+                dispatcher.loginView(stage);
+            } catch (ViewException e) {
+                throw new RuntimeException(e);
+            }
         });
+        FxRobot robot = new FxRobot();
+        robot.clickOn("#iscrivitiButton");
     }
-
-
-
-
-
 
    @Test
     void testButtonClick(FxRobot robot) throws InterruptedException {
-
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
-
         robot.clickOn("#nome").write("usama");
         robot.clickOn("#cognome").write("lb");
         robot.clickOn("#password").write("password");
@@ -110,12 +102,11 @@ public class IscrivitiControllerTest {
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#avantiButton");
-
     }
+
     @Test
     void testButtonClickWrong(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
-
         robot.clickOn("#nome").write("usahhhma");
         robot.clickOn("#cognome").write("lhhhb");
         robot.clickOn("#password").write("pasjjsword");
@@ -126,20 +117,21 @@ public class IscrivitiControllerTest {
         robot.clickOn("#avantiButton").clickOn();
         FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore nella data di nascita"));
     }
+
    @Test
     void testButtonBackClick(FxRobot robot) throws InterruptedException {
+        FxAssert.verifyThat("#indietroButton", isEnabled());
         robot.clickOn("#indietroButton").clickOn();
-    }
+   }
 
 
     @Test
     void testButtonSocioPlusClick(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
-
         robot.clickOn("#nome").write("Luigi");
         robot.clickOn("#cognome").write("Rossi");
         robot.clickOn("#password").write("password1");
-        robot.clickOn("#username").write("Luigi ");
+        robot.clickOn("#username").write("Luigi");
         robot.clickOn("#dataNascita").write("24/06/2003");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         FxAssert.verifyThat("#avantiButton", isEnabled());
@@ -149,9 +141,8 @@ public class IscrivitiControllerTest {
     }
 
     @Test
-    void testButtonSocioPlusClickWrong(FxRobot robot) throws InterruptedException {
+    void testButtonSocioPlusClickWrong(FxRobot robot)  {
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
-
         robot.clickOn("#nome").write("Luigi");
         robot.clickOn("#cognome").write("Rossi");
         robot.clickOn("#password").write("password1");
@@ -162,10 +153,10 @@ public class IscrivitiControllerTest {
         robot.clickOn("#socioPlusBox");
         robot.clickOn("#avantiButton");
     }
+
    @Test
     void testButtonSocioClick(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
-
         robot.clickOn("#nome").write("Mario");
         robot.clickOn("#cognome").write("Rossi");
         robot.clickOn("#password").write("password2");
