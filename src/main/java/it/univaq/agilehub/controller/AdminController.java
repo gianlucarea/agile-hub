@@ -81,7 +81,8 @@ public class AdminController extends DataInitializable<User> implements Initiali
         avantiMaestroButton.disableProperty()
                 .bind(usernameMaestro.textProperty().isEmpty().or(passwordMaestro.textProperty().isEmpty())
                         .or(dataNascitaMaestro.valueProperty().isNull())
-                        .or(nomeMaesto.textProperty().isEmpty()).or(cognomeMaestro.textProperty().isEmpty()));
+                        .or(nomeMaesto.textProperty().isEmpty()).or(cognomeMaestro.textProperty().isEmpty())
+                        .or(sportMaestro.valueProperty().isNull()));
 
         for (Sport sport : Sport.values()){
             sportMaestro.getItems().add(sport.name());
