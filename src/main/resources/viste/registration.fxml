@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.RegistrationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.RegistrationController">
    <children>
       <Button fx:id="avantiButton" layoutX="469.0" layoutY="413.0" mnemonicParsing="false" onAction="#avantiAction" prefHeight="32.0" prefWidth="75.0" text="Avanti" />
       <Button fx:id="indietroButton" layoutX="143.0" layoutY="413.0" mnemonicParsing="false" onAction="#indietroAction" prefHeight="32.0" prefWidth="75.0" text="Indietro" />
@@ -51,5 +51,10 @@
          </font>
       </Text>
       <CheckBox fx:id="socioPlusBox" layoutX="388.0" layoutY="358.0" mnemonicParsing="false" onAction="#socioPlusAction" text="Diventa Socio +" />
+      <Label fx:id="errorLabel" layoutX="500.0" layoutY="460.0" textFill="#c70000">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

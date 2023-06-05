@@ -10,10 +10,7 @@ import it.univaq.agilehub.view.ViewException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -53,6 +50,8 @@ public class RegistrationController extends DataInitializable<User> implements I
     ImageView calcio = new ImageView();
     @FXML
     ImageView Tennis = new ImageView();
+    @FXML
+    Label errorLabel = new Label();
 
     @FXML
     void PasswordAction(ActionEvent event) {}
@@ -69,16 +68,26 @@ public class RegistrationController extends DataInitializable<User> implements I
         }
         User user = null;
         String dateOfBirth = Utility.dateOfBirthConverter(dataNascita.getValue().toString()) ;
+        LocalDate currentDate = LocalDate.now();
         LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirthTolocalDate ,type);
-        UserDao userDao = new UserDaoImpl();
-        userDao.registration(user);
-        ViewDispatcher dispatcher = ViewDispatcher.getInstance();
-        try {
-            dispatcher.logout();
-        } catch (ViewException e) {
-            throw new RuntimeException(e);
+        if(currentDate.isAfter(dateOfBirthTolocalDate)){
+            user = new User(nome.getText(), cognome.getText(), password.getText(),username.getText(), dateOfBirthTolocalDate ,type);
+            UserDao userDao = new UserDaoImpl();
+            userDao.registration(user);
+            ViewDispatcher dispatcher = ViewDispatcher.getInstance();
+            try {
+                dispatcher.logout();
+            } catch (ViewException e) {
+                throw new RuntimeException(e);
+            }
         }
+        else{
+            errorLabel.setText("Errore nella data di nascita");
+
+
+        }
+
+
     }
 
     @FXML

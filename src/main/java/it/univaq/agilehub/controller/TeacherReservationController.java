@@ -126,6 +126,8 @@ public class TeacherReservationController extends DataInitializable<User> implem
 
         dataPrenotazioneMaestro.disableProperty().bind(listaMaestri.getSelectionModel().selectedItemProperty().isNull());
 
+        selezioneOrario.disableProperty().bind(dataPrenotazioneMaestro.valueProperty().isNull());
+
         for (Sport sport : Sport.values()){
             selezioneSport.getItems().add(sport.name());
         }
@@ -160,5 +162,9 @@ public class TeacherReservationController extends DataInitializable<User> implem
             }
         });
 
+    }
+
+    public void setUser(User user) {
+        this.userLogged = user;
     }
 }

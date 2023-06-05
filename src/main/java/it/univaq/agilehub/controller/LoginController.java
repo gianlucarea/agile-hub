@@ -45,7 +45,7 @@ public class LoginController extends DataInitializable<User> implements Initiali
         accediButton.disableProperty().bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty()));
     }
 
-    public void accediAction(ActionEvent event) throws ViewException {
+    public void accediAction(ActionEvent event)  {
         try {
             User user = userDao.authenticate(username.getText(), password.getText());
             if(user != null){
@@ -60,6 +60,7 @@ public class LoginController extends DataInitializable<User> implements Initiali
     }
 
     public void iscrivitiAction() {
+
         ViewDispatcher dispatcher = ViewDispatcher.getInstance();
         try {
             dispatcher.iscrivitiView();
