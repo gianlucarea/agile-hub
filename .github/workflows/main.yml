@@ -23,7 +23,7 @@ jobs:
         image: mysql:8.0.21
         env:
          MYSQL_DATABASE: agile_hub_test
-         MYSQL_PASSWORD: 'password'
+         MYSQL_ROOT_PASSWORD: 'password'
          MYSQL_USER: root
         ports:
           - 3306:3306
