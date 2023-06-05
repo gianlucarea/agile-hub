@@ -34,9 +34,14 @@ public class ViewDispatcher {
         stage.show();
     }
     public void logout() throws ViewException {
+
         AnchorPane recoveryView = (AnchorPane) loadView("login").getView();
         Scene scene = new Scene(recoveryView);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("AgileHub");
+
+
     }
 
 

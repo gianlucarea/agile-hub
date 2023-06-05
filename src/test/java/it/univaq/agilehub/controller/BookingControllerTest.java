@@ -194,28 +194,60 @@ public class BookingControllerTest {
         User socio = userDao.getUserById(3);
         controller.setUser(socio);
 
+
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
         robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(BASKET));
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
         robot.clickOn("#data").write("08/06/2023");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#numeroPartecipanti").write("10");
         robot.clickOn("#selezioneCampo").clickOn("Basket 1");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
         robot.clickOn("#selezioneOrario").clickOn("18:00 - 19:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
+
+
     }
     @Test
     void prenotazionUtenteSocioWrongTestData(FxRobot robot) throws InterruptedException {
         User socio = userDao.getUserById(3);
         controller.setUser(socio);
 
-        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(PALLAVOLO));
-        robot.clickOn("#data").write("28/06/2023");
+        FxAssert.verifyThat("#selezioneCampo", Node::isDisable);
+        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        FxAssert.verifyThat("#prenota", Node::isDisable);
+
+        robot.clickOn("#selezioneTipologia").clickOn(String.valueOf(CALCETTO));
+
+        FxAssert.verifyThat("#selezioneCampo", isEnabled());
+
+        robot.clickOn("#data").write("04/06/2023");
         robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#numeroPartecipanti").write("10");
-        robot.clickOn("#selezioneCampo").clickOn("Basket 1");
-        robot.clickOn("#selezioneOrario").clickOn("18:00 - 19:00");
+        robot.clickOn("#selezioneCampo").clickOn("Calcetto 2");
+
+        FxAssert.verifyThat("#selezioneOrario", isEnabled());
+
+        robot.clickOn("#selezioneOrario").clickOn("19:00 - 20:00");
+
+        FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
+
+        FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore controllare numero prenotati o data"));
+    }
+    @Test
+    void prenotaButtonIsDisabled(FxRobot robot) throws InterruptedException {
+        FxAssert.verifyThat("#prenota", Node::isDisable);
     }
 }
 

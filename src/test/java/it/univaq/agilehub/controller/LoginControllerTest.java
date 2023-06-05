@@ -97,12 +97,17 @@ public class LoginControllerTest {
      */
 
     @Test
-    void LoginTest(FxRobot robot) throws InterruptedException {
+    void loginTest(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
         robot.clickOn("#username").write("univaq");
         robot.clickOn("#password").write("password");
         FxAssert.verifyThat("#accediButton", isEnabled());
         robot.clickOn("#accediButton");
+    }
+    @Test
+    void iscrivitiTest(FxRobot robot) throws InterruptedException {
+        FxAssert.verifyThat("#iscrivitiButton",isEnabled());
+        robot.clickOn("#iscrivitiButton");
     }
 
     @Test
@@ -137,7 +142,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    void AccediButtonIsDisabled(FxRobot robot) throws InterruptedException {
+    void accediButtonIsDisabled(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
     }
 }
