@@ -13,46 +13,39 @@ on:
     branches: [ "main","develop" ]
   pull_request:
     branches: [ "main","develop" ]
+env:
+  MYSQL_DATABASE: agile_hub_test
+  DB_USER: root
+  DB_PASSWORD: root
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0.21
-        env:
-         DB_NAME: agile_hub_test
-         DB_PASSWORD: 'password'
-         DB_USER: root
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE ${{ env.DB_NAME }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
-    - name: Set up JDK 17
+    steps:
+    
+    - name: 🔥 Initialize MySQL
+      run: sudo systemctl start mysql.service
+
+    - name: 📌 Initialize first database
+      run: |
+        mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' \
+        -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+
+    - name: 🍺 Check out repository code
+      uses: actions/checkout@v3
+    
+
+    - name:  Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
+        distribution: 'temurin'
         cache: maven
 
-    - name: Build
-      run: mvn --batch-mode -DskipTests package
+    - name: Build With MAVEN
+      run: mvn --batch-mode --update-snapshots package
 
-    - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-
-    - name: Report
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: Maven Tests
-        path: target/surefire-reports/*.xml
-        reporter: java-junit
-        fail-on-error: true
+    - name: Run tests with Maven
+      run: mvn -B test --file pom.xml
