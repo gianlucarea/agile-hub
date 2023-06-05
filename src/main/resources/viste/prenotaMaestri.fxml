@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #d2e7ba #d2e7ba;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univaq.agilehub.controller.TeacherReservationController">
+    <children>
+        <ImageView fitHeight="124.0" fitWidth="141.0" layoutX="24.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@calcio.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="124.0" fitWidth="142.0" layoutX="552.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Tennis.png" />
+            </image>
+        </ImageView>
+      <Text layoutX="135.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona sport" textAlignment="CENTER" wrappingWidth="150.10908570344805">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ChoiceBox fx:id="selezioneSport" layoutX="135.0" layoutY="119.0" prefWidth="150.0" />
+      <Text layoutX="383.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona maestro" textAlignment="CENTER" wrappingWidth="201.5999930087005">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ListView fx:id="listaMaestri" layoutX="366.0" layoutY="102.0" prefHeight="124.0" prefWidth="235.0" />
+      <Text layoutX="135.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona data" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="dataPrenotazioneMaestro" layoutX="130.0" layoutY="190.0" onAction="#showAvailableSlots" />
+        <Button fx:id="prenotaMaestroButton" layoutX="288.0" layoutY="376.0" mnemonicParsing="false" onAction="#prenotaMaestroAction" prefHeight="32.0" prefWidth="124.0" text="Prenota maestro" />
+      <Label fx:id="confermaPrenotazioneMaestro" alignment="TOP_CENTER" layoutX="277.0" layoutY="418.0" prefWidth="146.7" textAlignment="CENTER" />
+      <ChoiceBox fx:id="selezioneOrario" layoutX="275.0" layoutY="295.0" prefWidth="150.0" />
+      <Text layoutX="262.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona Orario" textAlignment="CENTER" wrappingWidth="176.29090297730522">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>
