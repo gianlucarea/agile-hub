@@ -34,7 +34,7 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE IF NOT EXISTS ${{ env.MYSQL_DATABASE }};' -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_ROOT_PASSWORD }}
+        mysql -e 'CREATE DATABASE IF NOT EXISTS agile_hub_test;' -u root -p 'password'
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
