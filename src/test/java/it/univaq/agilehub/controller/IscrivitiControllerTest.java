@@ -99,7 +99,7 @@ public class IscrivitiControllerTest {
 
    @Test
     void testButtonClick(FxRobot robot) throws InterruptedException {
-        
+
         FxAssert.verifyThat("#avantiButton", Node::isDisable);
 
         robot.clickOn("#nome").write("usama");

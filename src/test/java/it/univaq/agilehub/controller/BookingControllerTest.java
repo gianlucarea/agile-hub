@@ -131,6 +131,8 @@ public class BookingControllerTest {
         FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
 
+        FxAssert.verifyThat("#bookingLabel", LabeledMatchers.hasText("Prenotazione efettuata!"));
+
 
     }
 
@@ -214,6 +216,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#prenota", isEnabled());
         robot.clickOn("#prenota").clickOn();
+        FxAssert.verifyThat("#bookingLabel", LabeledMatchers.hasText("Prenotazione efettuata!"));
 
 
     }
