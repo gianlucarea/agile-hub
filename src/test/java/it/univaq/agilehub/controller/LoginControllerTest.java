@@ -145,4 +145,17 @@ public class LoginControllerTest {
     void accediButtonIsDisabled(FxRobot robot) throws InterruptedException {
         FxAssert.verifyThat("#accediButton", Node::isDisable);
     }
+
+    @Test
+    void logout(FxRobot robot) throws InterruptedException {
+        FxAssert.verifyThat("#accediButton", Node::isDisable);
+        robot.clickOn("#username").write("aldino");
+        robot.clickOn("#password").write("password");
+        FxAssert.verifyThat("#accediButton", isEnabled());
+        robot.clickOn("#accediButton");
+        FxAssert.verifyThat("#Iogout",Node::isVisible);
+        Thread.sleep(1000);
+        robot.clickOn("#Iogout");
+        FxAssert.verifyThat("#accediButton", Node::isDisable);
+    }
 }

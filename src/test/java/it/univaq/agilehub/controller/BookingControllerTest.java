@@ -42,9 +42,7 @@ public class BookingControllerTest {
 
     private static final DaoFactory daoFactory = new DaoFactory();
     static Connection connection;
-
     UserDao userDao = new UserDaoImpl();
-
     BookingController controller;
 
     @BeforeAll
@@ -93,7 +91,7 @@ public class BookingControllerTest {
                 getClass().getResource("/viste/prenotazione.fxml"));
         AnchorPane pane = loader.load();
         FxToolkit.setupStage(stage -> {
-            stage.setScene(new Scene(pane, 1000, 1000));
+            stage.setScene(new Scene(pane, 1000, 500));
             stage.show();
         });
 
