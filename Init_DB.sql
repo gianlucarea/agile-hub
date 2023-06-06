@@ -15,7 +15,7 @@ CREATE TABLE `Users`  (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_user_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Teacher_Booking`  (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -33,7 +33,7 @@ CREATE TABLE `Teacher_Booking`  (
   ON DELETE CASCADE  
   ON UPDATE CASCADE  
 
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Booking`  (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -48,20 +48,20 @@ CREATE TABLE `Booking`  (
   REFERENCES Users(id)
   ON DELETE CASCADE  
   ON UPDATE CASCADE
-  )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Pitch`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `type` enum('CALCETTO','PALLAVOLO','TENNIS','PADEL','BASKET') ,
   PRIMARY KEY (`id`)
-  )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
   
 CREATE TABLE  `Time_Slot` (
 `id` int NOT NULL AUTO_INCREMENT,
 `time_slot` varchar(45) NOT NULL,
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Time_Booking` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -80,7 +80,7 @@ CONSTRAINT fk_time_id FOREIGN KEY (time_id)
 REFERENCES Time_Slot(id)
 ON DELETE CASCADE  
 ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `Time_TeacherBooking` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -99,7 +99,7 @@ CONSTRAINT fk_time_teacher_id FOREIGN KEY (time_id)
 REFERENCES Time_Slot(id)
 ON DELETE CASCADE  
 ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `agile_hub_production`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`)VALUES('Gianluca','Rea','cGFzc3dvcmQ=','aldino','26/09/1997',25,'NORMALE');
 INSERT INTO `agile_hub_production`.`Users`(`name`,`surname`,`password`,`username`,`dateOfBirth`,`age`,`type`)VALUES('Francesco','Falone','cGFzc3dvcmQx','falone','26/09/1997',25,'ADMIN');
