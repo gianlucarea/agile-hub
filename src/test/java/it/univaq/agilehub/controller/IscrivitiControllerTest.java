@@ -97,8 +97,10 @@ public class IscrivitiControllerTest {
         robot.clickOn("#username").write("Usama ");
         robot.clickOn("#password").write("password");
         robot.clickOn("#dataNascita").write("24/06/1998");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        FxAssert.verifyThat("#avantiButton", isEnabled());
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+       robot.push(KeyCode.ENTER);
+
+       FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#avantiButton");
     }
 
@@ -110,7 +112,9 @@ public class IscrivitiControllerTest {
         robot.clickOn("#username").write("Usaggma ");
         robot.clickOn("#password").write("pasjjsword");
         robot.clickOn("#dataNascita").write("30/06/2024");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
+
         FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#avantiButton").clickOn();
         FxAssert.verifyThat("#errorLabel", LabeledMatchers.hasText("Errore nella data di nascita"));
@@ -131,7 +135,8 @@ public class IscrivitiControllerTest {
         robot.clickOn("#username").write("Luigi");
         robot.clickOn("#password").write("password1");
         robot.clickOn("#dataNascita").write("24/06/2003");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
         FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#socioPlusBox");
         robot.clickOn("#avantiButton");
@@ -146,7 +151,9 @@ public class IscrivitiControllerTest {
         robot.clickOn("#username").write("Luigi ");
         robot.clickOn("#password").write("password1");
         robot.clickOn("#dataNascita").write("24/06/2025");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
+
         FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#socioPlusBox");
         robot.clickOn("#avantiButton");
@@ -160,8 +167,10 @@ public class IscrivitiControllerTest {
         robot.clickOn("#username").write("Mario ");
         robot.clickOn("#password").write("password2");
         robot.clickOn("#dataNascita").write("24/06/2001");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        FxAssert.verifyThat("#avantiButton", isEnabled());
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+         robot.push(KeyCode.ENTER);
+
+       FxAssert.verifyThat("#avantiButton", isEnabled());
         robot.clickOn("#socioBox");
         robot.clickOn("#avantiButton");
     }

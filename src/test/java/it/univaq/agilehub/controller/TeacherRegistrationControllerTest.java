@@ -98,7 +98,8 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", isEnabled());
@@ -118,7 +119,9 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
+
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -133,7 +136,9 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
+
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -148,7 +153,8 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#passwordMaestro").write("password");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -163,7 +169,8 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -193,7 +200,9 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
         robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
-        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+
+        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
+        robot.push(KeyCode.ENTER);
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
     }
