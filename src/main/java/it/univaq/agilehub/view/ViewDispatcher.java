@@ -34,9 +34,14 @@ public class ViewDispatcher {
         stage.show();
     }
     public void logout() throws ViewException {
+
         AnchorPane recoveryView = (AnchorPane) loadView("login").getView();
         Scene scene = new Scene(recoveryView);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("AgileHub");
+
+
     }
 
 
@@ -51,9 +56,6 @@ public class ViewDispatcher {
         DataInitializable<User> homeController = view.getController();
         homeController.initializeData(user);
         layout = (BorderPane) view.getView();
-
-
-        stage.setX(200.0);
         Scene scene = new Scene(layout);
         stage.setScene(scene);
         renderView("welcome", user);
@@ -61,8 +63,6 @@ public class ViewDispatcher {
     }
 
     public <T> View<T> loadView(String viewName) throws ViewException {
-        System.out.println(getClass());
-        System.out.println(RESOURCE_BASE + viewName + FXML_SUFFIX);
 
         try {
 

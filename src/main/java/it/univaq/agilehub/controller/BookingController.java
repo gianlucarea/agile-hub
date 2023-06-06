@@ -65,7 +65,7 @@ public class BookingController extends DataInitializable<User> implements Initia
     void dataAction(ActionEvent event) {
         selezioneOrario.getItems().clear();
         if(selezioneCampo.getValue() != null){
-            String converted = Utility.dateOfBirthConverter(data.getValue().toString());
+            String converted = Utility.dateOfBirthConverter(data.getEditor().getText());
             try {
                 ArrayList<Integer> unavailableTS = timeSlotService.unavailableTimeSlotId(converted, selezioneCampo.getValue());
                 ArrayList<TimeSlot> allTimeSlot = timeSlotService.getAllTimeSlots();
@@ -116,7 +116,7 @@ public class BookingController extends DataInitializable<User> implements Initia
 
         Booking booking = new Booking();
         booking.setUserId(userLogged.getId());
-        booking.setDateBooking(LocalDate.parse(Utility.dateOfBirthConverter(data.getValue().toString()) , DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        booking.setDateBooking(LocalDate.parse(Utility.dateOfBirthConverter(data.getEditor().getText()) , DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         booking.setNumberPlayers(Integer.parseInt(numeroPartecipanti.getText()));
         booking.setSport(valueOf(sport));
 
@@ -150,7 +150,7 @@ public class BookingController extends DataInitializable<User> implements Initia
                     selezioneCampo.setValue(null);
                     selezioneOrario.setValue(null);
                 } else {
-                    errorLabel.setText("Errore controllare numero prenotati");
+                    errorLabel.setText("Errore controllare numero prenotati o data");
                 }
             }catch(Exception e){
                errorLabel.setText("Errore nella prenotazione");
@@ -166,7 +166,7 @@ public class BookingController extends DataInitializable<User> implements Initia
                     selezioneCampo.setValue(null);
                     selezioneOrario.setValue(null);
                 } else {
-                    errorLabel.setText("Errore controllare numero prenotati");
+                    errorLabel.setText("Errore controllare numero prenotati o data");
                 }
             }catch(Exception e){
                 errorLabel.setText("Errore nella prenotazione");
@@ -183,7 +183,7 @@ public class BookingController extends DataInitializable<User> implements Initia
     public void initialize(URL location, ResourceBundle resources) {
 
         prenota.disableProperty()
-                        .bind(data.valueProperty().isNull()
+                        .bind(data.getEditor().textProperty().isEmpty()
                                 .or(numeroPartecipanti.textProperty().isEmpty())
                                 .or(selezioneTipologia.getSelectionModel().selectedIndexProperty().lessThan(0))
                                 .or(selezioneCampo.getSelectionModel().selectedIndexProperty().lessThan(0))
@@ -195,7 +195,7 @@ public class BookingController extends DataInitializable<User> implements Initia
 
         selezioneOrario.disableProperty()
                 .bind(selezioneCampo.getSelectionModel().selectedIndexProperty().lessThan(0)
-                        .or(data.valueProperty().isNull()));
+                        .or(data.getEditor().textProperty().isNull()));
 
         data.setDayCellFactory(datePicker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -238,9 +238,9 @@ public class BookingController extends DataInitializable<User> implements Initia
 
             @Override
             public void changed(ObservableValue<? extends Pitch> observable, Pitch oldValue, Pitch newValue) {
-                if(data.getValue() != null && newValue != null){
+                if(!data.getEditor().getText().isEmpty()  && newValue != null){
                     selezioneOrario.getItems().clear();
-                    String converted = Utility.dateOfBirthConverter(data.getValue().toString());
+                    String converted = Utility.dateOfBirthConverter(data.getEditor().getText());
                     try {
                         ArrayList<Integer> unavailableTS = timeSlotService.unavailableTimeSlotId(converted, newValue);
                         ArrayList<TimeSlot> allTimeSlot = timeSlotService.getAllTimeSlots();
@@ -271,5 +271,9 @@ public class BookingController extends DataInitializable<User> implements Initia
             }
         });
 
+    }
+
+    public void setUser(User user) {
+        this.userLogged = user;
     }
 }

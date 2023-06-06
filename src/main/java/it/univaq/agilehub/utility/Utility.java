@@ -1,6 +1,14 @@
 package it.univaq.agilehub.utility;
 
+import java.io.*;
+import java.sql.Connection;
+import it.univaq.agilehub.dao.DaoFactory;
+import org.apache.ibatis.jdbc.ScriptRunner;
+
 public class Utility {
+
+    private static final DaoFactory daoFactory = new DaoFactory();
+    static Connection connection;
 
     /**
      *   yyyy-mm-dd TO dd/mm/yyyy
@@ -18,4 +26,24 @@ public class Utility {
             throw e;
         }
     }
+
+
+        public static void readScript() throws Exception {
+
+            daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
+            daoFactory.setUser("root");
+            daoFactory.setPassword("root");
+            connection = daoFactory.getConnection();
+
+            System.out.println("Connection established......");
+            //Initialize the script runner
+            ScriptRunner sr = new ScriptRunner(connection);
+            //Creating a reader object
+            Reader reader = new BufferedReader(new FileReader(Utility.class.getResource("/Testing_DB.sql").getFile()));
+
+            sr.setLogWriter(null);
+            //Running the script
+            sr.runScript(reader);
+        }
+
 }

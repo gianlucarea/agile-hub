@@ -1,14 +1,15 @@
 package it.univaq.agilehub.dao;
 
 
-import org.junit.jupiter.api.BeforeAll;
+import it.univaq.agilehub.utility.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class DaoFactoryTest {
@@ -17,9 +18,12 @@ public class DaoFactoryTest {
 
     @BeforeEach
     void setUp(){
-        daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
-        daoFactory.setUser("root");
-        daoFactory.setPassword("password");
+        //Database creation
+        try {
+            Utility.readScript();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

@@ -1,11 +1,9 @@
 package it.univaq.agilehub.model;
 
-import javafx.util.converter.LocalDateStringConverter;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 class UserTest {

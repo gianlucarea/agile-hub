@@ -59,10 +59,9 @@ public class TeacherReservationController extends DataInitializable<User> implem
     @FXML
     void showAvailableSlots(ActionEvent event) {
         selezioneOrario.getItems().clear();
-
-        if(dataPrenotazioneMaestro.getValue() != null) {
+        if( dataPrenotazioneMaestro.getEditor().getText().isEmpty() != true) {
             User teacher = listaMaestri.getSelectionModel().getSelectedItem();
-            String converted = Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
+            String converted = Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getEditor().getText());
             try {
                 ArrayList<Integer> unavailableTS = timeSlotDao.unavailableTimeSlotTeacherId(converted,teacher);
                 ArrayList<TimeSlot> allTimeSlot = timeSlotDao.getAllTimeSlots();
@@ -94,7 +93,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
 
     @FXML
     void prenotaMaestroAction(ActionEvent event) {
-        String dayOfBooking =  Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getValue().toString());
+        String dayOfBooking =  Utility.dateOfBirthConverter(dataPrenotazioneMaestro.getEditor().getText());
         LocalDate dayOfBookingTolocalDate = LocalDate.parse(dayOfBooking, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Sport sport = Enum.valueOf(Sport.class, selezioneSport.getValue());
 
@@ -108,7 +107,7 @@ public class TeacherReservationController extends DataInitializable<User> implem
                 int teacher_bookingid = teacherBookingDao.insertTeacherBooking(teacherBooking);
                 teacherBookingDao.insertTimeTeacherBooking(listaMaestri.getSelectionModel().getSelectedItem().getId(),teacher_bookingid,dayOfBooking,selezioneOrario.getValue().getId());
                 confermaPrenotazioneMaestro.setText("Prenotazione effettuata");
-                dataPrenotazioneMaestro.setValue(null);
+                dataPrenotazioneMaestro.getEditor().setText("");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -119,16 +118,25 @@ public class TeacherReservationController extends DataInitializable<User> implem
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherList = new ArrayList<User>();
         prenotaMaestroButton.disableProperty()
-                .bind(dataPrenotazioneMaestro.valueProperty().isNull()
+                .bind(dataPrenotazioneMaestro.getEditor().textProperty().isEmpty()
                         .or(selezioneOrario.getSelectionModel().selectedIndexProperty().lessThan(0))
                         .or(selezioneSport.getSelectionModel().selectedIndexProperty().lessThan(0))
                         .or(listaMaestri.getSelectionModel().selectedItemProperty().isNull()));
 
         dataPrenotazioneMaestro.disableProperty().bind(listaMaestri.getSelectionModel().selectedItemProperty().isNull());
 
+        selezioneOrario.disableProperty().bind(dataPrenotazioneMaestro.getEditor().textProperty().isNull());
+
+        dataPrenotazioneMaestro.getEditor().textProperty().addListener((ov, oldValue, newValue) -> {
+            if(dataPrenotazioneMaestro.getEditor().getText().length() == 10){
+                this.showAvailableSlots(new ActionEvent());
+            }
+        });
+
         for (Sport sport : Sport.values()){
             selezioneSport.getItems().add(sport.name());
         }
+
 
         selezioneSport.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -160,5 +168,11 @@ public class TeacherReservationController extends DataInitializable<User> implem
             }
         });
 
+
+
+    }
+
+    public void setUser(User user) {
+        this.userLogged = user;
     }
 }

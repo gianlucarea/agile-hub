@@ -4,7 +4,8 @@ module it.univaq.agilehub {
     requires java.sql;
     requires mysql.connector.j;
     requires java.desktop;
-
+    requires org.mybatis;
+    requires jdk.jshell;
 
     opens it.univaq.agilehub to javafx.fxml;
     exports it.univaq.agilehub;
