@@ -40,6 +40,8 @@ public class Utility {
             ScriptRunner sr = new ScriptRunner(connection);
             //Creating a reader object
             Reader reader = new BufferedReader(new FileReader(Utility.class.getResource("/Testing_DB.sql").getFile()));
+
+            sr.setLogWriter(null);
             //Running the script
             sr.runScript(reader);
         }
