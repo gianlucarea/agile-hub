@@ -110,7 +110,7 @@ public class TeacherBookingControllerTest {
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
         LocalDate tomorrow = LocalDate.now().plusDays(1);
-        robot.clickOn("#dataPrenotazioneMaestro").write(tomorrow.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        robot.clickOn("#dataPrenotazioneMaestro").write(tomorrow.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -140,7 +140,7 @@ public class TeacherBookingControllerTest {
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
         LocalDate now = LocalDate.now();
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -156,7 +156,7 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#prenotaMaestroButton", Node::isDisable);
 
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -189,7 +189,7 @@ public class TeacherBookingControllerTest {
             User user = userDao.getUserById(i);
             controller.setUser(user);
 
-            robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
             //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
             robot.push(KeyCode.ENTER);
 
@@ -211,7 +211,7 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 

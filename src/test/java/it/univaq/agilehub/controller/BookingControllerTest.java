@@ -111,7 +111,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("10/06/2023");
+        robot.clickOn("#data").write("10/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -142,7 +142,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("24/06/2023");
+        robot.clickOn("#data").write("24/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -171,7 +171,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("09/06/2023");
+        robot.clickOn("#data").write("09/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -200,7 +200,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("08/06/2023");
+        robot.clickOn("#data").write("08/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -230,7 +230,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("04/06/2023");
+        robot.clickOn("#data").write("04/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
@@ -259,7 +259,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("07/06/2023");
+        robot.clickOn("#data").write("07/06/2023").push(KeyCode.ENTER);
         //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.push(KeyCode.ENTER);
 
