@@ -48,7 +48,7 @@ public class AdminController extends DataInitializable<User> implements Initiali
     @FXML
     void avantiMaestroAction(ActionEvent event) {
         User user = null;
-        String dateOfBirth =  dataNascitaMaestro.getEditor().getText();
+        String dateOfBirth = dataNascitaMaestro.getEditor().getText();
 
         LocalDate dateOfBirthTolocalDate = LocalDate.parse(Utility.dateOfBirthConverter(dateOfBirth), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String sport = sportMaestro.getValue();
