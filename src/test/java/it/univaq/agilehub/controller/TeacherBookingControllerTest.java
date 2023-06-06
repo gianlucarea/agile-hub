@@ -4,6 +4,7 @@ import it.univaq.agilehub.dao.DaoFactory;
 import it.univaq.agilehub.dao.UserDao;
 import it.univaq.agilehub.dao.UserDaoImpl;
 import it.univaq.agilehub.model.User;
+import it.univaq.agilehub.utility.Utility;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -50,39 +51,8 @@ public class TeacherBookingControllerTest {
         LocalDate n = LocalDate.now();
         tomorrowString = t.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
         todayString = n.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
-
-        daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
-        daoFactory.setUser("root");
-        daoFactory.setPassword("root");
-        connection = daoFactory.getConnection();
-
-        try{
-            ClassLoader classLoader = BookingControllerTest.class.getClassLoader();
-            File scriptFile = new File(classLoader.getResource("Testing_DB.sql").getFile());
-            if(scriptFile.exists()) {
-                var buffer = new StringBuilder();
-                var scanner = new Scanner(scriptFile);
-                while(scanner.hasNextLine()) {
-                    var line = scanner.nextLine();
-                    buffer.append(line);
-                    if(line.endsWith(";")) {
-                        String command = buffer.toString();
-                        connection.createStatement().execute(command);
-                        buffer = new StringBuilder();
-                    } else {
-                        buffer.append("\n");
-                    }
-                }
-            }
-            else System.err.println("File not found.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if(connection != null) connection.close();
-        }
-
+        //Database creation
+        Utility.readScript();
     }
 
     @BeforeEach

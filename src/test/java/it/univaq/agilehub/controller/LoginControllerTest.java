@@ -1,6 +1,7 @@
 package it.univaq.agilehub.controller;
 
 import it.univaq.agilehub.dao.DaoFactory;
+import it.univaq.agilehub.utility.Utility;
 import it.univaq.agilehub.view.ViewDispatcher;
 import it.univaq.agilehub.view.ViewException;
 import javafx.fxml.FXMLLoader;
@@ -33,42 +34,13 @@ public class LoginControllerTest {
     @BeforeAll
     public static void setupSpec() throws Exception {
         FxToolkit.registerPrimaryStage();
+
+        //Database creation
+        Utility.readScript();
     }
 
     @BeforeEach
     public void start() throws Exception {
-
-        daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
-        daoFactory.setUser("root");
-        daoFactory.setPassword("root");
-        connection = daoFactory.getConnection();
-
-        try{
-            ClassLoader classLoader = getClass().getClassLoader();
-            File scriptFile = new File(classLoader.getResource("Testing_DB.sql").getFile());
-            if(scriptFile.exists()) {
-                var buffer = new StringBuilder();
-                var scanner = new Scanner(scriptFile);
-                while(scanner.hasNextLine()) {
-                    var line = scanner.nextLine();
-                    buffer.append(line);
-                    if(line.endsWith(";")) {
-                        String command = buffer.toString();
-                        connection.createStatement().execute(command);
-                        buffer = new StringBuilder();
-                    } else {
-                        buffer.append("\n");
-                    }
-                }
-            }
-            else System.err.println("File not found.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if(connection != null) connection.close();
-        }
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/viste/login.fxml"));

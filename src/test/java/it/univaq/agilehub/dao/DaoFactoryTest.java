@@ -1,6 +1,7 @@
 package it.univaq.agilehub.dao;
 
 
+import it.univaq.agilehub.utility.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,12 @@ public class DaoFactoryTest {
 
     @BeforeEach
     void setUp(){
-        daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
-        daoFactory.setUser("root");
-        daoFactory.setPassword("root");
+        //Database creation
+        try {
+            Utility.readScript();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
