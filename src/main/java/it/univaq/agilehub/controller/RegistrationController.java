@@ -67,7 +67,7 @@ public class RegistrationController extends DataInitializable<User> implements I
             type = Type.NORMALE;
         }
         User user = null;
-        String dateOfBirth = Utility.dateOfBirthConverter(dataNascita.getValue().toString()) ;
+        String dateOfBirth = Utility.dateOfBirthConverter(dataNascita.getEditor().getText()) ;
         LocalDate currentDate = LocalDate.now();
         LocalDate dateOfBirthTolocalDate = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         if(currentDate.isAfter(dateOfBirthTolocalDate)){
@@ -130,7 +130,7 @@ public class RegistrationController extends DataInitializable<User> implements I
     public void initialize(URL location, ResourceBundle resources) {
         avantiButton.disableProperty()
                 .bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty())
-                        .or(dataNascita.valueProperty().isNull())
+                        .or(dataNascita.getEditor().textProperty().isEmpty())
                         .or(nome.textProperty().isEmpty()).or(cognome.textProperty().isEmpty()));
     }
 }

@@ -4,7 +4,6 @@ import it.univaq.agilehub.dao.DaoFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,9 +96,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", isEnabled());
@@ -118,9 +115,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
 
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
@@ -135,9 +130,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#nomeMaesto").write("Antonio");
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
 
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
@@ -152,9 +145,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#nomeMaesto").write("Antonio");
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#passwordMaestro").write("password");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -168,9 +159,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#nomeMaesto").write("Antonio");
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#usernameMaestro").write("antodeva");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
         robot.clickOn("#sportMaestro").clickOn(String.valueOf(PALLAVOLO));
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
@@ -199,10 +188,7 @@ public class TeacherRegistrationControllerTest {
         robot.clickOn("#cognomeMaestro").write("Devastatore");
         robot.clickOn("#usernameMaestro").write("antodeva");
         robot.clickOn("#passwordMaestro").write("password");
-        robot.clickOn("#dataNascitaMaestro").write("21/04/1984").push(KeyCode.ENTER);
-
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataNascitaMaestro").write("21/04/1984");
 
         FxAssert.verifyThat("#avantiMaestroButton", Node::isDisable);
     }

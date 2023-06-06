@@ -48,7 +48,8 @@ public class AdminController extends DataInitializable<User> implements Initiali
     @FXML
     void avantiMaestroAction(ActionEvent event) {
         User user = null;
-        String dateOfBirth =  dataNascitaMaestro.getValue().toString();
+        String dateOfBirth =  dataNascitaMaestro.getEditor().getText();
+
         LocalDate dateOfBirthTolocalDate = LocalDate.parse(Utility.dateOfBirthConverter(dateOfBirth), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String sport = sportMaestro.getValue();
         user = new User(nomeMaesto.getText(), cognomeMaestro.getText(), passwordMaestro.getText(),usernameMaestro.getText(), dateOfBirthTolocalDate , Type.MAESTRO, Sport.valueOf(sport));
@@ -80,10 +81,10 @@ public class AdminController extends DataInitializable<User> implements Initiali
     public void initialize(URL location, ResourceBundle resources) {
         avantiMaestroButton.disableProperty()
                 .bind(usernameMaestro.textProperty().isEmpty().or(passwordMaestro.textProperty().isEmpty())
-                        .or(dataNascitaMaestro.valueProperty().isNull())
+                        .or(dataNascitaMaestro.getEditor().textProperty().isEmpty())
                         .or(nomeMaesto.textProperty().isEmpty()).or(cognomeMaestro.textProperty().isEmpty())
                         .or(sportMaestro.valueProperty().isNull()));
-
+        ;
         for (Sport sport : Sport.values()){
             sportMaestro.getItems().add(sport.name());
         }

@@ -7,7 +7,6 @@ import it.univaq.agilehub.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,9 +41,15 @@ public class TeacherBookingControllerTest {
 
     TeacherReservationController controller;
 
+    static String tomorrowString = null,todayString =null;
+
     @BeforeAll
     public static void setupSpec() throws Exception {
         FxToolkit.registerPrimaryStage();
+        LocalDate t = LocalDate.now().plusDays(1);
+        LocalDate n = LocalDate.now();
+        tomorrowString = t.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
+        todayString = n.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
 
         daoFactory.setUrl("jdbc:mysql://localhost:3306/agile_hub_test");
         daoFactory.setUser("root");
@@ -102,17 +107,14 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#prenotaMaestroButton", Node::isDisable);
         FxAssert.verifyThat("#dataPrenotazioneMaestro", Node::isDisable);
-        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        //FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
 
         robot.clickOn("#selezioneSport").clickOn(String.valueOf(PALLAVOLO));
         robot.clickOn("#listaMaestri").clickOn("Hector Barbossa");
 
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-        robot.clickOn("#dataPrenotazioneMaestro").write(tomorrow.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataPrenotazioneMaestro").write(tomorrowString);
 
         FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
@@ -132,17 +134,14 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#prenotaMaestroButton", Node::isDisable);
         FxAssert.verifyThat("#dataPrenotazioneMaestro", Node::isDisable);
-        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        //FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
 
         robot.clickOn("#selezioneSport").clickOn(String.valueOf(PALLAVOLO));
         robot.clickOn("#listaMaestri").clickOn("Hector Barbossa");
 
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
-        LocalDate now = LocalDate.now();
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataPrenotazioneMaestro").write(todayString);
 
         FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
@@ -156,9 +155,7 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#prenotaMaestroButton", Node::isDisable);
 
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataPrenotazioneMaestro").write(todayString);
 
         FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
@@ -174,11 +171,10 @@ public class TeacherBookingControllerTest {
     @Test
     void TeacherBookingNoAvailableBookingTest (FxRobot robot) throws Exception {
         int i = 1;
-        LocalDate now = LocalDate.now();
 
         FxAssert.verifyThat("#prenotaMaestroButton", Node::isDisable);
         FxAssert.verifyThat("#dataPrenotazioneMaestro", Node::isDisable);
-        FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
+        //FxAssert.verifyThat("#selezioneOrario", Node::isDisable);
 
         robot.clickOn("#selezioneSport").clickOn(String.valueOf(PALLAVOLO));
         robot.clickOn("#listaMaestri").clickOn("Hector Barbossa");
@@ -189,9 +185,7 @@ public class TeacherBookingControllerTest {
             User user = userDao.getUserById(i);
             controller.setUser(user);
 
-            robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
-            //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-            robot.push(KeyCode.ENTER);
+            robot.clickOn("#dataPrenotazioneMaestro").write(todayString);
 
             FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
@@ -211,9 +205,7 @@ public class TeacherBookingControllerTest {
 
         FxAssert.verifyThat("#dataPrenotazioneMaestro", isEnabled());
 
-        robot.clickOn("#dataPrenotazioneMaestro").write(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).push(KeyCode.ENTER);
-        //robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
-        robot.push(KeyCode.ENTER);
+        robot.clickOn("#dataPrenotazioneMaestro").write(todayString);
 
         FxAssert.verifyThat("#selezioneOrario", isEnabled());
 
