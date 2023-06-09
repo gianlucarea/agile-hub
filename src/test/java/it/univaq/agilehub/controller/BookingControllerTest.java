@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import static it.univaq.agilehub.model.Sport.*;
@@ -39,6 +41,7 @@ public class BookingControllerTest {
     static Connection connection;
     UserDao userDao = new UserDaoImpl();
     BookingController controller;
+    static String tomorrowString;
 
     @BeforeAll
     public static void setupSpec() throws Exception {
@@ -46,6 +49,9 @@ public class BookingControllerTest {
 
         //Database creation
         Utility.readScript();
+
+        LocalDate t = LocalDate.now().plusDays(1);
+        tomorrowString = t.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
     }
 
 
@@ -82,7 +88,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("10/06/2023");
+        robot.clickOn("#data").write(tomorrowString);
 
 
         robot.clickOn("#numeroPartecipanti").write("12");
@@ -112,7 +118,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("24/06/2023");
+        robot.clickOn("#data").write("24/05/2023");
 
         robot.clickOn("#numeroPartecipanti").write("12");
         robot.clickOn("#selezioneCampo").clickOn("Pallavolo 2");
@@ -139,7 +145,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("09/06/2023");
+        robot.clickOn("#data").write(tomorrowString);
 
         robot.clickOn("#numeroPartecipanti").write("13");
         robot.clickOn("#selezioneCampo").clickOn("Calcetto 1");
@@ -166,7 +172,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("08/06/2023");
+        robot.clickOn("#data").write(tomorrowString);
 
         robot.clickOn("#numeroPartecipanti").write("10");
         robot.clickOn("#selezioneCampo").clickOn("Basket 1");
@@ -221,7 +227,7 @@ public class BookingControllerTest {
 
         FxAssert.verifyThat("#selezioneCampo", isEnabled());
 
-        robot.clickOn("#data").write("07/06/2023");
+        robot.clickOn("#data").write(tomorrowString);
 
 
         robot.clickOn("#numeroPartecipanti").write("13");
