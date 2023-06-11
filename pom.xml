@@ -103,7 +103,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <argLine> --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED </argLine>
+                    <argLine> ${argLine} --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED </argLine>
                 </configuration>
             </plugin>
             <plugin>
