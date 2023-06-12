@@ -46,11 +46,18 @@ jobs:
     - name: 💪 Build With MAVEN
       run: xvfb-run mvn --batch-mode --update-snapshots package
 
+    - name: 🔋 Upload Report
+      uses: 'actions/upload-artifact@v2'
+      with:
+        name: jacoco-report
+        path: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+
     - name: 🔋 Add coverage to PR
       id: jacoco
-      uses: madrapps/jacoco-report@v1.3
+      uses: madrapps/jacoco-report@v1.2
       with:
-        paths: ${{ github.workspace }}/target/jacoco.exec
+        paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
         token: ${{ secrets.GITHUB_TOKEN }}
-        min-coverage-overall: 40
-        min-coverage-changed-files: 60
+        min-coverage-overall: 80
+        min-coverage-changed-files: 80
+        title: Code Coverage
